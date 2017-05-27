@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.0" client="site" method="upgrade">
+	<name>AJAX Search</name>
+	<author>Emir Sakic</author>
+	<creationDate>November 2015</creationDate>
+	<copyright>Copyright (C) Emir Sakic 2015. All Rights Reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>emir@sakic.net</authorEmail>
+	<authorUrl>www.sakic.net</authorUrl>
+	<version>1.0.0</version>
+	<description>AJAX-powered search for Joomla</description>
+	<files>
+		<filename module="mod_ajaxsearch">mod_ajaxsearch.php</filename>
+		<folder>assets</folder>
+		<folder>tmpl</folder>
+		<filename>helper.php</filename>
+	</files>
+	<languages>
+		<language tag="en-GB">en-GB.mod_ajaxsearch.ini</language>
+		<language tag="en-GB">en-GB.mod_ajaxsearch.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="label"
+					type="label"
+					label="MOD_SEARCH_FIELD_LABEL_TEXT_LABEL"
+					description="MOD_SEARCH_FIELD_LABEL_TEXT_DESC" />
+				<field
+					name="width"
+					type="text"
+					label="MOD_AJAXSEARCH_FIELD_BOXWIDTH_LABEL"
+					description="MOD_AJAXSEARCH_FIELD_BOXWIDTH_DESC" />
+				<field
+					name="text"
+					type="text"
+					label="MOD_AJAXSEARCH_FIELD_TEXT_LABEL"
+					description="MOD_AJAXSEARCH_FIELD_TEXT_DESC" />
+				<field
+					name="button"
+					type="radio"
+					default="0"
+					class="btn-group btn-group-yesno"
+					label="MOD_AJAXSEARCH_FIELD_BUTTON_LABEL"
+					description="MOD_AJAXSEARCH_FIELD_BUTTON_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field
+					name="button_text"
+					type="text"
+					label="MOD_AJAXSEARCH_FIELD_BUTTONTEXT_LABEL"
+					description="MOD_AJAXSEARCH_FIELD_BUTTONTEXT_DESC" />
+				<field
+					name="opensearch"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					label="MOD_AJAXSEARCH_FIELD_OPENSEARCH_LABEL"
+					description="MOD_AJAXSEARCH_FIELD_OPENSEARCH_DESC"
+					default="1">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field
+					name="opensearch_title"
+					type="text"
+					label="MOD_AJAXSEARCH_FIELD_OPENSEARCH_TEXT_LABEL"
+					description="MOD_AJAXSEARCH_FIELD_OPENSEARCH_TEXT_DESC" />
+				<field
+					name="max_results"
+					type="text"
+					default="5"
+					label="MOD_AJAXSEARCH_FIELD_MAXRESULTS_LABEL"
+					description="MOD_AJAXSEARCH_FIELD_MAXRESULTS_DESC" />
+				<field
+					name="find_itemid"
+					type="radio"
+					default="0"
+					class="btn-group btn-group-yesno"
+					label="MOD_AJAXSEARCH_FIELD_FINDITEMID_LABEL"
+					description="MOD_AJAXSEARCH_FIELD_FINDITEMID_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+			</fieldset>
+			<fieldset
+				name="advanced">
+				<field
+					name="layout"
+					type="modulelayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+				<field
+					name="moduleclass_sfx"
+					type="textarea" rows="3"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+				<field
+					name="cache"
+					type="list"
+					default="1"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					description="COM_MODULES_FIELD_CACHING_DESC">
+					<option
+						value="1">JGLOBAL_USE_GLOBAL</option>
+					<option
+						value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field
+					name="cache_time"
+					type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+				<field
+					name="cachemode"
+					type="hidden"
+					default="itemid">
+					<option
+						value="itemid"></option>
+				</field>
+				<field
+					name="include_css"
+					type="radio"
+					default="1"
+					class="btn-group btn-group-yesno"
+					label="MOD_AJAXSEARCH_FIELD_INCLUDE_CSS_LABEL"
+					description="MOD_AJAXSEARCH_FIELD_INCLUDE_CSS_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+	<updateservers>
+		<server type="extension" priority="1" name="AJAX Search Update Site">http://www.sakic.net/update/mod_ajaxsearch/extension.xml</server>
+	</updateservers>
+</extension>

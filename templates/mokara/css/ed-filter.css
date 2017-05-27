@@ -1,0 +1,114 @@
+img.cat_img {
+    height: 50px;
+}
+img.cat_img.active, img.cat_img:hover {
+    box-shadow: 0 0 4px 2px #f1ec52;
+}
+span.color-box {
+    display: inline-block;
+    height: 35px;
+    width: 35px;
+    background: none;
+    cursor: pointer;
+	    border: 1px solid;
+}
+span.color-box.active, span.color-box:hover, span.btn.btn-price.active,  span.btn.btn-price:hover, span.btn-label.active, span.btn-label:hover {
+    box-shadow: 0 0 2px 2px #192201;
+	color: #fff;
+}
+span.color-box.color_1 {
+    background: blue;
+}
+span.color-box.color_2 {
+    background: red;
+}
+span.color-box.color_3 {
+    background: violet;
+}
+span.color-box.color_4 {
+    background: yellow;
+}
+span.color-box.color_5 {
+    background: brown;
+}
+span.color-box.color_6 {
+    background: black;
+}
+span.color-box.color_7 {
+    background: white;
+}
+span.color-box.color_8 {
+    background: pink;
+}
+span.color-box.color_9 {
+    background: orange;
+}
+span.color-box.color_10 {
+    background: grey;
+}
+span.color-box.color_11 {
+    background: wheat;
+}
+span.color-box.color_12 {
+    background: url(../images/hoa-van.jpg);
+}
+span.color-box.color_13 {
+    background: blue;
+}
+span.color-box.color_14 {
+    background: blue;
+}
+span.color-box.color_15 {
+    background: blue;
+}
+span.btn.btn-price {
+    background: #000000;
+    color: #fff;
+   
+}
+span.btn-label {
+	color: white;
+}
+span.btn-label.label_1 {
+    background: #a20000;
+}
+span.btn-label.label_2 {
+    background: #5cb85c;
+}
+span.btn-label.label_3 {
+    background: #f0ad4e;
+}
+h3.field-title {
+    margin-top: 0;
+}
+.filer-box {
+    margin: 10px 0;
+}
+span.btn.btn-eddy {
+    border: 1px solid;
+}
+span.btn.btn-eddy.active, span.btn.btn-eddy:hover {
+    background: #000;
+    color: #fff;
+}
+button.remove-selected {
+  
+    padding: 2px 5px;
+}
+.sticky-fillter.affix {
+    width: 259px;
+    top: 20px;
+}
+.filter-module {
+    margin-bottom: 20px;
+}
+#fillter-button {
+	width: 100%;
+}
+span.btn.text-color {
+    color: #fff;
+    width: auto;
+}
+span.btn.color-box.color_4.text-color, span.btn.color-box.color_7.text-color, span.btn.color-box.color_12.text-color, span.btn.color-box.color_11.text-color {
+	color: #000;
+}

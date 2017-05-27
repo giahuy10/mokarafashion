@@ -1,0 +1,26 @@
+Version 1.2.0 | 26-03-2015
+
+added - Search icon in search box
+improved - Various visual styling fixes
+fixed - ---
+
+
+Version 1.1.0 | 26-03-2015
+
+added - Complete responsive design and mobile device support added to Deluxe edition!
+improved - ---
+fixed - ---
+
+
+Version 1.0.2 | 25-03-2015
+
+added - ---
+improved - ---
+fixed - Minor javascript fix solving problem with MooTools conflict on rare occasions.
+
+
+Version 1.0.1 | 17-03-2015
+
+added - Initial Ajax Loader to display first time you input search
+improved - ---
+fixed - ---

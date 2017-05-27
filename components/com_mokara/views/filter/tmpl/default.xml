@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Filter products" option="View">
+        <message>
+                        <![CDATA[COM_MOKARA_TITLE_LIST_VIEW_ORDERS_DESC]]>
+        </message>
+	</layout>
+	<fields name="params">
+
+		<!-- Basic options. -->
+		<fieldset name="basic"
+			label="Option">
+
+		<field
+			name="discount"
+			type="list"
+			label="Discount page"
+		
+		
+			>
+			<option value="1">JSHOW</option>
+			<option value="0">JHIDE</option>
+		</field>
+		</fieldset>
+	</fields>	
+</metadata>

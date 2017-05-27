@@ -1,0 +1,53 @@
+@media (max-width: 767px) {
+	.affix {
+    position: relative;
+}
+.sticky-fillter.affix {
+    width: 100%;
+    top: initial;
+}
+.ed-search, .custombanner-top-right {
+    
+    height: auto;
+    padding-top: 10px;
+}
+#search-box {
+	display: none;
+}
+.ed-navigation .nav-pills > li {
+    float: none;
+}
+.ed-navigation .nav-pills>li>a {
+    font-size: 15px;
+   
+}
+
+}
+@media (min-width: 768px) and (max-width: 990px) {
+	.btn {
+   
+    padding: 3px 5px;
+   
+	}
+	.ed-navigation .nav-pills>li>a {
+    font-size: 14px;
+   
+    padding: 10px;
+}
+.ed-search, .custombanner-top-right {
+   
+    height: 75px;
+}
+.ed-search input[type="search"] {
+  
+    width: 230px;
+   
+}
+}
+@media (min-width: 991px) and (max-width: 1100px) {
+	.ed-navigation .nav-pills>li>a {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #000;
+}
+}

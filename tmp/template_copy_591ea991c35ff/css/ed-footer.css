@@ -1,0 +1,13 @@
+.ed-footer p, .ed-footer li {
+    margin-bottom: 0;
+    font-size: 15px;
+}
+footer#ed-footer {
+    background: #000;
+    color: #fff;
+	margin-top: 40px;
+    padding-bottom: 20px;
+}
+footer#ed-footer a {
+	color: #fff;
+}
