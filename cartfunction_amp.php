@@ -110,7 +110,8 @@ if(!function_exists("ed_number_format")) {
 }
 if(!function_exists("show_product_item")) {
 	function show_product_item ($item) { ?>
-	<div class="ed-inner-product">
+	<div class="ed-inner-product" itemscope itemtype="http://schema.org/Product">
+	<span itemprop="brand" class="hidden">Mokara</span>
 		<?php $item = get_custom_field($item);?>
 		<?php 
 			if ($item->id <646) {
@@ -128,9 +129,14 @@ if(!function_exists("show_product_item")) {
 					  width="300"
 					  height="433"
 					  layout="responsive"
+					  itemprop="image"
 					  alt="<?php echo $item->title?>"></amp-img>
 				
 		</div>
+		<span itemprop="aggregateRating" class="hidden" itemscope itemtype="http://schema.org/AggregateRating">
+					Average rating: <span itemprop="ratingValue">4.4</span>, based on
+					<span itemprop="ratingCount">89</span> reviews
+				  </span>
 		<div class="ed-product-content">
 		<div class="page-header">
 			<h2 itemprop="name">
@@ -138,11 +144,14 @@ if(!function_exists("show_product_item")) {
 			</h2>
 		</div>
 		<?php echo $item->introtext; ?>
-			<div class="ed-price-block">
+			<div class="ed-price-block" itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer">
+			<meta itemprop="priceCurrency" content="VND" />
+			<span itemprop="lowPrice" class="hidden"><?php echo $item->product_price?></span>
 				<div class="price pull-left">
 					<?php echo ed_number_format($item->product_price)?>
 				</div>
 				<?php if ($item->product_old_price) {?>
+					<span itemprop="highPrice" class="hidden"><?php echo $item->product_old_price?></span>
 					<div class="old_price pull-right"><s><?php echo ed_number_format($item->product_old_price)?></s></div>
 				<?php }?>
 				<div class="clearfix"></div>

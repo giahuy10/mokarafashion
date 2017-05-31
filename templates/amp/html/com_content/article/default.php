@@ -26,66 +26,65 @@ JHtml::_('behavior.caption');
 
 ?>
 
-<div class="item-page<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
-	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? JFactory::getConfig()->get('language') : $this->item->language; ?>" />
-	<?php if ($this->params->get('show_page_heading')) : ?>
-	<div class="page-header">
-		<h1> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1>
-	</div>
-	<?php endif;
 
 
-	?>
-
-
-
-
-
-
-
-
-
-	<?php if ($params->get('access-view')) : ?>
-
-	
-
-	
+	<?php if ($params->get('access-view')) : ?>	
 	<?php if ($this->item->jcfields) { // Product layout?>
-	<?php 
-	include ("./cartfunction.php");
-$this->item = get_custom_field($this->item);
+	<?php
+	
+	
+	include ("./cartfunction.php"); 
+	$this->item = get_custom_field($this->item);
+
+	$description = 'Thời trang công sở cao cấp Mokara - '.get_categories($this->item->catid)[0]->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | Giá: '.ed_number_format($this->item->product_price);
+	$title = get_categories($this->item->catid)[0]->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | '.ed_number_format($this->item->product_price);
+	
 	?>
+	
+		<div itemscope itemtype="http://schema.org/Product">
+		 <span itemprop="brand" class="hidden">Mokara</span>
 		<div class="row">
-			<div class="col-xs-12 col-sm-6 ed-media-block">
+			<div class="col-xs-12 col-sm-6 col-md-6 ed-media-block">
 				<?php 
-					if ($this->item->id <610) {
+					$code = $this->item->sku;
+					if ($this->item->id <646) {
 						$pro_image = get_product_image_2($this->item->id);
 						
-						$this->item->sku = "img_products";
+						$this->item->sku = "img_products/";
+						$full ="full_";
 					}else {
 						$pro_image = get_product_image($this->item->sku);
-						
+						$this->item->sku .="/";
+						$full = "";
 					}
 					?>
+					
 				<div class="row">
-					<div class="col-xs-12 col-sm-2">
+					<div class="col-xs-12 col-sm-2 thumb-list">
 						<?php for ($i = 0; $i< count($pro_image); $i++) {?>
 							<div class="thumb_img">
 								
-								<img  class="" src="images/san-pham/<?php echo $this->item->sku."/".$pro_image[$i]?>" alt="<?php echo $this->item->title?>"/>
+								<img  class="" src="images/san-pham/<?php echo $this->item->sku.$pro_image[$i]?>" alt="<?php echo $this->item->title?>"/>
 							</div>
 						<?php }?>
 					</div>
 					<div class="col-xs-12 col-sm-10" id="main_image">
-						<img class="main-img" src="images/san-pham/<?php echo $this->item->sku."/".$pro_image[0]?>" alt="<?php echo $this->item->title?>"/>
+						<img itemprop="image" class="main-img" src="images/san-pham/<?php echo $this->item->sku.$full.$pro_image[0]?>" alt="<?php echo $this->item->title?>"/>
+						<br/><br/>
+						<div class="fb-like" data-href="<?php echo JUri::getInstance();?>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+						<div class="fb-save" data-uri="<?php echo JUri::getInstance();?>"></div>
+						<div class="fb-send" data-href="<?php echo JUri::getInstance();?>"></div>
 					</div>
 					
 				</div>
-			
+				
 				<script>
 					jQuery(function($) {
 						$('.thumb_img').click(function(){
 							var imgelem = $(this).find('img').attr('src');
+							<?php if ($this->item->id <646) {?>
+							imgelem = imgelem.replace("<?php echo $this->item->sku?>", "<?php echo $this->item->sku?>/full_");
+							<?php }?>
 							$('#main_image').html('<img src="'+imgelem+'"/>' );
 
 						});
@@ -94,80 +93,120 @@ $this->item = get_custom_field($this->item);
 				</script>
 				
 			</div>
-			<div class="col-xs-12 col-sm-6 ed-shopping-block">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ed-shopping-block">
 					
 	
-			<h2 itemprop="headline" class="product-title-detail">
-				Sản phẩm: <?php echo $this->escape($this->item->title); ?>
-			</h2>
-			<strong>Danh mục: </strong><img class="cat_img" src="/images/category-icon/<?php echo get_categories($this->item->catid)[0]->alias?>.png"> <a href="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528&cat_id='.$this->item->catid)?>"><?php echo get_categories($this->item->catid)[0]->title?></a>
-			<?php foreach ($this->item->jcfields as $field) : ?>
-				<?php if ($field->id > 7 && $field->id != 14) {?>
-				<div class="product-custom-field"><strong><?php echo $field->label . ': </strong>' . $field->value; ?></div>
-				<?php }?>
-			<?php endforeach ?>
+				<h2 class="product-title-detail">
+					Sản phẩm: <span itemprop="name"><?php echo $this->escape($this->item->title); ?></span> (<span itemprop="mpn"><?php echo $code?></span>)
+				</h2>
+				 <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="hidden">
+				<span itemprop="ratingValue">4.4</span> trên <span itemprop="reviewCount">89
+				  </span> đánh giá
+				</span>
+				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528&cat_id='.$this->item->catid)?>"><?php echo get_categories($this->item->catid)[0]->title?></a>
+				<?php foreach ($this->item->jcfields as $field) : ?>
+					<?php if ($field->id > 7 && $field->id != 14) {?>
+					<?php $description .= ' | '.$field->label.': '.$field->value;?>
+					<div class="product-custom-field"><strong><?php echo $field->label . ': </strong>' . $field->value; ?></div>
+					<?php }?>
+				<?php endforeach ?>
 			
+				
+				
 			
-			
-		
-
-				<?php if ($this->item->product_old_price) {?>
-					<div class="old_price"><strong><?php echo JText::_('COM_CONTENT_OLD_PRICE'); ?>: </strong><s><?php echo ed_number_format($this->item->product_old_price)?></s></div>
-				<?php }?>
-				<div class="price">
-					<strong><?php if ($this->item->product_old_price) {
-						echo JText::_('COM_CONTENT_SALE_PRICE');
-					}
-						else {
-						echo JText::_('COM_CONTENT_PRICE');
+				<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+				<meta itemprop="priceCurrency" content="VND" />
+					<?php if ($this->item->product_old_price) {?>
+						<div class="old_price"><strong><?php echo JText::_('COM_CONTENT_OLD_PRICE'); ?>: </strong><s><?php echo ed_number_format($this->item->product_old_price)?></s></div>
+					<?php }?>
+					<div class="price">
+						<strong><?php if ($this->item->product_old_price) {
+							echo JText::_('COM_CONTENT_SALE_PRICE');
 						}
-					?>: </strong> 
-					<span class="detail_price"><?php echo ed_number_format($this->item->product_price)?></span>
-				</div>
-				<form action="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502')?>" method="post" class="buy-section">
-				<div class="stock">
-					<strong>Trạng thái:</strong> <?php if ($this->item->product_status == 1) echo "Còn hàng"; else echo "Hết hàng"?>
-				</div>
-				<div class="size">
+							else {
+							echo JText::_('COM_CONTENT_PRICE');
+							}
+						?>: </strong> 
+						<span class="detail_price"><?php echo ed_number_format($this->item->product_price)?></span>
+					</div>
+					<span itemprop="seller" itemscope itemtype="http://schema.org/Organization" class="hidden">
+                      <span itemprop="name">Mokara</span>
+					 </span> 
+					  <link itemprop="itemCondition" href="http://schema.org/New"/>
+					  <div class="stock">
+						<strong>Trạng thái:</strong> <?php if ($this->item->product_status == 1) echo "Còn hàng"; else echo "Hết hàng"?>
+						<link itemprop="availability" href="http://schema.org/<?php if ($this->item->product_status == 1) echo "InStock"; else echo "OutOfStock"?>"/>
+					</div>
+				</div>	
+					<form action="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502')?>" method="post" class="buy-section">
 				
-				<strong>Vui lòng chọn: </strong>
-				
-				<select name="size" required>
-					<option value="">Size</option>
-					<option value="S">S</option>
-					<option value="M">M</option>
-					<option value="L">L</option>
-					<option value="XL">XL</option>
-				</select>
-				</div>
-				<strong>Số lượng:</strong> <input type="number" min="1" name="quantity" value="1" />
-					<button type="submit" name="submit" class="btn btn-buy"><i class="fa fa-shopping-cart"></i> <?php echo JText::_('COM_CONTENT_ADD_TO_CART')?></button>
-					<input type="hidden" name="product_id" value="<?php echo $this->item->id?>"/>
-					<input type="hidden" name="option" value="com_mokara"/>
-					<input type="hidden" name="view" value="orders"/>
-					<input type="hidden" name="task" value="add2cart"/>
-					<input type="hidden" name="Itemid" value="502"/>
-					<input type="hidden" name="product_name" value="<?php echo $this->item->title?>"/>
-					<input type="hidden" name="product_img" value="<?php echo "images/san-pham/".$img_link?>"/>
-					<input type="hidden" name="product_price" value="<?php echo $this->item->product_price?>"/>
-					<input type="hidden" name="product_old_price" value="<?php echo $this->item->product_old_price?>"/>
-					<input type="hidden" name="product_category_id" value="<?php echo $this->item->catid?>"/>
-				</form>
-				<div class="support">
-				<a href="" class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i> Xem bảng size</a> 
-			<a href="" class="btn btn-success"><i class="fa fa-phone" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 	
+					<div class="size">
 					
-				</div>
+					<strong>Vui lòng chọn: </strong>
+					
+					<select name="size" required>
+						<option value="">Size</option>
+						<option value="S">S</option>
+						<option value="M">M</option>
+						<option value="L">L</option>
+						<option value="XL">XL</option>
+					</select>
+					</div>
+					<strong>Số lượng:</strong> <input type="number" min="1" name="quantity" value="1" />
+						<button type="submit" name="submit" class="btn btn-buy"><i class="fa fa-shopping-cart"></i> <?php echo JText::_('COM_CONTENT_ADD_TO_CART')?></button>
+						<input type="hidden" name="product_id" value="<?php echo $this->item->id?>"/>
+						<input type="hidden" name="option" value="com_mokara"/>
+						<input type="hidden" name="view" value="orders"/>
+						<input type="hidden" name="task" value="add2cart"/>
+						<input type="hidden" name="Itemid" value="502"/>
+						<input type="hidden" name="product_name" value="<?php echo $this->item->title?>"/>
+						<input type="hidden" name="product_img" value="<?php echo "images/san-pham/".$this->item->sku.$full.$pro_image[0]?>"/>
+						<input type="hidden" name="product_price" value="<?php echo $this->item->product_price?>"/>
+						<input type="hidden" name="product_old_price" value="<?php echo $this->item->product_old_price?>"/>
+						<input type="hidden" name="product_category_id" value="<?php echo $this->item->catid?>"/>
+					</form>
+					<div class="support">
+						<a href="" class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i> Xem bảng size</a> 
+						<a href="" class="btn btn-success"><i class="fa fa-phone" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 	
+						
+					</div>
+			</div><!--END ART TO CART SECTION-->
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 ed-loyalty-block hidden">
+				<div class="ed-loyalty-inner">
+				<img src="http://www.shotmechanics.com/wp-content/uploads/2014/05/Special-Offer-Banner.png" alt="Ưu đãi đặc biệt" class="special-banner hidden-xs">
+				<h3 class="text-center">Ưu đãi đặc biệt</h3>
+					<ul class="special-list">
+					<li>Tặng ngay <span>50.000<sup>đ</sup></span> vào tài khoản. <a href="">Xem chi tiết!</a></li>
+					<li>Nhận ngay <span>2</span> mã số dự thưởng may mắn. <a href="">Xem chi tiết!</a> </li>
+					<li class="margin-top-10">Giao hàng tận nơi miễn phí trên toàn quốc. <a href="">Xem chi tiết!</a> </li>
+					<li class="margin-top-10">1 đổi 1 trong 1 tháng với sản phẩm lỗi. <a href="">Xem chi tiết!</a></li>
+					</ul>
+					</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-12 ed-description-block">
+			<div class="col-xs-12 ed-description-block"  itemprop="description">
+				
+				<?php echo $this->item->text; ?>
+				<div class="fb-comments" data-href="<?php echo JUri::getInstance();?>" data-numposts="5"></div>
 			</div>
 		</div>
+		</div>
 	<?php }	else { //News layout?>
+		<div class="item-page<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
+		<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? JFactory::getConfig()->get('language') : $this->item->language; ?>" />
+		<?php if ($this->params->get('show_page_heading')) : ?>
+		<div class="page-header">
+			<h1> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1>
+		</div>
+		<?php endif;?>
+			<h2 itemprop="headline" >
+					<?php echo $this->escape($this->item->title); ?>
+				</h2>	
 		<div itemprop="articleBody">
-		<?php echo $this->item->text; ?>
-	</div>
+			<?php echo $this->item->text; ?>
+		</div>
+		</div>
 	<?php }?>
 	
 
@@ -181,4 +220,18 @@ $this->item = get_custom_field($this->item);
 
 	<?php // Content is generated by content plugin event "onContentAfterDisplay" ?>
 	<?php echo $this->item->event->afterDisplayContent; ?>
-</div>
+<?php 
+				$doc = JFactory::getDocument();
+				$doc->setDescription(strip_tags($description));
+				$doc->setTitle(strip_tags($title));
+				$doc->addCustomTag( '
+				<meta property="og:title" content="'.strip_tags($title).'"/>
+				<meta property="og:type" content="product"/>
+				<meta property="og:email" content="info@mokara.com.vn"/>
+				<meta property="og:url" content="'.JURI::current().'"/>
+				<meta property="og:image" content="'.JURI::base().'images/san-pham/'.$this->item->sku.$full.$pro_image[0].'"/>
+				<meta property="og:site_name" content="Thời trang công sở cao cấp Mokara"/>
+				<meta property="fb:admins" content="Eddy Nguyen"/>
+				<meta property="og:description" content="'.strip_tags($description).'"/>
+				');
+				?>
