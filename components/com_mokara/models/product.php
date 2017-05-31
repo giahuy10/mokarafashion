@@ -229,10 +229,12 @@ class MokaraModelProduct extends JModelList
 			$html .= $item->introtext; 
 			$html .='<div class="ed-price-block" itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer">';
 			$html .= ' <meta itemprop="priceCurrency" content="VND" />';
+			$html .= '<span itemprop="lowPrice" class="hidden">'.$item->product_price.'</span>';
 			$html .='<div class="price pull-left">';
 			$html .=$this->ed_number_format($item->product_price);
 			$html .='</div>';
 			if ($item->product_old_price) {
+					$html .= '<span itemprop="highPrice" class="hidden">'.$item->product_old_price.'</span>';
 					$html .='<div class="old_price pull-right"><s>'.$this->ed_number_format($item->product_old_price).'</s></div>';
 				 }
 			$html .='<div class="clearfix"></div>';
