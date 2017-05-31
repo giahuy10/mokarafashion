@@ -104,7 +104,7 @@ if(!function_exists("get_product_image_2")) {
 }
 if(!function_exists("ed_number_format")) {
 	function ed_number_format ($money){
-		$money = '<span  itemprop="price">'.number_format($money).'</span><sup>đ</sup>';
+		$money = '<span  itemprop="price">'.number_format($money,0,",",".").'</span><sup>đ</sup>';
 		return $money;
 	}
 }
