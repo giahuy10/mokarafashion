@@ -82,7 +82,7 @@ JHtml::_('behavior.caption');
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-5 ed-shopping-block">
 					
 	
-				<h2 itemprop="headline" class="product-title-detail">
+				<h2 class="product-title-detail">
 					Sản phẩm: <span itemprop="name"><?php echo $this->escape($this->item->title); ?></span> (<span itemprop="mpn"><?php echo $this->item->sku?></span>)
 				</h2>
 				 <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
@@ -112,10 +112,11 @@ JHtml::_('behavior.caption');
 							echo JText::_('COM_CONTENT_PRICE');
 							}
 						?>: </strong> 
-						<span class="detail_price" itemprop="price"><?php echo ed_number_format($this->item->product_price)?></span>
+						<span class="detail_price"><?php echo ed_number_format($this->item->product_price)?></span>
 					</div>
 					<span itemprop="seller" itemscope itemtype="http://schema.org/Organization">
                       <span itemprop="name">Mokara</span>
+					 </span> 
 					  <link itemprop="itemCondition" href="http://schema.org/New"/>
 					  <div class="stock">
 						<strong>Trạng thái:</strong> <?php if ($this->item->product_status == 1) echo "Còn hàng"; else echo "Hết hàng"?>
@@ -169,7 +170,7 @@ JHtml::_('behavior.caption');
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-12 ed-description-block"  itemprop="description">>
+			<div class="col-xs-12 ed-description-block"  itemprop="description">
 				
 				<?php echo $this->item->text; ?>
 			</div>
@@ -183,7 +184,9 @@ JHtml::_('behavior.caption');
 			<h1> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1>
 		</div>
 		<?php endif;?>
-			
+			<h2 itemprop="headline" >
+					<?php echo $this->escape($this->item->title); ?>
+				</h2>	
 		<div itemprop="articleBody">
 			<?php echo $this->item->text; ?>
 		</div>
