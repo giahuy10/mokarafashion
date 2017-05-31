@@ -13,86 +13,17 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
-include ("./cartfunction.php");
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_content/models', 'MokaraModel');
+$productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
+
 JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_content/models', 'ContentModel');
-$model = JModelLegacy::getInstance('Article', 'ContentModel', array('ignore_request' => true));
+$articleMod = JModelLegacy::getInstance('Article', 'ContentModel', array('ignore_request' => true));
 $appParams = JFactory::getApplication()->getParams();
-$model->setState('params', $appParams);
+$articleMod->setState('params', $appParams);
 $user       = JFactory::getUser();
 $userId     = $user->get('id');
-// Get a db connection.
 $cat_id = JRequest::getVar('cat_id');
-
-$db = JFactory::getDbo();
- 
-// Create a new query object.
-$query = $db->getQuery(true);
- 
-// Select all records from the user profile table where key begins with "custom.".
-// Order it by the ordering field.
-$query->select($db->quoteName(array('id', 'title', 'type', 'ordering','fieldparams')));
-$query->from($db->quoteName('#__fields'));
-if ($cat_id > 0) {
-	$query->join('INNER', $db->quoteName('#__fields_categories') . ' ON (' . $db->quoteName('id') . ' = ' . $db->quoteName('field_id') . ')');
-	$query->where($db->quoteName('category_id') . ' = '. $db->quote($cat_id));
-}else {
-	$query->join('INNER', $db->quoteName('#__fields_categories') . ' ON (' . $db->quoteName('id') . ' = ' . $db->quoteName('field_id') . ')');
-	$query->where($db->quoteName('category_id') . ' = '. $db->quote(20));
-}
-$query->where($db->quoteName('group_id') . ' = '. $db->quote('1'));
-$query->where($db->quoteName('required') . ' = '. $db->quote('1'));
-$query->where($db->quoteName('state') . ' = '. $db->quote('1'));
-$query->where($db->quoteName('context') . ' = '. $db->quote('com_content.article'));
-$query->order('ordering ASC');
- 
-// Reset the query using our newly populated query object.
-$db->setQuery($query);
- 
-// Load the results as a list of stdClass objects (see later for more options on retrieving data).
-$fieds = $db->loadObjectList();
-/*echo "<pre>";
-var_dump($results);
-echo "</pre>";*/
-// Create a new query object.
-
-function get_items ($field_id = NULL, $value_id = NULL, $cat_id = NULL, $page = NULL) {
-		$start = 0;
-		$num = 20;
-		if ($page) {
-			$start = ($page-1)*$num;
-		}
-		
-		
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		
-	// Select all records from the user profile table where key begins with "custom.".
-	// Order it by the ordering field.
-		$query->select('DISTINCT item_id');
-		$query->from($db->quoteName('#__fields_values','a'));
-		$query->join('INNER', $db->quoteName('#__content','b') . ' ON (' . $db->quoteName('a.item_id') . ' = ' . $db->quoteName('b.id') . ')');
-		if ($cat_id) {
-			$query->where($db->quoteName('catid') . ' = '. $db->quote($cat_id));
-		}
-		if ($field_id && $value_id) {
-			$query->where($db->quoteName('field_id') . ' = '. $db->quote($field_id). ' and '.$db->quoteName('value') . ' = '. $db->quote($value_id));
-		}
-		$query->where($db->quoteName('state') . ' = '. $db->quote('1'));
-		//echo $query;	
-		//$query->order('ordering ASC');
-		$query->order('b.created DESC');
-		if ($page) {
-			$start = ($page-1)*$num;
-			$db->setQuery($query,$start,$num);
-		}
-		$db->setQuery($query,$start);
-		$items = $db->loadColumn();
-		return($items);
-}
-
-
-
-// Reset the query using our newly populated query object.
+$fieds = $productMod->get_fields($cat_id);
 $filters = array();
 
 $selected = array();
@@ -124,11 +55,11 @@ jQuery(function($) {
 <form id="myForm" action="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528')?>">
 	<h3 class="field-title">Danh mục</h3>
 	<div class="filer-box">
-	<?php $cats = get_categories();
+	<?php $cats = $productMod->get_categories();
 
 		foreach ($cats as $cat) { ?>
 
-			<label for="cat_<?php echo $cat->id?>"><img class="cat_img <?php if ($cat_id == $cat->id) echo "active";?>" src="images/category-icon/<?php echo $cat->alias?>.png"/></label>
+			<label for="cat_<?php echo $cat->id?>"><img title="<?php echo $cat->title?>" class="cat_img <?php if ($cat_id == $cat->id) echo "active";?>" src="images/category-icon/<?php echo $cat->alias?>.png"/></label>
 			
 				<input class="hidden" type="radio" name="cat_id" value="<?php echo $cat->id?>" id="cat_<?php echo $cat->id?>" <?php if ($cat_id == $cat->id) echo "checked";?> onchange="this.form.submit()"/>
 		<?php }
@@ -148,8 +79,8 @@ jQuery(function($) {
 		<?php  
 			if ($value > 0) {
 				$selected[$field->id]['check'] = 1; 
-				$n = $n+count(get_items($field->id, $value, $cat_id));
-				$filters[]=get_items($field->id, $value, $cat_id, $page);
+				$n = $n+count($productMod->get_items($field->id, $value, $cat_id));
+				$filters[]=$productMod->get_items($field->id, $value, $cat_id, $page);
 				$selected[$field->id]['value'] = $value;
 		
 			}
@@ -201,8 +132,8 @@ jQuery(function($) {
 			$n = count($items);
 		}else {
 		
-			$items = get_items(0, 0, $cat_id, $page);
-			$n = count(get_items(0, 0, $cat_id));
+			$items = $productMod->get_items(0, 0, $cat_id, $page);
+			$n = count($productMod->get_items(0, 0, $cat_id));
 		}
 		
 		
@@ -259,7 +190,7 @@ jQuery(function($) {
 			}
 			?>	
 		<?php if ($cat_id) {
-				echo " trong danh mục ".get_categories($cat_id)[0]->title;
+				echo " trong danh mục ".$productMod->get_categories($cat_id)[0]->title;
 			}
 		?>
 		<?php
@@ -287,9 +218,9 @@ jQuery(function($) {
 							<?php 
 								
 								
-								$content = $model->getItem($item);
+								$content = $articleMod->getItem($item);
 								
-								show_product_item($content);
+								$productMod->show_product_item($content);
 							?>
 							
 						</div>

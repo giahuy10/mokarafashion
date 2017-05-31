@@ -26,35 +26,14 @@ JHtml::_('behavior.caption');
 
 ?>
 
-<div class="item-page<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
-	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? JFactory::getConfig()->get('language') : $this->item->language; ?>" />
-	<?php if ($this->params->get('show_page_heading')) : ?>
-	<div class="page-header">
-		<h1> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1>
-	</div>
-	<?php endif;
 
-
-	?>
-
-
-
-
-
-
-
-
-
-	<?php if ($params->get('access-view')) : ?>
-
-	
-
-	
+	<?php if ($params->get('access-view')) : ?>	
 	<?php if ($this->item->jcfields) { // Product layout?>
-	<?php 
-	include ("./cartfunction.php");
-$this->item = get_custom_field($this->item);
-	?>
+	<?php include ("./cartfunction.php"); $this->item = get_custom_field($this->item);?>
+	
+		<div itemscope itemtype="http://schema.org/Product">
+		 <span itemprop="brand">Mokara</span>
+	
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-4 ed-media-block">
 				<?php 
@@ -79,7 +58,8 @@ $this->item = get_custom_field($this->item);
 						<?php }?>
 					</div>
 					<div class="col-xs-12 col-sm-10" id="main_image">
-						<img class="main-img" src="images/san-pham/<?php echo $this->item->sku.$full.$pro_image[0]?>" alt="<?php echo $this->item->title?>"/>
+						<img itemprop="image" class="main-img" src="images/san-pham/<?php echo $this->item->sku.$full.$pro_image[0]?>" alt="<?php echo $this->item->title?>"/>
+						<br/><br/><div class="fb-like" data-href="<?php echo JUri::getInstance();?>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
 					</div>
 					
 				</div>
@@ -103,9 +83,13 @@ $this->item = get_custom_field($this->item);
 					
 	
 				<h2 itemprop="headline" class="product-title-detail">
-					Sản phẩm: <?php echo $this->escape($this->item->title); ?>
+					Sản phẩm: <span itemprop="name"><?php echo $this->escape($this->item->title); ?></span> (<span itemprop="mpn"><?php echo $this->item->sku?></span>)
 				</h2>
-				<strong>Danh mục: </strong><img class="cat_img" src="/images/category-icon/<?php echo get_categories($this->item->catid)[0]->alias?>.png"> <a href="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528&cat_id='.$this->item->catid)?>"><?php echo get_categories($this->item->catid)[0]->title?></a>
+				 <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+				<span itemprop="ratingValue">4.4</span> trên <span itemprop="reviewCount">89
+				  </span> đánh giá
+			  </span>
+				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528&cat_id='.$this->item->catid)?>"><?php echo get_categories($this->item->catid)[0]->title?></a>
 				<?php foreach ($this->item->jcfields as $field) : ?>
 					<?php if ($field->id > 7 && $field->id != 14) {?>
 					<div class="product-custom-field"><strong><?php echo $field->label . ': </strong>' . $field->value; ?></div>
@@ -115,7 +99,8 @@ $this->item = get_custom_field($this->item);
 				
 				
 			
-
+				<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+				<meta itemprop="priceCurrency" content="VND" />
 					<?php if ($this->item->product_old_price) {?>
 						<div class="old_price"><strong><?php echo JText::_('COM_CONTENT_OLD_PRICE'); ?>: </strong><s><?php echo ed_number_format($this->item->product_old_price)?></s></div>
 					<?php }?>
@@ -127,12 +112,18 @@ $this->item = get_custom_field($this->item);
 							echo JText::_('COM_CONTENT_PRICE');
 							}
 						?>: </strong> 
-						<span class="detail_price"><?php echo ed_number_format($this->item->product_price)?></span>
+						<span class="detail_price" itemprop="price"><?php echo ed_number_format($this->item->product_price)?></span>
 					</div>
-					<form action="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502')?>" method="post" class="buy-section">
-					<div class="stock">
+					<span itemprop="seller" itemscope itemtype="http://schema.org/Organization">
+                      <span itemprop="name">Mokara</span>
+					  <link itemprop="itemCondition" href="http://schema.org/New"/>
+					  <div class="stock">
 						<strong>Trạng thái:</strong> <?php if ($this->item->product_status == 1) echo "Còn hàng"; else echo "Hết hàng"?>
+						<link itemprop="availability" href="http://schema.org/<?php if ($this->item->product_status == 1) echo "InStock"; else echo "OutOfStock"?>"/>
 					</div>
+				</div>	
+					<form action="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502')?>" method="post" class="buy-section">
+				
 					<div class="size">
 					
 					<strong>Vui lòng chọn: </strong>
@@ -178,14 +169,24 @@ $this->item = get_custom_field($this->item);
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-12 ed-description-block">
+			<div class="col-xs-12 ed-description-block"  itemprop="description">>
+				
 				<?php echo $this->item->text; ?>
 			</div>
 		</div>
-		
+		</div>
 	<?php }	else { //News layout?>
+		<div class="item-page<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
+		<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? JFactory::getConfig()->get('language') : $this->item->language; ?>" />
+		<?php if ($this->params->get('show_page_heading')) : ?>
+		<div class="page-header">
+			<h1> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1>
+		</div>
+		<?php endif;?>
+			
 		<div itemprop="articleBody">
 			<?php echo $this->item->text; ?>
+		</div>
 		</div>
 	<?php }?>
 	
@@ -200,4 +201,4 @@ $this->item = get_custom_field($this->item);
 
 	<?php // Content is generated by content plugin event "onContentAfterDisplay" ?>
 	<?php echo $this->item->event->afterDisplayContent; ?>
-</div>
+
