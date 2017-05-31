@@ -30,20 +30,44 @@ $sitename = $app->get('sitename');
 
 
 
+$doc = JFactory::getDocument();
+unset($doc->base);
+$dontInclude = array(
+'/media/jui/js/jquery.min.js',
+'/media/system/js/caption.js',
+'/media/system/js/html5fallback.js',
+'/media/jui/js/jquery-migrate.min.js',
+'/media/jui/js/jquery-noconflict.js',
+'/media/system/js/core-uncompressed.js',
+'/media/system/js/tabs-state.js',
+'/media/system/js/core.js',
+'/media/system/js/mootools-core.js',
+'/media/jui/js/bootstrap.min.js',
+'/media/system/js/multiselect.js',
+'/media/jui/js/chosen.jquery.min.js'
+);
 
-	
+foreach($doc->_scripts as $key => $script){
+    if(in_array($key, $dontInclude)){
+        unset($doc->_scripts[$key]);
+    }
+}
+unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);	
 ?>
 <!DOCTYPE html>
 
 <html amp>
 <head>
-	<meta charset="utf-8">
+	
+		<jdoc:include type="head" />
 	<meta name="viewport" content="width=device-width,minimum-scale=1">
 	<script async src="https://cdn.ampproject.org/v0.js"></script>
 	<script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
 	<script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
 	<script async custom-element="amp-image-lightbox" src="https://cdn.ampproject.org/v0/amp-image-lightbox-0.1.js"></script>
+	
 	<link rel="canonical" href="<?php echo JUri::current();?>">
+	
 	
 	<style amp-custom>
 	

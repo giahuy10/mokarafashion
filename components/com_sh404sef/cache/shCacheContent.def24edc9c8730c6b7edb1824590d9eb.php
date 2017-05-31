@@ -106,3 +106,6 @@ $this->_urlCache['1ff512edb4169595ffa845d42538e6cf']='index.php?option=com_conte
 $shURLCacheCreationDate=1496244283;
 $this->_urlCache['f0863e14b90e27f64cf1eec9822f5779']='index.php?option=com_content&amp;Itemid=447&amp;catid=24&amp;id=626&amp;lang=vi&amp;view=article#mang-to/mt1504#0';
 $shURLCacheCreationDate=1496244336;
+$this->_urlCache['2708df64a3a1a016f74886ff2b81353f']='index.php?option=com_content&amp;Itemid=447&amp;id=522&amp;lang=vi&amp;view=article#dam/dk1510#0';
+$this->_urlCache['4351762abfd357c3b46d77e81c16517b']='index.php?option=com_content&amp;Itemid=447&amp;id=483&amp;lang=vi&amp;view=article#dam/dk1517#0';
+$shURLCacheCreationDate=1496246438;
