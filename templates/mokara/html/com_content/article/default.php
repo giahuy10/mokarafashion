@@ -114,7 +114,7 @@ JHtml::_('behavior.caption');
 						?>: </strong> 
 						<span class="detail_price"><?php echo ed_number_format($this->item->product_price)?></span>
 					</div>
-					<span itemprop="seller" itemscope itemtype="http://schema.org/Organization">
+					<span itemprop="seller" itemscope itemtype="http://schema.org/Organization" class="hidden">
                       <span itemprop="name">Mokara</span>
 					 </span> 
 					  <link itemprop="itemCondition" href="http://schema.org/New"/>
