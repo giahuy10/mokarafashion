@@ -251,7 +251,73 @@ class MokaraModelProduct extends JModelList
 				$html .='	<input type="hidden" name="Itemid" value="502"/>';
 				$html .='	<input type="hidden" name="product_name" value="'.$item->title.'"/>';
 				$html .='	<input type="hidden" name="product_price" value="'.$item->product_price.'"/>';
-				$html .='	<input type="hidden" name="product_img" value="images/san-pham/"'.$img_link.'"/>';
+				$html .='	<input type="hidden" name="product_img" value="images/san-pham/'.$img_link.'"/>';
+				$html .='	<input type="hidden" name="product_old_price" value="'.$item->product_old_price.'"/>';
+				$html .='	<input type="hidden" name="product_category_id" value="'.$item->catid.'>"/>';
+				$html .='</form>';
+				$html .='<a class="btn pull-right add2cart-btn" href="'.$link.'">';
+				$html .= JText::_('COM_CONTENT_VIEW');
+				$html .='</a>';
+				$html .='<div class="clearfix"></div>';
+		$html .='</div>';
+	$html .='</div>	';
+	echo $html;
+ }
+ public function show_product_item_amp ($item) { 
+	$html ='<div class="ed-inner-product" itemscope itemtype="http://schema.org/Product">';
+	$html .= '<span itemprop="brand" class="hidden">Mokara</span>';
+	$item = $this->get_custom_field($item);
+	
+			if ($item->id <646) {
+				$pro_image = $this->get_product_image_2($item->id);
+				$img_link = "img_products/".$pro_image[0];
+			}else {
+				$pro_image = $this->get_product_image($item->sku);
+				$img_link = $item->sku."/".$pro_image[0];
+			}
+			$link = JRoute::_('index.php?option=com_content&view=article&Itemid=447&id='.$item->id);
+			$html .='<div class="ed-item-img">';
+			$html .='	<a href="'.$link.'"><amp-img src="images/san-pham/'.$img_link.'"
+					  width="300"
+					  height="433"
+					  layout="responsive"
+					  itemprop="image"
+					  alt="'.$item->title.'"></amp-img></a>';
+			$html .='</div>';
+			$html .='<div class="ed-product-content">';
+			$html .='<div class="page-header">';
+			$html .='<h2 itemprop="name">';
+			$html .='<a href="'.$link.' ?>" itemprop="url">'.$item->title.'</a>';
+			$html .='</h2>';
+			$html .='</div>';
+			$html .='<span itemprop="aggregateRating" class="hidden" itemscope itemtype="http://schema.org/AggregateRating">
+					Average rating: <span itemprop="ratingValue">4.4</span>, based on
+					<span itemprop="ratingCount">89</span> reviews
+				  </span>';
+			$html .= $item->introtext; 
+			$html .='<div class="ed-price-block" itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer">';
+			$html .= ' <meta itemprop="priceCurrency" content="VND" />';
+			$html .= '<span itemprop="lowPrice" class="hidden">'.$item->product_price.'</span>';
+			$html .='<div class="price pull-left">';
+			$html .=$this->ed_number_format($item->product_price);
+			$html .='</div>';
+			if ($item->product_old_price) {
+					$html .= '<span itemprop="highPrice" class="hidden">'.$item->product_old_price.'</span>';
+					$html .='<div class="old_price pull-right"><s>'.$this->ed_number_format($item->product_old_price).'</s></div>';
+				 }
+			$html .='<div class="clearfix"></div>';
+			$html .='</div>';	
+			$html .='<form action-xhr="/'.JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502').'" method="post" class="pull-left" target="_top">';
+			$html .='<input type="hidden" min="1" name="quantity" value="1" />';
+			$html .='<button type="submit" name="submit" class="btn btn-buy"><i class="fa fa-shopping-cart"></i> '.JText::_('COM_CONTENT_ADD_TO_CART').'</button>';
+				$html .='	<input type="hidden" name="product_id" value="'.$item->id.'"/>';
+				$html .='	<input type="hidden" name="option" value="com_mokara"/>';
+				$html .='	<input type="hidden" name="view" value="orders"/>';
+				$html .='	<input type="hidden" name="task" value="add2cart"/>';
+				$html .='	<input type="hidden" name="Itemid" value="502"/>';
+				$html .='	<input type="hidden" name="product_name" value="'.$item->title.'"/>';
+				$html .='	<input type="hidden" name="product_price" value="'.$item->product_price.'"/>';
+				$html .='	<input type="hidden" name="product_img" value="images/san-pham/'.$img_link.'"/>';
 				$html .='	<input type="hidden" name="product_old_price" value="'.$item->product_old_price.'"/>';
 				$html .='	<input type="hidden" name="product_category_id" value="'.$item->catid.'>"/>';
 				$html .='</form>';

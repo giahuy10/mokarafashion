@@ -42,11 +42,14 @@ $sitename = $app->get('sitename');
 	<script async src="https://cdn.ampproject.org/v0.js"></script>
 	<script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
 	<script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+	<script async custom-element="amp-image-lightbox" src="https://cdn.ampproject.org/v0/amp-image-lightbox-0.1.js"></script>
 	<link rel="canonical" href="<?php echo JUri::current();?>">
 	
 	<style amp-custom>
+	
 	  body {
 		  padding: 0 10px;
+		  font-family: arial;
 	  }
 	  .header-icon {
     text-align: center;
@@ -54,6 +57,104 @@ $sitename = $app->get('sitename');
 a {
     color: #000;
     text-decoration: none;
+}
+amp-sidebar#sidebar {
+    background: #000;
+}
+amp-sidebar#sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+amp-sidebar#sidebar ul li {
+    padding: 5px 40px 5px 20px;
+    background: #000;
+    border-bottom: 1px solid #fff;
+}
+amp-sidebar#sidebar ul li a {
+    color: #fff;
+}
+ul.nav-child.unstyled.small, .hidden {
+    display: none;
+}
+.moduletable.home-module h3 {
+    text-align: center;
+}
+.ed-inner-product {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+  
+}
+.pull-right {
+    float: right;
+}
+.pull-left {
+    float: left;
+}
+.clearfix {
+    clear: both;
+    margin-bottom: 10px;
+}
+h2 {
+    margin: 10px 0 5px;
+}
+.btn {
+   
+    border: 0;
+	display: inline-block;
+    padding: 6px 12px;
+    color: #fff;
+    border-radius: 5px;
+}
+.btn-buy {
+    background: #a20000;
+    color: #fff;
+}
+.add2cart-btn {
+    background: #252525;
+    border-color: #676565;
+    color: #fff;
+}
+footer#ed-footer {
+    background: #000;
+    color: #fff;
+    margin-top: 40px;
+    padding-bottom: 20px;
+    position: relative;
+}
+.moduletable > h3 {
+    margin-top: 30px;
+}
+footer#ed-footer a {
+    color: #fff;
+   
+    padding: 5px 10px;
+}
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.thumb_img {
+    width: 25%;
+    float: left;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.btn-warning {
+    color: #fff;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+.bottom-10 {
+    margin-bottom: 10px;
 }
   </style>
 	<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
@@ -138,7 +239,7 @@ a {
 	<footer class="ed-footer" id="ed-footer">
 		<div class="container">
 			<div class="col-xs-12 col-sm-3">
-				<amp-img src="/images/logo-mokara-black.png"
+				<amp-img src="/images/logo-mokara-white.png"
 					  width="1051"
 					  height="262"
 					  layout="responsive"

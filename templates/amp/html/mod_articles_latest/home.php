@@ -8,7 +8,8 @@
  */
 
 defined('_JEXEC') or die;
-include ("./cartfunction_amp.php");
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_content/models', 'MokaraModel');
+$productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
 ?>
 <div class="ed-mostread <?php echo $moduleclass_sfx; ?> row">
 <?php 
@@ -17,7 +18,7 @@ foreach ($list as $item) : ?>
 	
 	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
 	
-		<?php show_product_item($item)?>
+		<?php $productMod->show_product_item_amp($item)?>
 		
 	</div>
 

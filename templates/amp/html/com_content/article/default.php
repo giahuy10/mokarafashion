@@ -43,7 +43,7 @@ JHtml::_('behavior.caption');
 	
 		<div itemscope itemtype="http://schema.org/Product">
 		 <span itemprop="brand" class="hidden">Mokara</span>
-		<div class="row">
+		<div class="product-detail">
 			<div class="col-xs-12 col-sm-6 col-md-6 ed-media-block">
 				<?php 
 					$code = $this->item->sku;
@@ -59,17 +59,28 @@ JHtml::_('behavior.caption');
 					}
 					?>
 					
-				<div class="row">
+				<div class="row ">
 					<div class="col-xs-12 col-sm-2 thumb-list">
 						<?php for ($i = 0; $i< count($pro_image); $i++) {?>
 							<div class="thumb_img">
+								<amp-img 
+								on="tap:lightbox<?php echo $i?>"
+								  role="button"
+								  tabindex="0"
+									src="images/san-pham/<?php echo $this->item->sku.$pro_image[$i]?>" alt="<?php echo $this->item->title?>"
+								  width="330"
+								  height="433"
+								  layout="responsive"
+								  itemprop="image"
+								  alt="<?php echo $item->title?>"></amp-img>
 								
-								<img  class="" src="images/san-pham/<?php echo $this->item->sku.$pro_image[$i]?>" alt="<?php echo $this->item->title?>"/>
 							</div>
+							<amp-image-lightbox id="lightbox<?php echo $i?>"
+  layout="nodisplay"></amp-image-lightbox>
 						<?php }?>
 					</div>
 					<div class="col-xs-12 col-sm-10" id="main_image">
-						<img itemprop="image" class="main-img" src="images/san-pham/<?php echo $this->item->sku.$full.$pro_image[0]?>" alt="<?php echo $this->item->title?>"/>
+		
 						<br/><br/>
 						<div class="fb-like" data-href="<?php echo JUri::getInstance();?>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
 						<div class="fb-save" data-uri="<?php echo JUri::getInstance();?>"></div>
@@ -78,21 +89,10 @@ JHtml::_('behavior.caption');
 					
 				</div>
 				
-				<script>
-					jQuery(function($) {
-						$('.thumb_img').click(function(){
-							var imgelem = $(this).find('img').attr('src');
-							<?php if ($this->item->id <646) {?>
-							imgelem = imgelem.replace("<?php echo $this->item->sku?>", "<?php echo $this->item->sku?>/full_");
-							<?php }?>
-							$('#main_image').html('<img src="'+imgelem+'"/>' );
-
-						});
-
-						});
-				</script>
+				
 				
 			</div>
+			<div class="clearfix"></div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ed-shopping-block">
 					
 	
@@ -103,11 +103,13 @@ JHtml::_('behavior.caption');
 				<span itemprop="ratingValue">4.4</span> trên <span itemprop="reviewCount">89
 				  </span> đánh giá
 				</span>
+				<div class="bottom-10">
 				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528&cat_id='.$this->item->catid)?>"><?php echo get_categories($this->item->catid)[0]->title?></a>
+				</div>
 				<?php foreach ($this->item->jcfields as $field) : ?>
 					<?php if ($field->id > 7 && $field->id != 14) {?>
 					<?php $description .= ' | '.$field->label.': '.$field->value;?>
-					<div class="product-custom-field"><strong><?php echo $field->label . ': </strong>' . $field->value; ?></div>
+					<div class="product-custom-field bottom-10"><strong><?php echo $field->label . ': </strong>' . $field->value; ?></div>
 					<?php }?>
 				<?php endforeach ?>
 			
@@ -117,9 +119,9 @@ JHtml::_('behavior.caption');
 				<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 				<meta itemprop="priceCurrency" content="VND" />
 					<?php if ($this->item->product_old_price) {?>
-						<div class="old_price"><strong><?php echo JText::_('COM_CONTENT_OLD_PRICE'); ?>: </strong><s><?php echo ed_number_format($this->item->product_old_price)?></s></div>
+						<div class="old_price bottom-10"><strong><?php echo JText::_('COM_CONTENT_OLD_PRICE'); ?>: </strong><s><?php echo ed_number_format($this->item->product_old_price)?></s></div>
 					<?php }?>
-					<div class="price">
+					<div class="price bottom-10">
 						<strong><?php if ($this->item->product_old_price) {
 							echo JText::_('COM_CONTENT_SALE_PRICE');
 						}
@@ -133,14 +135,13 @@ JHtml::_('behavior.caption');
                       <span itemprop="name">Mokara</span>
 					 </span> 
 					  <link itemprop="itemCondition" href="http://schema.org/New"/>
-					  <div class="stock">
+					  <div class="stock bottom-10">
 						<strong>Trạng thái:</strong> <?php if ($this->item->product_status == 1) echo "Còn hàng"; else echo "Hết hàng"?>
 						<link itemprop="availability" href="http://schema.org/<?php if ($this->item->product_status == 1) echo "InStock"; else echo "OutOfStock"?>"/>
 					</div>
 				</div>	
-					<form action="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502')?>" method="post" class="buy-section">
-				
-					<div class="size">
+				<form action-xhr="/<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502')?>" method="post" class="pull-left" target="_top">
+					<div class="size bottom-10">
 					
 					<strong>Vui lòng chọn: </strong>
 					
@@ -152,8 +153,8 @@ JHtml::_('behavior.caption');
 						<option value="XL">XL</option>
 					</select>
 					</div>
-					<strong>Số lượng:</strong> <input type="number" min="1" name="quantity" value="1" />
-						<button type="submit" name="submit" class="btn btn-buy"><i class="fa fa-shopping-cart"></i> <?php echo JText::_('COM_CONTENT_ADD_TO_CART')?></button>
+					<strong>Số lượng:</strong> <input type="number" min="1" name="quantity" value="1" class="bottom-10"/>
+						<button type="submit" name="submit" class="btn btn-buy bottom-10"><i class="fa fa-shopping-cart"></i> <?php echo JText::_('COM_CONTENT_ADD_TO_CART')?></button>
 						<input type="hidden" name="product_id" value="<?php echo $this->item->id?>"/>
 						<input type="hidden" name="option" value="com_mokara"/>
 						<input type="hidden" name="view" value="orders"/>
@@ -165,15 +166,22 @@ JHtml::_('behavior.caption');
 						<input type="hidden" name="product_old_price" value="<?php echo $this->item->product_old_price?>"/>
 						<input type="hidden" name="product_category_id" value="<?php echo $this->item->catid?>"/>
 					</form>
+					<div class="clearfix"></div>
 					<div class="support">
-						<a href="" class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i> Xem bảng size</a> 
-						<a href="" class="btn btn-success"><i class="fa fa-phone" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 	
+						<a href="" class="btn btn-warning bottom-10"><i class="fa fa-bar-chart" aria-hidden="true"></i> Xem bảng size</a> 
+						<a href="" class="btn btn-success bottom-10"><i class="fa fa-phone" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 	
 						
 					</div>
 			</div><!--END ART TO CART SECTION-->
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 ed-loyalty-block hidden">
 				<div class="ed-loyalty-inner">
-				<img src="http://www.shotmechanics.com/wp-content/uploads/2014/05/Special-Offer-Banner.png" alt="Ưu đãi đặc biệt" class="special-banner hidden-xs">
+				
+				<amp-img src="images/Special-Offer-Banner.png"
+					  width="300"
+					  height="433"
+					  layout="responsive"
+					  itemprop="image"
+					  alt="Ưu đãi đặc biệt"></amp-img>
 				<h3 class="text-center">Ưu đãi đặc biệt</h3>
 					<ul class="special-list">
 					<li>Tặng ngay <span>50.000<sup>đ</sup></span> vào tài khoản. <a href="">Xem chi tiết!</a></li>
