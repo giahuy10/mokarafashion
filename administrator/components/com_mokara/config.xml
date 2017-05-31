@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <fieldset label="COM_MOKARA" name="mokara">
-      
+      <field name="freeshipping" type="text" default="0" label="Vận chuyển miễn phí" description="" size="10" />
     </fieldset>
 
     <fieldset name="permissions" description="JCONFIG_PERMISSIONS_DESC" label="JCONFIG_PERMISSIONS_LABEL">

@@ -330,3 +330,5 @@ $this->_urlCache['db4c7b410db2b9b9a31769886680c861']='index.php?option=com_conte
 $this->_urlCache['54245698f656dfeb71225a4a1e646c3b']='index.php?option=com_search&amp;Itemid=101&amp;lang=vi&amp;limit=5&amp;limitstart=30&amp;view=order#search/page-7#0';
 $this->_urlCache['aa147142b432821f65f69f72a62edca5']='index.php?option=com_search&amp;Itemid=101&amp;lang=vi&amp;limit=5&amp;limitstart=25&amp;view=order#search/page-6#0';
 $shURLCacheCreationDate=1496046544;
+$this->_urlCache['e406951a0f160b919c99887497ef12b9']='index.php?option=com_content&amp;Itemid=447&amp;catid=21&amp;id=487&amp;lang=vi&amp;view=article#dam/dk1504#0';
+$shURLCacheCreationDate=1496215806;

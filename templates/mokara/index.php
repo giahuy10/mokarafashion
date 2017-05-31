@@ -69,7 +69,8 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-footer.css'?>" rel="stylesheet" type="text/css" />
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-filter.css'?>" rel="stylesheet" type="text/css" />
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-responsive.css'?>" rel="stylesheet" type="text/css" />
-
+	<meta property="fb:app_id" content="1907423642863145" />
+	<meta property="fb:admins" content="100002787759779"/>
 	<link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
 <style type="text/css">
     .table>tbody>tr>td, .table>tfoot>tr>td{
@@ -121,9 +122,24 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.9&appId=1546325965399411";
+  js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.9&appId=1907423642863145";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
+
+
+  <script>
+  jQuery(document).ready(function () {
+  jQuery(".chat_fb").click(function() {
+jQuery('.fchat').toggle('slow');
+  });
+  });
+  </script>
+<div id="cfacebook">
+  <a href="javascript:;" class="chat_fb" onclick="return:false;"><i class="fa fa-facebook-square"></i> Hỗ trợ trực tuyến</a>
+  <div class="fchat">
+  <div class="fb-page" data-tabs="messages" data-href="https://www.facebook.com/Mokara-Fashion-1357088934371320/" data-width="250" data-height="400" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"></div>
+  </div>
+  </div>
 	<div class="ed-header" id="ed-header">
 		<div class="container">
 			<div class="row">
@@ -209,7 +225,11 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 			
 			
 		</div>
-		
+	<p class="pull-right">
+				<a href="#top" id="back-top" title="Trở lên trên">
+					<i class="fa fa-hand-o-up" aria-hidden="true"></i>
+				</a>
+			</p>	
 	</footer>
 	<jdoc:include type="modules" name="debug" style="none" />
 	

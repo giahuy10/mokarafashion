@@ -193,9 +193,11 @@ class MokaraModelProduct extends JModelList
 		return($results);
 	}
 
-
+	public function test_function () {
+		echo "hello";
+	}
 	public function ed_number_format ($money){
-		$money = number_format($money)."<sup>d</sup>";
+		$money = number_format($money)."<sup>đ</sup>"; 
 		return $money;
 	}
 

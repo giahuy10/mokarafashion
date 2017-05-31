@@ -7,9 +7,18 @@ footer#ed-footer {
     color: #fff;
 	margin-top: 40px;
     padding-bottom: 20px;
+	    position: relative;
 }
 footer#ed-footer a {
 	color: #fff;
 	    background: none;
     padding: 5px 10px;
+}
+footer#ed-footer a#back-top {
+    position: absolute;
+    bottom: 100px;
+    right: 50px;
+    border: 1px solid;
+    border-radius: 100%;
+    background: #000;
 }

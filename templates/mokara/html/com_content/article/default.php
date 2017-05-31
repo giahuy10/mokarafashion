@@ -29,13 +29,19 @@ JHtml::_('behavior.caption');
 
 	<?php if ($params->get('access-view')) : ?>	
 	<?php if ($this->item->jcfields) { // Product layout?>
-	<?php include ("./cartfunction.php"); $this->item = get_custom_field($this->item);?>
+	<?php
+	JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_content/models', 'MokaraModel');
+	$model = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
+	include ("./cartfunction.php"); 
+	$this->item = get_custom_field($this->item);
+	
+	?>
 	
 		<div itemscope itemtype="http://schema.org/Product">
-		 <span itemprop="brand">Mokara</span>
+		 <span itemprop="brand" class="hidden">Mokara</span>
 	
 		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-4 ed-media-block">
+			<div class="col-xs-12 col-sm-6 col-md-6 ed-media-block">
 				<?php 
 					$code = $this->item->sku;
 					if ($this->item->id <646) {
@@ -49,6 +55,7 @@ JHtml::_('behavior.caption');
 						$full = "";
 					}
 					?>
+					
 				<div class="row">
 					<div class="col-xs-12 col-sm-2 thumb-list">
 						<?php for ($i = 0; $i< count($pro_image); $i++) {?>
@@ -60,11 +67,26 @@ JHtml::_('behavior.caption');
 					</div>
 					<div class="col-xs-12 col-sm-10" id="main_image">
 						<img itemprop="image" class="main-img" src="images/san-pham/<?php echo $this->item->sku.$full.$pro_image[0]?>" alt="<?php echo $this->item->title?>"/>
-						<br/><br/><div class="fb-like" data-href="<?php echo JUri::getInstance();?>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+						<br/><br/>
+						<div class="fb-like" data-href="<?php echo JUri::getInstance();?>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+						<div class="fb-save" data-uri="<?php echo JUri::getInstance();?>"></div>
+						<div class="fb-send" data-href="<?php echo JUri::getInstance();?>"></div>
 					</div>
 					
 				</div>
-			
+				<?php 
+				$doc = JFactory::getDocument();
+				$doc->addCustomTag( '
+				<meta property="og:title" content="'.$this->escape($this->item->title).'"/>
+				<meta property="og:type" content="product"/>
+				<meta property="og:email" content="info@mokara.com.vn"/>
+				<meta property="og:url" content="'.JURI::current().'"/>
+				<meta property="og:image" content="'.JURI::base().'images/san-pham/'.$this->item->sku.$full.$pro_image[0].'"/>
+				<meta property="og:site_name" content="Thời trang công sở cao cấp Mokara"/>
+				<meta property="fb:admins" content="Eddy Nguyen"/>
+				<meta property="og:description" content="'.strip_tags($this->item->fulltext).'"/>
+				');
+				?>
 				<script>
 					jQuery(function($) {
 						$('.thumb_img').click(function(){
@@ -80,7 +102,7 @@ JHtml::_('behavior.caption');
 				</script>
 				
 			</div>
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-5 ed-shopping-block">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ed-shopping-block">
 					
 	
 				<h2 class="product-title-detail">
@@ -157,23 +179,24 @@ JHtml::_('behavior.caption');
 						
 					</div>
 			</div><!--END ART TO CART SECTION-->
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 ed-loyalty-block">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 ed-loyalty-block hidden">
 				<div class="ed-loyalty-inner">
-			<img src="http://www.shotmechanics.com/wp-content/uploads/2014/05/Special-Offer-Banner.png" alt="Ưu đãi đặc biệt" class="special-banner hidden-xs">
-			<h3 class="text-center">Ưu đãi đặc biệt</h3>
-				<ul class="special-list">
-				<li>Tặng ngay <span>50.000<sup>đ</sup></span> vào tài khoản. <a href="">Xem chi tiết!</a></li>
-				<li>Nhận ngay <span>2</span> mã số dự thưởng may mắn. <a href="">Xem chi tiết!</a> </li>
-				<li class="margin-top-10">Giao hàng tận nơi miễn phí trên toàn quốc. <a href="">Xem chi tiết!</a> </li>
-				<li class="margin-top-10">1 đổi 1 trong 1 tháng với sản phẩm lỗi. <a href="">Xem chi tiết!</a></li>
-				</ul>
-				</div>
+				<img src="http://www.shotmechanics.com/wp-content/uploads/2014/05/Special-Offer-Banner.png" alt="Ưu đãi đặc biệt" class="special-banner hidden-xs">
+				<h3 class="text-center">Ưu đãi đặc biệt</h3>
+					<ul class="special-list">
+					<li>Tặng ngay <span>50.000<sup>đ</sup></span> vào tài khoản. <a href="">Xem chi tiết!</a></li>
+					<li>Nhận ngay <span>2</span> mã số dự thưởng may mắn. <a href="">Xem chi tiết!</a> </li>
+					<li class="margin-top-10">Giao hàng tận nơi miễn phí trên toàn quốc. <a href="">Xem chi tiết!</a> </li>
+					<li class="margin-top-10">1 đổi 1 trong 1 tháng với sản phẩm lỗi. <a href="">Xem chi tiết!</a></li>
+					</ul>
+					</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-12 ed-description-block"  itemprop="description">
 				
 				<?php echo $this->item->text; ?>
+				<div class="fb-comments" data-href="<?php echo JUri::getInstance();?>" data-numposts="5"></div>
 			</div>
 		</div>
 		</div>
