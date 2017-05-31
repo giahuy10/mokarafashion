@@ -38,14 +38,15 @@ $sitename = $app->get('sitename');
 <html amp>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,minimum-scale=1">
 	<script async src="https://cdn.ampproject.org/v0.js"></script>
+	<script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
+	<script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
 	<link rel="canonical" href="<?php echo JUri::current();?>">
-	<jdoc:include type="head" />
-	<style amp-custom>
-	  h1 {
-		color: red;
-	  }
-	</style>
+	
+	
+	<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+
 
 </head>
 
@@ -56,39 +57,40 @@ $sitename = $app->get('sitename');
 	. ($itemid ? ' itemid-' . $itemid : '');
 
 ?>">
+	<amp-sidebar id="sidebar"
+						  layout="nodisplay"
+						  side="right">						 
+						<jdoc:include type="modules" name="main-menu" style="none" />
+						</amp-sidebar>
 	<div class="ed-header" id="ed-header">
 		<div class="container">
-			<div class="row">
-				
-				<div class="col-xs-12 col-sm-4">
+			
+				<div class="logo">
 					<amp-img src="/images/logo-mokara-black.png"
-					  width="425"
-					  height="240"
+					  width="1051"
+					  height="262"
 					  layout="responsive"
 					  alt="AMP"></amp-img>
 				</div>
-				<div class="col-xs-12 col-sm-4">
-					<jdoc:include type="modules" name="banner-top" style="none" />
+				<div class="header-icon">
+				<a href="/cart?view=orders">Giỏ hàng </a> | <a href="/log-in/">Đăng nhập</a> | 	<button on="tap:sidebar.toggle" class="ampstart-btn caps m2">Menu</button>
 				</div>
-			</div>	
+		
 		</div>	
 	</div>
 	<div class="ed-main-menu " id="ed-main-menu">
 		<div class="container ed-black-bg">
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="ed-navigation">			
-						<jdoc:include type="modules" name="main-menu" style="none" />
-					</div>
-				</div>
+		
+					
+			
 				
-			</div>
+			
 			
 			
 		</div>	
 	</div>
 	<div class="ed-slider" id="ed-slider">
-		<jdoc:include type="modules" name="slider" style="none" />
+		<jdoc:include type="modules" name="slider-amp" style="none" />
 	</div>
 	<div class="ed-main-body" id="ed-main-body">
 		<div class="container">
@@ -98,25 +100,25 @@ $sitename = $app->get('sitename');
 					echo "col-sm-9";
 				} ?>">
 					<div class="ed-mass-top">
-						<jdoc:include type="modules" name="mass-top" style="xhtml" />
+						<jdoc:include type="modules" name="mass-top-amp" style="xhtml" />
 					</div>
 					<jdoc:include type="message" />
 					<jdoc:include type="component" />
 					<div class="row">
 						<div class="col-xs-12 col-sm-6">
-							<jdoc:include type="modules" name="mass-bottom-left" style="xhtml" />
+							<jdoc:include type="modules" name="mass-bottom-left-amp" style="xhtml" />
 						</div>
 						<div class="col-xs-12 col-sm-6">
-							<jdoc:include type="modules" name="mass-bottom-right" style="xhtml" />
+							<jdoc:include type="modules" name="mass-bottom-right-amp" style="xhtml" />
 						</div>
 					</div>
 					<div class="ed-mass-bottom">
-						<jdoc:include type="modules" name="mass-bottom" style="xhtml" />
+						<jdoc:include type="modules" name="mass-bottom-amp" style="xhtml" />
 					</div>
 				</div>
 				<?php if ($this->countModules( 'right-sidebar' )) : ?>
 					<div class="col-xs-12 col-sm-3">
-						<jdoc:include type="modules" name="right-sidebar" style="xhtml" />
+						<jdoc:include type="modules" name="right-sidebar-amp" style="xhtml" />
 					</div>
 				<?php endif; ?>
 			</div>

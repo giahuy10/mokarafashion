@@ -8,7 +8,7 @@
  */
 
 defined('_JEXEC') or die;
-include ("./cartfunction.php");
+include ("./cartfunction_amp.php");
 ?>
 <div class="ed-mostread <?php echo $moduleclass_sfx; ?> row">
 <?php 

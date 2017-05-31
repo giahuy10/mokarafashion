@@ -31,8 +31,8 @@ JHtml::_('behavior.caption');
 	<?php if ($params->get('access-view')) : ?>	
 	<?php if ($this->item->jcfields) { // Product layout?>
 	<?php
-	JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_content/models', 'MokaraModel');
-	$model = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
+	
+	
 	include ("./cartfunction.php"); 
 	$this->item = get_custom_field($this->item);
 
