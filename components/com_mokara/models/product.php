@@ -201,7 +201,8 @@ class MokaraModelProduct extends JModelList
 
 
 	public function show_product_item ($item) { 
-	$html ='<div class="ed-inner-product">';
+	$html ='<div class="ed-inner-product" itemscope itemtype="http://schema.org/Product">';
+	$html .= '<span itemprop="brand" class="hidden">Mokara</span>';
 	$item = $this->get_custom_field($item);
 	
 			if ($item->id <646) {
@@ -213,7 +214,7 @@ class MokaraModelProduct extends JModelList
 			}
 			$link = JRoute::_('index.php?option=com_content&view=article&Itemid=447&id='.$item->id);
 			$html .='<div class="ed-item-img">';
-			$html .='	<a href="'.$link.'"><img src="images/san-pham/'.$img_link.'" alt="'.$item->title.'"/></a>';
+			$html .='	<a href="'.$link.'"><img itemprop="image" src="images/san-pham/'.$img_link.'" alt="'.$item->title.'"/></a>';
 			$html .='</div>';
 			$html .='<div class="ed-product-content">';
 			$html .='<div class="page-header">';
@@ -221,8 +222,13 @@ class MokaraModelProduct extends JModelList
 			$html .='<a href="'.$link.' ?>" itemprop="url">'.$item->title.'</a>';
 			$html .='</h2>';
 			$html .='</div>';
+			$html .='<span itemprop="aggregateRating" class="hidden" itemscope itemtype="http://schema.org/AggregateRating">
+					Average rating: <span itemprop="ratingValue">4.4</span>, based on
+					<span itemprop="ratingCount">89</span> reviews
+				  </span>';
 			$html .= $item->introtext; 
-			$html .='<div class="ed-price-block">';
+			$html .='<div class="ed-price-block" itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer">';
+			$html .= ' <meta itemprop="priceCurrency" content="VND" />';
 			$html .='<div class="price pull-left">';
 			$html .=$this->ed_number_format($item->product_price);
 			$html .='</div>';

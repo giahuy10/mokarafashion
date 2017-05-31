@@ -37,6 +37,7 @@ JHtml::_('behavior.caption');
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-4 ed-media-block">
 				<?php 
+					$code = $this->item->sku;
 					if ($this->item->id <646) {
 						$pro_image = get_product_image_2($this->item->id);
 						
@@ -83,12 +84,12 @@ JHtml::_('behavior.caption');
 					
 	
 				<h2 class="product-title-detail">
-					Sản phẩm: <span itemprop="name"><?php echo $this->escape($this->item->title); ?></span> (<span itemprop="mpn"><?php echo $this->item->sku?></span>)
+					Sản phẩm: <span itemprop="name"><?php echo $this->escape($this->item->title); ?></span> (<span itemprop="mpn"><?php echo $code?></span>)
 				</h2>
-				 <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+				 <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="hidden">
 				<span itemprop="ratingValue">4.4</span> trên <span itemprop="reviewCount">89
 				  </span> đánh giá
-			  </span>
+				</span>
 				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528&cat_id='.$this->item->catid)?>"><?php echo get_categories($this->item->catid)[0]->title?></a>
 				<?php foreach ($this->item->jcfields as $field) : ?>
 					<?php if ($field->id > 7 && $field->id != 14) {?>
