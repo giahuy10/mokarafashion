@@ -127,7 +127,17 @@ $sitename = $app->get('sitename');
 	<footer class="ed-footer" id="ed-footer">
 		<div class="container">
 			<div class="col-xs-12 col-sm-3">
-				<jdoc:include type="modules" name="footer1" style="xhtml" />
+				<amp-img src="/images/logo-mokara-black.png"
+					  width="1051"
+					  height="262"
+					  layout="responsive"
+					  alt="AMP"></amp-img>
+					  <div class="custom remove-p">
+
+<p>Thời trang công sở cao cấp Mokara</p>
+<p>Trụ sở: 10/51 Tôn Thất Tùng - Đống Đa</p>
+<p>Hotline: 04 3710 1368 - 093 626 5775</p>
+<p>Email: info@mokara.com.vn</p></div>
 			</div>
 			<div class="col-xs-12 col-sm-1">
 				<jdoc:include type="modules" name="footer3" style="xhtml" />
