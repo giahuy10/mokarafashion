@@ -62,7 +62,7 @@ if(!empty(JRequest::getVar('quantity')) && $update == 0) {
 ?>
 
 
-<div class="container">
+<div class="">
 <?php if ($_SESSION["itemcart"] && count($_SESSION["itemcart"]) >= 1) { ?>
 	<table id="cart" class="table table-hover table-condensed">
     				<thead>
@@ -80,7 +80,8 @@ if(!empty(JRequest::getVar('quantity')) && $update == 0) {
 						<tr>
 							<td data-th="Product">
 								<div class="row">
-									<div class="col-sm-2 hidden-xs"><img src="<?php echo $cart['product_img']?>" alt="<?php echo $cart['title']?>" class="img-responsive"></div>
+									<div class="col-sm-2 hidden-xs">
+									
 									<div class="col-sm-10">
 										<h4 class="nomargin">
 										<a href="<?php echo JRoute::_('index.php?option=com_content&view=article&id='.$cart['product_id'].'&catid='.$cart['product_category_id']);?>">
@@ -97,25 +98,27 @@ if(!empty(JRequest::getVar('quantity')) && $update == 0) {
 								<?php }?>
 								<?php echo ed_number_format($cart['product_price'])?></td>
 							<td data-th="Quantity">
-								<input type="number" class="form-control text-center" value="<?php echo $cart['quantity']?>">
+								<input type="number" class="form-control text-center quantity-box" value="<?php echo $cart['quantity']?>">
 							</td>
 							<td data-th="Subtotal" class="text-center"><?php echo ed_number_format($cart['quantity']*$cart['product_price'])?></td>
 							<td class="actions" data-th="">
 								
-								<a href="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502&removeitem='.$key)?>"><i class="fa fa-trash-o"></i></button>		</a>						
+								<a href="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502&removeitem='.$key)?>">Xóa</button>		</a>						
 							</td>
 						</tr>
 						<?php }?>
 					</tbody>
 					<tfoot>
-						<tr class="visible-xs">
-							<td class="text-center"><strong>Tổng: <?php echo ed_number_format($total)?></strong></td>
-						</tr>
 						<tr>
-							<td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Quay lại mua hàng</a></td>
-							<td colspan="2" class="hidden-xs"></td>
-							<td class="hidden-xs text-center"><strong>Tổng: <?php echo ed_number_format($total)?></strong></td>
-							<td><a href="<?php echo JRoute::_('index.php?option=com_mokara&view=checkout&Itemid=503')?>" class="btn btn-success btn-block">Thanh toán <i class="fa fa-angle-right"></i></a></td>
+							<td class="hidden-xs text-center" colspan="4"><strong>Tổng: <?php echo ed_number_format($total)?></strong></td>
+						</tr>	
+						<tr>
+							<td colspan="4"><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Quay lại mua hàng</a>
+							<a href="<?php echo JRoute::_('index.php?option=com_mokara&view=checkout&Itemid=503')?>" class="btn btn-success btn-block pull-right">Thanh toán <i class="fa fa-angle-right"></i></a>
+							</td>
+							
+							
+							
 						</tr>
 					</tfoot>
 				</table>

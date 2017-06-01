@@ -18,6 +18,21 @@ $user       = JFactory::getUser();
 $userId     = $user->get('id');
 
 	if (JRequest::getVar('product_id')) {
+	
+
+		$input = JRequest::get('post');
+
+		JPluginHelper::importPlugin('captcha');
+
+		$dispatcher = JDispatcher::getInstance();
+
+		$result = $dispatcher->trigger('onCheckAnswer',$input['recaptcha_response_field']);
+
+		if(!$result[0]){
+			die('Invalid Captcha Code');
+		}
+
+
 		// Get a db connection.
 		$db = JFactory::getDbo();
 		 
@@ -77,9 +92,22 @@ $userId     = $user->get('id');
 	<?php } else {
 
 ?>
+<?php
+
+JPluginHelper::importPlugin('captcha');
+    $dispatcher = JDispatcher::getInstance();
+
+    // This will put the code to load reCAPTCHA's JavaScript file into your <head>
+    $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
+
+    // This will return the array of HTML code.
+    $recaptcha = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_1', 'class=""'));
+
+?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_mokara&view=checkout'); ?>" method="post"
       name="adminForm" id="adminForm">
+	
 	  <div class="container">
 	<h2>Thông tin đơn hàng</h2>
 	<?php if ($_SESSION["itemcart"] && count($_SESSION["itemcart"]) >= 1) { ?>
@@ -173,6 +201,15 @@ $userId     = $user->get('id');
 	<input type="hidden" name="total" value="<?php echo $total; ?>"/>
 
 	<?php echo JHtml::_('form.token'); ?>
+	<?php
+
+// Echo this where you want to display reCAPTCHA.
+
+// I have only 1 recaptcha plugin enabled so the HTML is at 0 index.
+
+echo (isset($recaptcha[0])) ? $recaptcha[0] : '';
+
+?>
 	<button type="submit" class="btn btn-primary">Đặt hàng</button>
 </form>
 	<?php }?>

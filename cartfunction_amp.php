@@ -156,7 +156,7 @@ if(!function_exists("show_product_item")) {
 				<?php }?>
 				<div class="clearfix"></div>
 			</div>	
-				<form action-xhr="/<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502')?>" method="post" class="pull-left" target="_top">
+				<form action-xhr="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502')?>" method="post" class="pull-left" target="_top">
 				<input type="hidden" min="1" name="quantity" value="1" />
 					<button type="submit" name="submit" class="btn btn-buy"><i class="fa fa-shopping-cart"></i> <?php echo JText::_('COM_CONTENT_ADD_TO_CART')?></button>
 					<input type="hidden" name="product_id" value="<?php echo $item->id?>"/>

@@ -65,15 +65,21 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	<script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
 	<script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
 	<script async custom-element="amp-image-lightbox" src="https://cdn.ampproject.org/v0/amp-image-lightbox-0.1.js"></script>
-	
+	<script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
+	<meta http-equiv="origin-trial" data-feature="Web Share" data-expires="2017-04-04" content="Ajcrk411RcpUCQ3ovgC8le4e7Te/1kARZsW5Hd/OCnW6vIHTs5Kcq1PaABs7SzcrtfvT0TIlFh9Vdb5xWi9LiQsAAABSeyJvcmlnaW4iOiJodHRwczovL2FtcGJ5ZXhhbXBsZS5jb206NDQzIiwiZmVhdHVyZSI6IldlYlNoYXJlIiwiZXhwaXJ5IjoxNDkxMzM3MDEwfQ==">
+	<?php if ($itemid == 101) {?>
 	<link rel="canonical" href="<?php echo JUri::current();?>">
 	
-	
+	<?php }?>
 	<style amp-custom>
-	
+	.btn {
+    background: #000;
+}
 	  body {
-		  padding: 0 10px;
+		
 		  font-family: arial;
+		      padding-top: 65px;
+
 	  }
 	  .header-icon {
     text-align: center;
@@ -118,7 +124,7 @@ ul.nav-child.unstyled.small, .hidden {
 }
 .clearfix {
     clear: both;
-    margin-bottom: 10px;
+    
 }
 h2 {
     margin: 10px 0 5px;
@@ -180,6 +186,34 @@ footer#ed-footer a {
 .bottom-10 {
     margin-bottom: 10px;
 }
+div#ed-header .logo {
+    position: fixed;
+    background: black;
+    width: 100%;
+	top:0;
+	    z-index: 9999;
+}
+button.btn-menu {
+    color: #000;
+    margin-top: 13px;
+    background: #fff;
+}
+.btn-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+select.filter-select {
+    width: 100%;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+input.quantity-box {
+    width: 35px;
+    padding: 10px 0;
+    text-align: center;
+}
   </style>
 	<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 
@@ -199,20 +233,28 @@ footer#ed-footer a {
 						<jdoc:include type="modules" name="main-menu" style="none" />
 						</amp-sidebar>
 	<div class="ed-header" id="ed-header">
-		<div class="container">
+		
 			
 				<div class="logo">
-					<amp-img src="/images/logo-mokara-black.png"
-					  width="1051"
-					  height="262"
-					  layout="responsive"
-					  alt="AMP"></amp-img>
+					<div class="container">
+					<a href="/" class="pull-left">
+						<amp-img src="/images/logo-mokara-white.png"
+						  width="200"
+						  height="50"
+						
+						  alt="AMP"></amp-img>
+					</a>
+					<button on="tap:sidebar.toggle" class="ampstart-btn caps m2 btn btn-menu pull-right">Menu</button>		
+					</div>
+					<div class="clearfix"></div>					
 				</div>
-				<div class="header-icon">
-				<a href="/cart?view=orders">Giỏ hàng </a> | <a href="/log-in/">Đăng nhập</a> | 	<button on="tap:sidebar.toggle" class="ampstart-btn caps m2">Menu</button>
-				</div>
+				
+				<div class="container">
+					<div class="header-icon">
+					<a href="/cart?view=orders">Giỏ hàng </a> | <a href="/log-in/">Đăng nhập</a> 	
+					</div>
 		
-		</div>	
+				</div>	
 	</div>
 	<div class="ed-main-menu " id="ed-main-menu">
 		<div class="container ed-black-bg">
@@ -260,6 +302,17 @@ footer#ed-footer a {
 			</div>
 		</div>
 	</div>
+	<div class="container">
+	<amp-social-share type="email"></amp-social-share>
+  <amp-social-share type="facebook"
+    data-param-app_id="1907423642863145"></amp-social-share>
+  <amp-social-share type="gplus"></amp-social-share>
+  <amp-social-share type="linkedin"></amp-social-share>
+  <amp-social-share type="pinterest"></amp-social-share>
+  <amp-social-share type="tumblr"></amp-social-share>
+  <amp-social-share type="twitter"></amp-social-share>
+  <amp-social-share type="whatsapp"></amp-social-share>
+  </div>
 	<footer class="ed-footer" id="ed-footer">
 		<div class="container">
 			<div class="col-xs-12 col-sm-3">
