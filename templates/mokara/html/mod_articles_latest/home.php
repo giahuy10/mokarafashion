@@ -18,7 +18,7 @@ $model = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_reque
 	$clear=0;
 foreach ($list as $item) : ?>
 	
-	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 items-on-row" itemscope itemtype="https://schema.org/Article">
+	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 items-on-row">
 	
 		<?php $model->show_product_item($item)?>
 		
