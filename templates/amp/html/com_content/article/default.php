@@ -232,6 +232,29 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 		<div itemprop="articleBody">
 			<?php echo $this->item->text; ?>
 		</div>
+		<div class="hidden">
+		 <h3 itemprop="author" itemscope itemtype="https://schema.org/Person">
+			<span itemprop="name">Mokara Fashion</span>
+		  </h3>
+		  <span itemprop="description" ><?php echo $item->introtext?></span>
+		   <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+			
+			<meta itemprop="url" content="https://mokara.com.vn/images/logo-mokara-black.png">
+			<meta itemprop="width" content="360">
+			<meta itemprop="height" content="90">
+		  </div>
+		   <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+			<div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+			  <img src="https://mokara.com.vn/images/logo-mokara-black.png"/>
+			  <meta itemprop="url" content="https://mokara.com.vn/images/logo-mokara-black.png">
+			  <meta itemprop="width" content="360">
+			  <meta itemprop="height" content="90">
+			</div>
+			<meta itemprop="name" content="Mokara">
+		  </div>
+		  <meta itemprop="datePublished" content="<?php echo $item->created?>"/>
+		  <meta itemprop="dateModified" content="<?php echo $item->modified?>"/>
+		 </div> 
 		</div>
 	<?php }?>
 	
