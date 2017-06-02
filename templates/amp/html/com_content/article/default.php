@@ -22,7 +22,8 @@ $info    = $params->get('info_block_position', 0);
 // Check if associations are implemented. If they are, define the parameter.
 $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associations'));
 
-
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
+$productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
 
 ?>
 
@@ -33,11 +34,11 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 	<?php
 	
 	
-	include ("./cartfunction.php"); 
-	$this->item = get_custom_field($this->item);
 
-	$description = 'Thời trang công sở cao cấp Mokara - '.get_categories($this->item->catid)[0]->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | Giá: '.ed_number_format($this->item->product_price);
-	$title = get_categories($this->item->catid)[0]->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | '.ed_number_format($this->item->product_price);
+	$this->item = $productMod->get_custom_field($this->item);
+
+	$description = 'Thời trang công sở cao cấp Mokara - '.$productMod->get_categories($this->item->catid)[0]->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | Giá: '.$productMod->ed_number_format($this->item->product_price);
+	$title = $productMod->get_categories($this->item->catid)[0]->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | '.$productMod->ed_number_format($this->item->product_price);
 	$code = $this->item->sku;
 	?>
 	
@@ -51,12 +52,12 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 				<?php 
 					
 					if ($this->item->id <646) {
-						$pro_image = get_product_image_2($this->item->id);
+						$pro_image = $productMod->get_product_image_2($this->item->id);
 						
 						$this->item->sku = "img_products/";
 						$full ="full_";
 					}else {
-						$pro_image = get_product_image($this->item->sku);
+						$pro_image = $productMod->get_product_image($this->item->sku);
 						$this->item->sku .="/";
 						$full = "";
 					}
@@ -105,7 +106,7 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 				  </span> đánh giá
 				</span>
 				<div class="bottom-10">
-				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528&cat_id='.$this->item->catid)?>"><?php echo get_categories($this->item->catid)[0]->title?></a>
+				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528&cat_id='.$this->item->catid)?>"><?php echo $productMod->get_categories($this->item->catid)[0]->title?></a>
 				</div>
 				<?php foreach ($this->item->jcfields as $field) : ?>
 					<?php if ($field->id > 7 && $field->id != 14) {?>
@@ -120,7 +121,7 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 				<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 				<meta itemprop="priceCurrency" content="VND" />
 					<?php if ($this->item->product_old_price) {?>
-						<div class="old_price bottom-10"><strong><?php echo JText::_('COM_CONTENT_OLD_PRICE'); ?>: </strong><s><?php echo ed_number_format($this->item->product_old_price)?></s></div>
+						<div class="old_price bottom-10"><strong><?php echo JText::_('COM_CONTENT_OLD_PRICE'); ?>: </strong><s><?php echo $productMod->ed_number_format($this->item->product_old_price)?></s></div>
 					<?php }?>
 					<div class="price bottom-10">
 						<strong><?php if ($this->item->product_old_price) {
@@ -130,7 +131,7 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 							echo JText::_('COM_CONTENT_PRICE');
 							}
 						?>: </strong> 
-						<span class="detail_price"><?php echo ed_number_format($this->item->product_price)?></span>
+						<span class="detail_price"><?php echo $productMod->ed_number_format($this->item->product_price)?></span>
 					</div>
 					<span itemprop="seller" itemscope itemtype="http://schema.org/Organization" class="hidden">
                       <span itemprop="name">Mokara</span>

@@ -92,3 +92,14 @@ $this->_urlCache['5ec7bb2a51a6a6558a4a07c68339f8d1']='index.php?option=com_searc
 $shURLCacheCreationDate=1496389037;
 $this->_urlCache['17ee1fde2835419daba7e1934a080f41']='index.php?option=com_content&amp;Itemid=533&amp;id=647&amp;lang=vi&amp;view=article#mokara/huong-dan-chon-size#0';
 $shURLCacheCreationDate=1496389540;
+$this->_urlCache['dac63fee71cd119f76914bc40f26348b']='index.php?option=com_mokara&amp;Itemid=503&amp;lang=vi#check-out#0';
+$shURLCacheCreationDate=1496395188;
+$this->_urlCache['d97db0d351bce124c4c909a6fefe1498']='index.php?option=com_search&amp;Itemid=502&amp;lang=vi&amp;view=orders#search#0';
+$shURLCacheCreationDate=1496395204;
+$this->_urlCache['23d9f1dfbedec1d38e0caa4f65068005']='index.php?option=com_users&amp;Itemid=322&amp;lang=vi&amp;view=reset#lost-password/#0';
+$this->_urlCache['a370c9dc69059198badc51c98ef4f1d1']='index.php?option=com_users&amp;Itemid=322&amp;lang=vi&amp;view=remind#lost-user-name/#0';
+$this->_urlCache['b8707710ff29df13954ae0f4e8872d2f']='index.php?option=com_users&amp;Itemid=322&amp;lang=vi&amp;view=registration#create-an-account/#0';
+$this->_urlCache['c577ad3e62b552ddacce56d9a162da3d']='index.php?option=com_search&amp;Itemid=322&amp;lang=vi&amp;view=login#search#0';
+$shURLCacheCreationDate=1496395285;
+$this->_urlCache['a1a29574b21ac0ddd97b482e429763ce']='index.php?option=com_search&amp;Itemid=503&amp;lang=vi&amp;view=checkout#search#0';
+$shURLCacheCreationDate=1496395290;

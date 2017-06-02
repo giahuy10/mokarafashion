@@ -200,7 +200,7 @@ class MokaraModelProduct extends JModelList
 		echo "hello";
 	}
 	public function ed_number_format ($money){
-		$money = number_format($money)."<sup>đ</sup>"; 
+		$money = '<span  itemprop="price" content='.number_format($money,0,",",".").'>'.number_format($money).'</span><sup>đ</sup>';
 		return $money;
 	}
 
