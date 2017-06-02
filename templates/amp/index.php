@@ -68,10 +68,10 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	<script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
 	<script async custom-element="amp-analytics"src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
 	<meta http-equiv="origin-trial" data-feature="Web Share" data-expires="2017-04-04" content="Ajcrk411RcpUCQ3ovgC8le4e7Te/1kARZsW5Hd/OCnW6vIHTs5Kcq1PaABs7SzcrtfvT0TIlFh9Vdb5xWi9LiQsAAABSeyJvcmlnaW4iOiJodHRwczovL2FtcGJ5ZXhhbXBsZS5jb206NDQzIiwiZmVhdHVyZSI6IldlYlNoYXJlIiwiZXhwaXJ5IjoxNDkxMzM3MDEwfQ==">
-	<?php if ($itemid == 101) {?>
+
 	<link rel="canonical" href="<?php echo JUri::current();?>">
 	
-	<?php }?>
+
 	<style amp-custom>
 	.btn {
     background: #000;

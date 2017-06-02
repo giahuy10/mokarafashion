@@ -44,7 +44,7 @@ else {
 <div class="" id="search-box">
 <div class="sticky-fillter" >
 <h3 class="text-center">Tìm kiếm sản phẩm</h3>
-<form id="myForm" action-xhr="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528')?>" target="_top">
+<form id="myForm" method="post" action-xhr="<?php echo JURI::root(true).JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528')?>" target="_top">
 	
 	<div class="filer-box">
 	<select name="cat_id" class="filter-select">
@@ -115,7 +115,7 @@ else {
 
 
 			$pages = ceil($n / $limit);
-			echo '<select name="page" ">';
+			echo '<select name="page">';
 				for ($p = 1; $p<=$pages; $p++) {
 		?>	
 			

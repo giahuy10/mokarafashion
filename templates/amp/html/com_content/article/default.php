@@ -141,7 +141,7 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 						<link itemprop="availability" href="http://schema.org/<?php if ($this->item->product_status == 1) echo "InStock"; else echo "OutOfStock"?>"/>
 					</div>
 				</div>	
-				<form action-xhr="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502')?>" method="post" class="pull-left" target="_top">
+				<form action-xhr="<?php echo JURI::root(true).JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502')?>" method="post" class="pull-left" target="_top">
 					<div class="size bottom-10">
 					
 					<strong>Vui lòng chọn: </strong>
