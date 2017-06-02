@@ -16,7 +16,8 @@ if (!isset($this->error))
 	$this->error = JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 	$this->debug = false;
 }
-
+header("HTTP/1.1 301 Moved Permanently"); 
+header("Location: /index.php"); 
 $app = JFactory::getApplication();
 ?>
 <!DOCTYPE html>

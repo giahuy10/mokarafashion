@@ -103,3 +103,11 @@ $this->_urlCache['c577ad3e62b552ddacce56d9a162da3d']='index.php?option=com_searc
 $shURLCacheCreationDate=1496395285;
 $this->_urlCache['a1a29574b21ac0ddd97b482e429763ce']='index.php?option=com_search&amp;Itemid=503&amp;lang=vi&amp;view=checkout#search#0';
 $shURLCacheCreationDate=1496395290;
+$this->_urlCache['ffe313c26fa03dcb73ddee1e3f8d356e']='index.php?option=com_search&amp;Itemid=446&amp;lang=vi&amp;view=article#search#0';
+$shURLCacheCreationDate=1496397205;
+$this->_urlCache['93d7dd3686380db778b41154daf8a947']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=512&amp;lang=vi&amp;view=article#dam/dk1503#0';
+$this->_urlCache['3718963ebe3f69ec520eaa5ca5ea3f7c']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=513&amp;lang=vi&amp;view=article#dam/dk1524#0';
+$this->_urlCache['099900307bd598038771ec8af7c2ea39']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=514&amp;lang=vi&amp;view=article#dam/dk1523#0';
+$this->_urlCache['343f7c5d5770ac508ca79fb11972f363']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=515&amp;lang=vi&amp;view=article#dam/dam-thu-dong-mokara#0';
+$this->_urlCache['0e480ddb1750422e7038a900828ad023']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=516&amp;lang=vi&amp;view=article#dam/dk150927222158150927222237#0';
+$shURLCacheCreationDate=1496399523;

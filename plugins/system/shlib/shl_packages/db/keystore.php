@@ -6,8 +6,8 @@
  * @copyright   (c) Yannick Gaultier 2016
  * @package     shlib
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @version     0.3.1.611
- * @date		2017-04-05
+ * @version     0.3.1.594
+ * @date		2016-12-19
  */
 /* Security check to ensure this file is being included by a parent file.*/
 defined('_JEXEC') or die;
@@ -22,7 +22,7 @@ class ShlDb_Keystore
 	 * Default db table name
 	 *
 	 *
-	 * CREATE TABLE `XXXXX_wblib_keystore`
+	 * CREATE TABLE `XXXXX_wbl_keystore`
 	 * (
 	 * `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	 * `key` VARCHAR(333) NOT NULL,
@@ -31,10 +31,10 @@ class ShlDb_Keystore
 	 * `modified_at`  DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
 	 * `format` TINYINT DEFAULT 1 NOT NULL
 	 * );
-	 * CREATE INDEX `element_key` ON `XXXXX_wblib_keystore` (`key`);
+	 * CREATE INDEX `element_key` ON `XXXXX_wbl_keystore` (`key`);
 	 *
 	 */
-	const TABLE_NAME = '#__wblib_keystore';
+	const TABLE_NAME = '#__wbl_keystore';
 
 	/**
 	 * Base format constant. Right now we de/serialize to and from php and json, and things are likely to stay like this
@@ -93,7 +93,7 @@ class ShlDb_Keystore
 
 	/**
 	 * Store commonly used upstream object
-	 * DB table to use for storage can be changed from the default wblib_keystore
+	 * DB table to use for storage can be changed from the default wbl_keystore
 	 *
 	 * @param string $tableName
 	 */

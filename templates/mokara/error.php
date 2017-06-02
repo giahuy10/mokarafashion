@@ -50,6 +50,8 @@ else
 {
 	$logo = '<span class="site-title" title="' . $sitename . '">' . $sitename . '</span>';
 }
+header("HTTP/1.1 301 Moved Permanently"); 
+header("Location: /index.php"); 
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">

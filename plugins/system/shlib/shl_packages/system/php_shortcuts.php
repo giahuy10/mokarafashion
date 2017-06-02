@@ -40,12 +40,6 @@ if (!function_exists('wbArrayGet'))
 		{
 			return $array;
 		}
-
-		if (!is_array($array))
-		{
-			return $default;
-		}
-
 		if (!is_array($keys) && isset($array[$keys]))
 		{
 			return $array[$keys];
@@ -68,38 +62,6 @@ if (!function_exists('wbArrayGet'))
 		}
 
 		return $default;
-	}
-}
-
-if (!function_exists('wbArrayKeyAppend'))
-{
-	/**
-	 * Append a string to an array member
-	 * If not existing, the array member is created
-	 *
-	 * @param array  $array
-	 * @param mixed  $key
-	 * @param string $value
-	 *
-	 * @throws InvalidArgumentException
-	 * @return mixed
-	 */
-	function wbArrayKeyAppend(&$array, $key, $value, $glue = '')
-	{
-		if (empty($key))
-		{
-			return;
-		}
-		if (!is_array($array) && !empty($array))
-		{
-			throw new \InvalidArgumentException('Trying to initialize an array key, while not an array and not empty');
-		}
-		else if (!is_array($array))
-		{
-			throw new \InvalidArgumentException('Trying to initialize an array key, while not an array');
-		}
-
-		$array[$key] = empty($array[$key]) ? $value : $array[$key] . $glue . $value;
 	}
 }
 
@@ -160,38 +122,6 @@ if (!function_exists('wbArrayKeyMerge'))
 		{
 			$array[$key] = empty($array[$key]) ? (array) $toMerge : array_merge((array) $array[$key], (array) $toMerge);
 		}
-	}
-}
-
-if (!function_exists('wbArrayFilterByKey'))
-{
-	/**
-	 * Filter an associative array, returning only keys listed
-	 * in the second parameter
-	 *
-	 * @param array $data
-	 * @param array $keyList
-	 *
-	 * @return array
-	 */
-	function wbArrayFilterByKey($data, $keyList)
-	{
-		// return untouched if invalid params
-		if (!is_array($data) || !is_array($keyList))
-		{
-			return $data;
-		}
-
-		$filtered = array();
-		foreach ($data as $key => $value)
-		{
-			if (in_array($key, $keyList))
-			{
-				$filtered[$key] = $value;
-			}
-		}
-
-		return $filtered;
 	}
 }
 
@@ -289,13 +219,13 @@ if (!function_exists('wbContains'))
 	{
 		if (is_string($needles))
 		{
-			return !empty($needles) && JString::strpos($haystack, $needles) !== false;
+			return JString::strpos($haystack, $needles) !== false;
 		}
 		else if (is_array($needles))
 		{
 			foreach ($needles as $needle)
 			{
-				if (!empty($needle) && JString::strpos($haystack, $needle) !== false)
+				if (JString::strpos($haystack, $needle) !== false)
 				{
 					return true;
 				}
@@ -312,13 +242,13 @@ if (!function_exists('wbStartsWith'))
 	{
 		if (is_string($needles))
 		{
-			return !empty($needles) && 0 === JString::strpos($haystack, $needles);
+			return 0 === JString::strpos($haystack, $needles);
 		}
 		else if (is_array($needles))
 		{
 			foreach ($needles as $needle)
 			{
-				if (!empty($needle) && 0 === JString::strpos($haystack, $needle))
+				if (0 === JString::strpos($haystack, $needle))
 				{
 					return true;
 				}
@@ -335,13 +265,13 @@ if (!function_exists('wbEndsWith'))
 	{
 		if (is_string($needles))
 		{
-			return !empty($needles) && JString::substr($haystack, -JString::strlen($needles)) == $needles;
+			return JString::substr($haystack, -JString::strlen($needles)) == $needles;
 		}
 		else if (is_array($needles))
 		{
 			foreach ($needles as $needle)
 			{
-				if (!empty($needle) && JString::substr($haystack, -JString::strlen($needle)) == $needle)
+				if (JString::substr($haystack, -JString::strlen($needle)) == $needle)
 				{
 					return true;
 				}
@@ -349,32 +279,6 @@ if (!function_exists('wbEndsWith'))
 		}
 
 		return false;
-	}
-}
-
-if (!function_exists('wbRTrim'))
-{
-	function wbRTrim($string, $toTrim)
-	{
-		if (wbEndsWith($string, $toTrim))
-		{
-			$string = JString::substr($string, 0, -JString::strlen($toTrim));
-		}
-
-		return $string;
-	}
-}
-
-if (!function_exists('wbLTrim'))
-{
-	function wbLTrim($string, $toTrim)
-	{
-		if (wbStartsWith($string, $toTrim))
-		{
-			$string = JString::substr($string, JString::strlen($toTrim));
-		}
-
-		return $string;
 	}
 }
 
@@ -406,9 +310,8 @@ if (!function_exists('wbDotJoin'))
 	 * Join (hopefully) strings with dots
 	 * Warning: empty strings are removed prior to joining
 	 *
-	 * @param string    $glue the string to use to glue things
+	 * @param string $glue the string to use to glue things
 	 * @param \variable $mixed numbers or aguments te be joined
-	 *
 	 * @return mixed
 	 */
 	function wbDotJoin()
@@ -425,9 +328,8 @@ if (!function_exists('wbSlashJoin'))
 	 * Join (hopefully) strings with dots
 	 * Warning: empty strings are removed prior to joining
 	 *
-	 * @param string    $glue the string to use to glue things
+	 * @param string $glue the string to use to glue things
 	 * @param \variable $mixed numbers or aguments te be joined
-	 *
 	 * @return mixed
 	 */
 	function wbSlashJoin()
@@ -498,10 +400,10 @@ if (!function_exists('wbAbridge'))
 	 *
 	 * Note that this method does not scan for HTML tags so will potentially break them.
 	 *
-	 * @param   string  $text The text to abridge.
+	 * @param   string $text The text to abridge.
 	 * @param   integer $length The maximum length of the text (default is 50).
 	 * @param   integer $intro The maximum length of the intro text (default is 30).
-	 * @param string    $bridge the string to use to bridge
+	 * @param string $bridge the string to use to bridge
 	 *
 	 * @return  string   The abridged text.
 	 *
@@ -527,3 +429,32 @@ if (!function_exists('wbAbridge'))
 	}
 }
 
+if (!function_exists('wbT'))
+{
+	function wbT($key, $options = array('js_safe' => false, 'lang' => ''))
+	{
+		static $host = null;
+
+		if (is_null($host))
+		{
+			$host = wbWith(new \Weeblr\Wblib\v1\Base\Dc())->getThe('weeblr.wblib.host');
+		}
+
+		return $host->t($key, $options);
+	}
+}
+
+if (!function_exists('wbRoute'))
+{
+	function wbRoute($url, $xhtml = true, $ssl = null)
+	{
+		static $host = null;
+
+		if (is_null($host))
+		{
+			$host = wbWith(new \Weeblr\Wblib\v1\Base\Dc())->getThe('weeblr.wblib.host');
+		}
+
+		return $host->proxyRoute($url, $xhtml, $ssl);
+	}
+}
