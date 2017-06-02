@@ -39,31 +39,14 @@ $selected = array();
 			$options = json_decode($field->fieldparams)->options;
 			$selected[$field->id]['options'] = $options;
 		?>
-		<?php if ($field->id == 15) {?>
-			<?php foreach ($options as $option) {?>
-				<label title="<?php echo $option->name?>" for="color_<?php echo $option->value?>"><span class="btn color-box color_<?php echo $option->value?> <?php if ($option->value == $value) echo "active";?>"></span></label>
-				<input class="hidden" type="radio" name="field_<?php echo $field->id?>" value="<?php echo $option->value?>" id="color_<?php echo $option->value?>" <?php if ($option->value == $value) echo "checked";?> onchange="this.form.submit()"/>
+		<?php foreach ($options as $option) {?>
+				<label for="field_<?php echo $field->id."_".$option->value?>">
+				<span class="<?php echo 'btn btn_field btn_field_'.$field->name.' btn_field_value_'.$option->value?> <?php if ($option->value == $value) echo "active";?>"><?php echo $option->name?></span>
 				
-			<?php }?>
-		<?php } elseif($field->id == 14) {?>
-			<?php foreach ($options as $option) {?>
-				<label for="price_<?php echo $option->value?>"><span class="btn btn-price <?php if ($option->value == $value) echo "active";?>"><?php echo $option->name?></span></label>
-				<input class="hidden" type="radio" name="field_<?php echo $field->id?>" value="<?php echo $option->value?>" id="price_<?php echo $option->value?>" <?php if ($option->value == $value) echo "checked";?> onchange="this.form.submit()"/>
-				
-			<?php }?>
-		<?php } elseif($field->id == 5) {?>
-			<?php foreach ($options as $option) {?>
-				<label for="label_<?php echo $option->value?>"><span class="btn btn-label label_<?php echo $option->value?> <?php if ($option->value == $value) echo "active";?>"><?php echo $option->name?></span></label>
-				<input class="hidden" type="radio" name="field_<?php echo $field->id?>" value="<?php echo $option->value?>" id="label_<?php echo $option->value?>" <?php if ($option->value == $value) echo "checked";?> onchange="this.form.submit()"/>
-				
-			<?php }?>	
-		<?php } else {?>
-			<?php foreach ($options as $option) {?>
-				<label for="field_<?php echo $field->id."_".$option->value?>"><span class="btn btn-eddy  <?php if ($option->value == $value) echo "active";?>"><?php echo $option->name?></span></label>
+				</label>
 				<input class="hidden" type="radio" name="field_<?php echo $field->id?>" value="<?php echo $option->value?>" id="field_<?php echo $field->id."_".$option->value?>" <?php if ($option->value == $value) echo "checked";?> onchange="this.form.submit()"/>
 				
 			<?php }?>
-		<?php }?>
 	</div>
 <?php } ?>
 <br/>
