@@ -13,13 +13,13 @@ defined('_JEXEC') or die;
 <?php foreach ($list as $item) : ?>
 	<li itemscope itemtype="https://schema.org/Article">
 	<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="https://google.com/article"/>
-		 <h2 itemprop="headline"><a href="<?php echo $item->link; ?>" itemprop="url">
+		 <div itemprop="headline"><a href="<?php echo $item->link; ?>" itemprop="url">
 			<span itemprop="name">
 				<?php echo $item->title; ?>
 			</span>
 			
 		</a>
-		</h2>
+		</div>
 		<div class="hidden">
 		 <h3 itemprop="author" itemscope itemtype="https://schema.org/Person">
 			<span itemprop="name">Mokara Fashion</span>

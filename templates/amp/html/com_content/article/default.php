@@ -99,7 +99,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 			<div class="clearfix"></div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ed-shopping-block">
 					
-	
+	<h1 class="hidden"><?php echo strip_tags($title)?></h1>
 				
 				 <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="hidden">
 				<span itemprop="ratingValue">4.4</span> trên <span itemprop="reviewCount">89

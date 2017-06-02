@@ -96,7 +96,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ed-shopping-block">
 					
-	
+				<h1 class="hidden"><?php echo strip_tags($title)?></h1>
 				<h2 class="product-title-detail">
 					Sản phẩm: <span itemprop="name"><?php echo $this->escape($this->item->title); ?></span> (<span itemprop="mpn"><?php echo $code?></span>)
 				</h2>
