@@ -10,16 +10,19 @@
 defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('bootstrap.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('formbehavior.chosen', 'select');
+header("Content-type: application/json");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Origin: *.ampproject.org");
+header("AMP-Access-Control-Allow-Source-Origin: https://www.mokara.com.vn");
+header("Access-Control-Expose-Headers: AMP-Access-Control-Allow-Source-Origin");
 
 $user       = JFactory::getUser();
 $userId     = $user->get('id');
 $update = 0;
 $total = 0;
 //session_destroy();
-include ("./cartfunction.php");
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
+$productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
 ?>
 
 <?php
@@ -92,14 +95,14 @@ if(!empty(JRequest::getVar('quantity')) && $update == 0) {
 							</td>
 							<td data-th="Price">
 								<?php if ($cart['product_old_price']) {?>
-								<span class="old_price"><s><?php echo ed_number_format($cart['product_old_price'])?></s></span>
+								<span class="old_price"><s><?php echo $productMod->ed_number_format($cart['product_old_price'])?></s></span>
 								<br/>
 								<?php }?>
-								<?php echo ed_number_format($cart['product_price'])?></td>
+								<?php echo $productMod->ed_number_format($cart['product_price'])?></td>
 							<td data-th="Quantity">
 								<input type="number" class="form-control text-center" value="<?php echo $cart['quantity']?>">
 							</td>
-							<td data-th="Subtotal" class="text-center"><?php echo ed_number_format($cart['quantity']*$cart['product_price'])?></td>
+							<td data-th="Subtotal" class="text-center"><?php echo $productMod->ed_number_format($cart['quantity']*$cart['product_price'])?></td>
 							<td class="actions" data-th="">
 								
 								<a href="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502&removeitem='.$key)?>"><i class="fa fa-trash-o"></i></button>		</a>						
@@ -109,12 +112,12 @@ if(!empty(JRequest::getVar('quantity')) && $update == 0) {
 					</tbody>
 					<tfoot>
 						<tr class="visible-xs">
-							<td class="text-center"><strong>Tổng: <?php echo ed_number_format($total)?></strong></td>
+							<td class="text-center"><strong>Tổng: <?php echo $productMod->ed_number_format($total)?></strong></td>
 						</tr>
 						<tr>
 							<td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Quay lại mua hàng</a></td>
 							<td colspan="2" class="hidden-xs"></td>
-							<td class="hidden-xs text-center"><strong>Tổng: <?php echo ed_number_format($total)?></strong></td>
+							<td class="hidden-xs text-center"><strong>Tổng: <?php echo $productMod->ed_number_format($total)?></strong></td>
 							<td><a href="<?php echo JRoute::_('index.php?option=com_mokara&view=checkout&Itemid=503')?>" class="btn btn-success btn-block">Thanh toán <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>

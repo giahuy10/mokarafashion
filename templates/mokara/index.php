@@ -81,29 +81,7 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	. ($itemid ? ' itemid-' . $itemid : '');
 
 ?>">
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.9&appId=1907423642863145";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
 
-
-  <script>
-  jQuery(document).ready(function () {
-  jQuery(".chat_fb").click(function() {
-jQuery('.fchat').toggle('slow');
-  });
-  });
-  </script>
-<div id="cfacebook">
-  <a href="javascript:;" class="chat_fb" onclick="return:false;"><i class="fa fa-facebook-square"></i> Hỗ trợ trực tuyến</a>
-  <div class="fchat">
-  <div class="fb-page" data-tabs="messages" data-href="https://www.facebook.com/Mokara-Fashion-1357088934371320/" data-width="250" data-height="400" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"></div>
-  </div>
-  </div>
 	<div class="ed-header" id="ed-header">
 		<div class="container">
 			<div class="row">
@@ -202,7 +180,29 @@ jQuery('.fchat').toggle('slow');
 			</p>	
 	</footer>
 	<jdoc:include type="modules" name="debug" style="none" />
-	
+	<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.9&appId=1907423642863145";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+  <script>
+  jQuery(document).ready(function () {
+  jQuery(".chat_fb").click(function() {
+jQuery('.fchat').toggle('slow');
+  });
+  });
+  </script>
+<div id="cfacebook">
+  <a href="javascript:;" class="chat_fb" onclick="return:false;"><i class="fa fa-facebook-square"></i> Hỗ trợ trực tuyến</a>
+  <div class="fchat">
+  <div class="fb-page" data-tabs="messages" data-href="https://www.facebook.com/Mokara-Fashion-1357088934371320/" data-width="250" data-height="400" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"></div>
+  </div>
+  </div>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
