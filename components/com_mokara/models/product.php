@@ -312,7 +312,7 @@ class MokaraModelProduct extends JModelList
 				 }
 			$html .='<div class="clearfix"></div>';
 			$html .='</div>';	
-			$html .='<form action-xhr="'.JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502').'" method="post" class="pull-left" target="_top">';
+			$html .='<form action-xhr="'.JURI::root(true).JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502').'" method="post" class="pull-left" target="_top">';
 			$html .='<input type="hidden" min="1" name="quantity" value="1" />';
 			$html .='<button type="submit" name="submit" class="btn btn-buy"><i class="fa fa-shopping-cart"></i> '.JText::_('COM_CONTENT_ADD_TO_CART').'</button>';
 				$html .='	<input type="hidden" name="product_id" value="'.$item->id.'"/>';
