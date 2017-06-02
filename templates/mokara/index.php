@@ -30,7 +30,7 @@ $sitename = $app->get('sitename');
 $doc = JFactory::getDocument();
 
 $dontInclude = array(
-'/media/jui/js/jquery.min.js',
+
 '/media/system/js/caption.js',
 '/media/system/js/html5fallback.js',
 '/media/jui/js/jquery-migrate.min.js',
