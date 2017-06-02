@@ -72,7 +72,7 @@ class MokaraModelProduct extends JModelList
 	 
 	// Select all records from the user profile table where key begins with "custom.".
 	// Order it by the ordering field.
-	$query->select($db->quoteName(array('id', 'title', 'type', 'ordering','fieldparams')));
+	$query->select($db->quoteName(array('id', 'title', 'type', 'ordering','fieldparams','name')));
 	$query->from($db->quoteName('#__fields'));
 	if ($cat_id > 0) {
 		$query->join('INNER', $db->quoteName('#__fields_categories') . ' ON (' . $db->quoteName('id') . ' = ' . $db->quoteName('field_id') . ')');

@@ -28,7 +28,7 @@ $task     = $app->input->getCmd('task', '');
 $itemid   = $app->input->getCmd('Itemid', '');
 $sitename = $app->get('sitename');
 $doc = JFactory::getDocument();
-/*
+
 $dontInclude = array(
 '/media/jui/js/jquery.min.js',
 '/media/system/js/caption.js',
@@ -50,7 +50,7 @@ foreach($doc->_scripts as $key => $script){
     }
 }
 unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
-*/
+
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
@@ -71,43 +71,7 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-responsive.css'?>" rel="stylesheet" type="text/css" />
 	<meta property="fb:app_id" content="1907423642863145" />
 	<meta property="fb:admins" content="100002787759779"/>
-	<link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
-<style type="text/css">
-    .table>tbody>tr>td, .table>tfoot>tr>td{
-    vertical-align: middle;
-}
-@media screen and (max-width: 600px) {
-    table#cart tbody td .form-control{
-		width:20%;
-		display: inline !important;
-	}
-	.actions .btn{
-		width:36%;
-		margin:1.5em 0;
-	}
-	
-	.actions .btn-info{
-		float:left;
-	}
-	.actions .btn-danger{
-		float:right;
-	}
-	
-	table#cart thead { display: none; }
-	table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
-	table#cart tbody tr td:first-child { background: #333; color: #fff; }
-	table#cart tbody td:before {
-		content: attr(data-th); font-weight: bold;
-		display: inline-block; width: 8rem;
-	}
-	
-	
-	
-	table#cart tfoot td{display:block; }
-	table#cart tfoot td .btn{display:block;}
-	
-}
-    </style>
+
 </head>
 
 <body class="site <?php echo $option

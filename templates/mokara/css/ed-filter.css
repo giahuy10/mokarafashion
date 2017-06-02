@@ -4,78 +4,82 @@ img.cat_img {
 img.cat_img.active, img.cat_img:hover {
     box-shadow: 0 0 4px 2px #f1ec52;
 }
-span.color-box {
+span.btn_field_mausac {
     display: inline-block;
     height: 35px;
-    width: 35px;
+    min-width: 35px;
     background: none;
     cursor: pointer;
 	    border: 1px solid;
 }
-span.color-box.active, span.color-box:hover, span.btn.btn-price.active,  span.btn.btn-price:hover, span.btn-label.active, span.btn-label:hover {
+.btn_field:hover, .btn_field.active {
+    box-shadow: 0 0 3px 1px black;
+    background: #000;
+    color: #fff;
+}
+span.btn_field_mausac.active, span.btn_field_mausac:hover, span.btn.btn-price.active,  span.btn.btn-price:hover, span.btn-label.active, span.btn-label:hover {
     box-shadow: 0 0 2px 2px #192201;
 	color: #fff;
 }
-span.color-box.color_1 {
+span.btn_field_mausac.btn_field_value_1 {
     background: blue;
 }
-span.color-box.color_2 {
+span.btn_field_mausac.btn_field_value_2 {
     background: red;
 }
-span.color-box.color_3 {
+span.btn_field_mausac.btn_field_value_3 {
     background: violet;
 }
-span.color-box.color_4 {
+span.btn_field_mausac.btn_field_value_4 {
     background: yellow;
 }
-span.color-box.color_5 {
+span.btn_field_mausac.btn_field_value_5 {
     background: brown;
 }
-span.color-box.color_6 {
+span.btn_field_mausac.btn_field_value_6 {
     background: black;
 }
-span.color-box.color_7 {
+span.btn_field_mausac.btn_field_value_7 {
     background: white;
 }
-span.color-box.color_8 {
+span.btn_field_mausac.btn_field_value_8 {
     background: pink;
 }
-span.color-box.color_9 {
+span.btn_field_mausac.btn_field_value_9 {
     background: orange;
 }
-span.color-box.color_10 {
+span.btn_field_mausac.btn_field_value_10 {
     background: grey;
 }
-span.color-box.color_11 {
+span.btn_field_mausac.btn_field_value_11 {
     background: wheat;
 }
-span.color-box.color_12 {
+span.btn_field_mausac.btn_field_value_12 {
     background: url(../images/hoa-van.jpg);
 }
-span.color-box.color_13 {
+span.btn_field_mausac.btn_field_value_13 {
     background: blue;
 }
-span.color-box.color_14 {
+span.btn_field_mausac.btn_field_value_14 {
     background: blue;
 }
-span.color-box.color_15 {
+span.btn_field_mausac.btn_field_value_15 {
     background: blue;
 }
-span.btn.btn-price {
-    background: #000000;
-    color: #fff;
-   
+
+.btn_field {
+    border: 1px solid;
 }
-span.btn-label {
+span.btn_field_label {
 	color: white;
 }
-span.btn-label.label_1 {
+span.btn_field_label.btn_field_value_1 {
     background: #a20000;
 }
-span.btn-label.label_2 {
+span.btn_field_label.btn_field_value_2 {
     background: #5cb85c;
 }
-span.btn-label.label_3 {
+span.btn_field_label.btn_field_value_3 {
     background: #f0ad4e;
 }
 h3.field-title {

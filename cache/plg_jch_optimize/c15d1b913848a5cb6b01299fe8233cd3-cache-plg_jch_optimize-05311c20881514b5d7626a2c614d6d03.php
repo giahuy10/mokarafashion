@@ -1,0 +1,1 @@
+<?php die("Access Denied"); ?>#x#a:2:{s:6:"result";s:80:".ed-article{border-bottom:1px solid #ccc;padding-bottom:10px;margin-bottom:10px}";s:6:"output";s:0:"";}

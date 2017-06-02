@@ -71,3 +71,15 @@ $this->_urlCache['98e8f7f4802dbc001e79a00189a71378']='index.php?option=com_conte
 $this->_urlCache['558d0887010fb26c12c88b3a5ad3557a']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=596&amp;lang=vi&amp;view=article#dam/dk-1702#0';
 $this->_urlCache['129dffbe5969c58f6e422712c626a090']='index.php?option=com_search&amp;Itemid=528&amp;lang=vi&amp;view=filter#search#0';
 $shURLCacheCreationDate=1496372115;
+$this->_urlCache['e556803d96fece852bfc841bb8601901']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=600&amp;lang=vi&amp;view=article#dam/dk-1706#0';
+$this->_urlCache['ffd6c9935ef4a82e28343637cc49008d']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=599&amp;lang=vi&amp;view=article#dam/dk-1705#0';
+$this->_urlCache['aa9830b5fbdfe59bb8d16b7f2a48a386']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=598&amp;lang=vi&amp;view=article#dam/dk-1704#0';
+$this->_urlCache['151065b07795bc9a444b278693e9ee01']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=597&amp;lang=vi&amp;view=article#dam/dk-1703#0';
+$this->_urlCache['d26ab704997cfc6a4369f6b43780a075']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=595&amp;lang=vi&amp;view=article#dam/dk-1701#0';
+$shURLCacheCreationDate=1496372476;
+$this->_urlCache['282f462fbebf23471716401c4a16fd79']='index.php?option=com_content&amp;Itemid=447&amp;catid=25&amp;id=612&amp;lang=vi&amp;view=article#vest/dk-628#0';
+$this->_urlCache['83d431a4be8b63443f0a34699ece811a']='index.php?option=com_content&amp;Itemid=447&amp;catid=25&amp;id=613&amp;lang=vi&amp;view=article#vest/vk-633#0';
+$shURLCacheCreationDate=1496374960;
+$this->_urlCache['b79a452863860870c4c33dc69c25f548']='index.php?option=com_content&amp;Itemid=447&amp;catid=22&amp;id=623&amp;lang=vi&amp;view=article#so-mi/sm-291#0';
+$this->_urlCache['4a42a68340a782f9768e03ed1322a0ef']='index.php?option=com_content&amp;Itemid=447&amp;catid=24&amp;id=624&amp;lang=vi&amp;view=article#mang-to/mt1501#0';
+$shURLCacheCreationDate=1496374990;

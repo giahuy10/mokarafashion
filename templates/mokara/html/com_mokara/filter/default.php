@@ -77,41 +77,30 @@ jQuery(function($) {
 	
 	<div class="filer-box">
 		<?php  
+			$options = json_decode($field->fieldparams)->options;
 			if ($value > 0) {
 				$selected[$field->id]['check'] = 1; 
 				$n = $n+count($productMod->get_items($field->id, $value, $cat_id));
 				$filters[]=$productMod->get_items($field->id, $value, $cat_id, $page);
 				$selected[$field->id]['value'] = $value;
-		
+				$selected[$field->id]['id'] = $field->id;
+				$selected[$field->id]['name'] = $field->name;
+				$selected[$field->id]['title'] = $field->title;
+				$selected[$field->id]['options'] = $options;
 			}
-			$options = json_decode($field->fieldparams)->options;
-			$selected[$field->id]['options'] = $options;
+			
+			
 		?>
-		<?php if ($field->id == 15) {?>
+	
 			<?php foreach ($options as $option) {?>
-				<label title="<?php echo $option->name?>" for="color_<?php echo $option->value?>"><span class="btn color-box color_<?php echo $option->value?> <?php if ($option->value == $value) echo "active";?>"></span></label>
-				<input class="hidden" type="radio" name="field_<?php echo $field->id?>" value="<?php echo $option->value?>" id="color_<?php echo $option->value?>" <?php if ($option->value == $value) echo "checked";?> onchange="this.form.submit()"/>
+				<label for="field_<?php echo $field->id."_".$option->value?>">
+				<span class="<?php echo 'btn btn_field btn_field_'.$field->name.' btn_field_value_'.$option->value?> <?php if ($option->value == $value) echo "active";?>"><?php echo $option->name?></span>
 				
-			<?php }?>
-		<?php } elseif($field->id == 14) {?>
-			<?php foreach ($options as $option) {?>
-				<label for="price_<?php echo $option->value?>"><span class="btn btn-price <?php if ($option->value == $value) echo "active";?>"><?php echo $option->name?></span></label>
-				<input class="hidden" type="radio" name="field_<?php echo $field->id?>" value="<?php echo $option->value?>" id="price_<?php echo $option->value?>" <?php if ($option->value == $value) echo "checked";?> onchange="this.form.submit()"/>
-				
-			<?php }?>
-		<?php } elseif($field->id == 5) {?>
-			<?php foreach ($options as $option) {?>
-				<label for="label_<?php echo $option->value?>"><span class="btn btn-label label_<?php echo $option->value?> <?php if ($option->value == $value) echo "active";?>"><?php echo $option->name?></span></label>
-				<input class="hidden" type="radio" name="field_<?php echo $field->id?>" value="<?php echo $option->value?>" id="label_<?php echo $option->value?>" <?php if ($option->value == $value) echo "checked";?> onchange="this.form.submit()"/>
-				
-			<?php }?>	
-		<?php } else {?>
-			<?php foreach ($options as $option) {?>
-				<label for="field_<?php echo $field->id."_".$option->value?>"><span class="btn btn-eddy  <?php if ($option->value == $value) echo "active";?>"><?php echo $option->name?></span></label>
+				</label>
 				<input class="hidden" type="radio" name="field_<?php echo $field->id?>" value="<?php echo $option->value?>" id="field_<?php echo $field->id."_".$option->value?>" <?php if ($option->value == $value) echo "checked";?> onchange="this.form.submit()"/>
 				
 			<?php }?>
-		<?php }?>
+		
 	</div>
 <?php } ?>
 <br/>
@@ -162,51 +151,21 @@ jQuery(function($) {
 	
 	
 	<h3 class="field-title">Hiện có <?php echo $n?> sản phẩm
-		<?php
-			if (isset($selected[5]['check'])){
-				foreach ($selected[5]['options'] as $selected_option) {
-					if ($selected_option->value == $selected[5]['value']) {
-						echo '<span class="btn btn-label label_'.$selected_option->value.'">'.$selected_option->name.'</span>';
-						break;
-					}
-				}
-			}
-			?>
-		<?php
-			if (isset($selected[15]['check'])){
-				foreach ($selected[15]['options'] as $selected_option) {
-					if ($selected_option->value == $selected[15]['value']) {
-						echo ' màu <span class="btn color-box color_'.$selected_option->value.' text-color">'.$selected_option->name.'</span>';
-						break;
-					}
-				}
-			}
-			?>	
-		<?php
-			if (isset($selected[12]['check'])){
-				foreach ($selected[12]['options'] as $selected_option) {
-					if ($selected_option->value == $selected[12]['value']) {
-						echo ' chất liệu <span class="btn btn-eddy active">'.$selected_option->name.'</span>';
-						break;
-					}
-				}
-			}
-			?>	
-		<?php if ($cat_id) {
-				echo " trong danh mục ".$productMod->get_categories($cat_id)[0]->title;
-			}
-		?>
-		<?php
-			if (isset($selected[14]['check'])){
-				foreach ($selected[14]['options'] as $selected_option) {
-					if ($selected_option->value == $selected[14]['value']) {
-						echo ' giá từ <span class="btn btn-price ">'.$selected_option->name.'</span>';
-						break;
-					}
-				}
-			}
-			?>	
+	
+	<?php 
 		
+		foreach ($selected as $choice) {
+			
+			foreach ($choice['options'] as $selected_option) {
+				if ($selected_option->value == $choice['value']) {
+						echo ' <span class="active btn btn_field btn_field_'.$choice['name'].' btn_field_value_'.$selected_option->value.'">'.$selected_option->name.'</span> ';
+						//echo '<button class="btn btn-danger remove-selected"onclick="resetForm(field_'.$choice['id'].')" title="Xóa lựa chọn '.$choice['title'].'"><i class="fa fa-times" aria-hidden="true"></i></button>';
+						break;
+					}
+			}
+		}
+	?>
+	
 	</h3>
 	 <div class="row items-row">
 	<?php 
