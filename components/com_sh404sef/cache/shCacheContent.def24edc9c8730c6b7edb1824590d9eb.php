@@ -67,3 +67,7 @@ $this->_urlCache['d69370fd1e1e890c7de89ac67275f4fe']='index.php?option=com_searc
 $shURLCacheCreationDate=1496371638;
 $this->_urlCache['61ed86ddaef9d032918ac1e61e6b9376']='index.php?option=com_search&amp;Itemid=480&amp;lang=vi&amp;view=article#search#0';
 $shURLCacheCreationDate=1496371643;
+$this->_urlCache['98e8f7f4802dbc001e79a00189a71378']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=601&amp;lang=vi&amp;view=article#dam/dk-1707#0';
+$this->_urlCache['558d0887010fb26c12c88b3a5ad3557a']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=596&amp;lang=vi&amp;view=article#dam/dk-1702#0';
+$this->_urlCache['129dffbe5969c58f6e422712c626a090']='index.php?option=com_search&amp;Itemid=528&amp;lang=vi&amp;view=filter#search#0';
+$shURLCacheCreationDate=1496372115;
