@@ -13,10 +13,11 @@ defined('_JEXEC') or die;
 $params = $this->item->params;
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 
-
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
+$productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
 
 // Check if associations are implemented. If they are, define the parameter.
-show_product_item($this->item);
+$productMod->show_product_item($this->item);
 ?>
 
 

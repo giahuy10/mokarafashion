@@ -66,6 +66,7 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	<script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
 	<script async custom-element="amp-image-lightbox" src="https://cdn.ampproject.org/v0/amp-image-lightbox-0.1.js"></script>
 	<script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
+	<script async custom-element="amp-analytics"src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
 	<meta http-equiv="origin-trial" data-feature="Web Share" data-expires="2017-04-04" content="Ajcrk411RcpUCQ3ovgC8le4e7Te/1kARZsW5Hd/OCnW6vIHTs5Kcq1PaABs7SzcrtfvT0TIlFh9Vdb5xWi9LiQsAAABSeyJvcmlnaW4iOiJodHRwczovL2FtcGJ5ZXhhbXBsZS5jb206NDQzIiwiZmVhdHVyZSI6IldlYlNoYXJlIiwiZXhwaXJ5IjoxNDkxMzM3MDEwfQ==">
 	<?php if ($itemid == 101) {?>
 	<link rel="canonical" href="<?php echo JUri::current();?>">
@@ -227,6 +228,30 @@ input.quantity-box {
 	. ($itemid ? ' itemid-' . $itemid : '');
 
 ?>">
+<amp-analytics type="googleanalytics">
+  <script type="application/json">
+  {
+    "vars": {
+      "account": "UA-100349674-1"
+    },
+    "triggers": {
+      "trackPageview": {
+        "on": "visible",
+        "request": "pageview"
+      },
+      "trackEvent": {
+        "selector": "#event-test",
+        "on": "click",
+        "request": "event",
+        "vars": {
+          "eventCategory": "ui-components",
+          "eventAction": "click"
+        }
+      }
+    }
+  }
+  </script>
+  </amp-analytics>
 	<amp-sidebar id="sidebar"
 						  layout="nodisplay"
 						  side="right">						 

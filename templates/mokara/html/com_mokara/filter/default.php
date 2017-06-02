@@ -13,7 +13,7 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
-JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_content/models', 'MokaraModel');
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
 $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
 
 JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_content/models', 'ContentModel');
@@ -151,6 +151,9 @@ jQuery(function($) {
 				<option value="<?php echo $p?>" <?php if ($p == $page) echo "selected";?>>Trang <?php echo $p?></option>
 				<?php }?>
 				</select>
+				<input type="hidden" name="option" value="com_mokara"/>
+<input type="hidden" name="view" value="filter"/>
+<input type="hidden" name="Itemid" value="528"/>
 		</form>
 </div>
 </div>

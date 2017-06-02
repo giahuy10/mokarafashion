@@ -10,7 +10,10 @@
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modellist');
+JLoader::register('ContentHelperRoute', JPATH_SITE . '/components/com_content/helpers/route.php');
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_content/models', 'ContentModel');
 
+use Joomla\Utilities\ArrayHelper;
 /**
  * Methods supporting a list of Mokara records.
  *
@@ -214,7 +217,8 @@ class MokaraModelProduct extends JModelList
 				$pro_image = $this->get_product_image($item->sku);
 				$img_link = $item->sku."/".$pro_image[0];
 			}
-			$link = JRoute::_('index.php?option=com_content&view=article&Itemid=447&id='.$item->id);
+			$item->slug    = $item->id . ':' . $item->alias;
+			$link = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language));
 			$html .='<div class="ed-item-img">';
 			$html .='	<a href="'.$link.'"><img itemprop="image" src="images/san-pham/'.$img_link.'" alt="'.$item->title.'"/></a>';
 			$html .='</div>';
@@ -275,7 +279,8 @@ class MokaraModelProduct extends JModelList
 				$pro_image = $this->get_product_image($item->sku);
 				$img_link = $item->sku."/".$pro_image[0];
 			}
-			$link = JRoute::_('index.php?option=com_content&view=article&Itemid=447&id='.$item->id);
+		
+			$link = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language));
 			$html .='<div class="ed-item-img">';
 			$html .='	<a href="'.$link.'"><amp-img src="images/san-pham/'.$img_link.'"
 					  width="300"

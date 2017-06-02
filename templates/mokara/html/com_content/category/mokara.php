@@ -27,9 +27,9 @@ $beforeDisplayContent = trim(implode("\n", $results));
 
 $results = $dispatcher->trigger('onContentAfterDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
 $afterDisplayContent = trim(implode("\n", $results));
-include ("./cartfunction.php");
+
 ?>
-<div class="blog<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Blog">
+<div class="blog<?php echo $this->pageclass_sfx; ?>">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 		<div class="page-header">
 			<h1> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1>
@@ -98,8 +98,7 @@ include ("./cartfunction.php");
 				<div class="items-row cols-<?php echo (int) $this->columns; ?> <?php echo 'row-' . $row; ?> row clearfix">
 			<?php endif; ?>
 			<div class="col-xs-12 col-sm-<?php echo round(12 / $this->columns); ?>">
-				<div class="item column-<?php echo $rowcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?>"
-					itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+				<div class="item column-<?php echo $rowcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?>">
 					<?php
 					$this->item = & $item;
 					echo $this->loadTemplate('item');
