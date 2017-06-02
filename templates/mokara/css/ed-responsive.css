@@ -94,9 +94,10 @@
 @media (min-width: 991px) and (max-width: 1100px) {
 	
 	.ed-navigation .nav-pills>li>a {
-    font-size: 16px;
+    font-size: 14px;
     text-transform: uppercase;
     color: #000;
+	padding: 10px;
 }
 }
  .table>tbody>tr>td, .table>tfoot>tr>td{

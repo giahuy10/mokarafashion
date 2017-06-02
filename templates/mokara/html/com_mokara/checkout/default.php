@@ -20,18 +20,7 @@ $userId     = $user->get('id');
 	if (JRequest::getVar('product_id')) {
 	
 
-		$input = JRequest::get('post');
-
-		JPluginHelper::importPlugin('captcha');
-
-		$dispatcher = JDispatcher::getInstance();
-
-		$result = $dispatcher->trigger('onCheckAnswer',$input['recaptcha_response_field']);
-
-		if(!$result[0]){
-			die('Invalid Captcha Code');
-		}
-
+		
 
 		// Get a db connection.
 		$db = JFactory::getDbo();
@@ -201,15 +190,7 @@ JPluginHelper::importPlugin('captcha');
 	<input type="hidden" name="total" value="<?php echo $total; ?>"/>
 
 	<?php echo JHtml::_('form.token'); ?>
-	<?php
-
-// Echo this where you want to display reCAPTCHA.
-
-// I have only 1 recaptcha plugin enabled so the HTML is at 0 index.
-
-echo (isset($recaptcha[0])) ? $recaptcha[0] : '';
-
-?>
+	
 	<button type="submit" class="btn btn-primary">Đặt hàng</button>
 </form>
 	<?php }?>

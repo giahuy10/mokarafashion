@@ -143,13 +143,19 @@ jQuery('.fchat').toggle('slow');
 	<div class="ed-main-body" id="ed-main-body">
 		<div class="container">
 			<div class="row">
-				
-				<div class="col-xs-12 <?php if ($this->countModules( 'right-sidebar' )){
+				<?php if ($this->countModules( 'left-sidebar' )) : ?>
+					<div class="col-xs-12 col-sm-3">
+						<jdoc:include type="modules" name="left-sidebar" style="xhtml" />
+					</div>
+				<?php endif; ?>
+				<div class="col-xs-12 <?php if ($this->countModules( 'right-sidebar' ) || $this->countModules( 'left-sidebar' )){
 					echo "col-sm-9";
 				} ?>">
+				<?php if ($this->countModules( 'mass-top' )) : ?>
 					<div class="ed-mass-top">
 						<jdoc:include type="modules" name="mass-top" style="xhtml" />
 					</div>
+				<?php endif; ?>	
 					<jdoc:include type="message" />
 					<jdoc:include type="component" />
 					<div class="row">

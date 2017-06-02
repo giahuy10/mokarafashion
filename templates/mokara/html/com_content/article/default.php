@@ -174,7 +174,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 			</div><!--END ART TO CART SECTION-->
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 ed-loyalty-block hidden">
 				<div class="ed-loyalty-inner">
-				<img src="http://www.shotmechanics.com/wp-content/uploads/2014/05/Special-Offer-Banner.png" alt="Ưu đãi đặc biệt" class="special-banner hidden-xs">
+				<img src="images/Special-Offer-Banner.png" alt="Ưu đãi đặc biệt" class="special-banner hidden-xs">
 				<h3 class="text-center">Ưu đãi đặc biệt</h3>
 					<ul class="special-list">
 					<li>Tặng ngay <span>50.000<sup>đ</sup></span> vào tài khoản. <a href="">Xem chi tiết!</a></li>
