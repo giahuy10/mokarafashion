@@ -1,6 +1,19 @@
 div#ed-main-body {
     margin-top: 20px;
 }
+.pagination {
+    DISPLAY: block;
+}
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+   
+    background-color: #000000;
+    border-color: #000000;
+}
+.pagination > li > a, .pagination > li > span {
+   
+    color: #000000;
+  
+}
 img {
 	max-width: 100%;
 	height: auto;

@@ -105,7 +105,11 @@ amp-sidebar#sidebar ul li {
 amp-sidebar#sidebar ul li a {
     color: #fff;
 }
-ul.nav-child.unstyled.small, .hidden {
+amp-sidebar#sidebar ul.nav-child li {
+    border-bottom: 0;
+  
+}
+.hidden {
     display: none;
 }
 .moduletable.home-module h3 {
@@ -215,6 +219,18 @@ input.quantity-box {
     width: 35px;
     padding: 10px 0;
     text-align: center;
+}
+ul.pagination li {
+    display: inline-block;
+    border: 1px solid #000;
+    padding: 2px 5px;
+    margin-right: 1px;
+}
+ul.pagination li.active {
+    background: #000;
+}
+ul.pagination li.active a {
+    color: #fff;
 }
   </style>
 	<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>

@@ -55,7 +55,29 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 <?php
 $this->item->introtext = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $this->item->introtext);
  echo $this->item->introtext; ?>
-
+<div class="hidden">
+		 <h3 itemprop="author" itemscope itemtype="https://schema.org/Person">
+			<span itemprop="name">Mokara Fashion</span>
+		  </h3>
+		  <span itemprop="description" ><?php echo $this->item->introtext?></span>
+		   <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+			
+			<meta itemprop="url" content="https://mokara.com.vn/images/logo-mokara-black.png">
+			<meta itemprop="width" content="360">
+			<meta itemprop="height" content="90">
+		  </div>
+		   <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+			<div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+			  
+			  <meta itemprop="url" content="https://mokara.com.vn/images/logo-mokara-black.png">
+			  <meta itemprop="width" content="360">
+			  <meta itemprop="height" content="90">
+			</div>
+			<meta itemprop="name" content="Mokara">
+		  </div>
+		  <meta itemprop="datePublished" content="<?php echo $this->item->created?>"/>
+		  <meta itemprop="dateModified" content="<?php echo $this->item->modified?>"/>
+		 </div>
 <?php if ($useDefList && ($info == 1 || $info == 2)) : ?>
 	<?php echo JLayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'position' => 'below')); ?>
 <?php  endif; ?>
