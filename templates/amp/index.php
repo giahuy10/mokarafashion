@@ -28,12 +28,7 @@ $layout   = $app->input->getCmd('layout', '');
 $task     = $app->input->getCmd('task', '');
 $itemid   = $app->input->getCmd('Itemid', '');
 $sitename = $app->get('sitename');
-if ($option=="com_content" && $view=="category" && $layout=="mokaramokara") {
-	$amp_url = str_replace("mokara:mokara","amp:amp",JUri::getInstance());
-	header("Location: ".$amp_url); 
-	?>
-	
-<?php }
+
 
 
 $doc = JFactory::getDocument();

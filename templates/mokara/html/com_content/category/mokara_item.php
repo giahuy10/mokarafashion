@@ -17,7 +17,7 @@ JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'Moka
 $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
 
 // Check if associations are implemented. If they are, define the parameter.
-if (JRequest::getVar('address') == 'amp') {
+if (JRequest::getVar('template') == 'amp') {
 	$productMod->show_product_item_amp($this->item);
 }else {
 	$productMod->show_product_item($this->item);
