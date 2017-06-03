@@ -111,3 +111,13 @@ $this->_urlCache['099900307bd598038771ec8af7c2ea39']='index.php?option=com_conte
 $this->_urlCache['343f7c5d5770ac508ca79fb11972f363']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=515&amp;lang=vi&amp;view=article#dam/dam-thu-dong-mokara#0';
 $this->_urlCache['0e480ddb1750422e7038a900828ad023']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=516&amp;lang=vi&amp;view=article#dam/dk150927222158150927222237#0';
 $shURLCacheCreationDate=1496399523;
+$this->_urlCache['ba1d1da99331fdd5cebb965e61f5601d']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=508&amp;lang=vi&amp;view=article#dam/dk1514d#0';
+$this->_urlCache['451c848c24608713d8ffff3b5f5ed80b']='index.php?option=com_content&amp;Itemid=447&amp;catid=22&amp;id=621&amp;lang=vi&amp;view=article#so-mi/sm-282#0';
+$this->_urlCache['0a5b43dfa9f0dfd67ee83299efb739fb']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=509&amp;lang=vi&amp;view=article#dam/dk1526#0';
+$this->_urlCache['d15600135d4fef1c1e6cc51347c747b2']='index.php?option=com_content&amp;Itemid=447&amp;catid=22&amp;id=622&amp;lang=vi&amp;view=article#so-mi/sm-290#0';
+$this->_urlCache['45e4755911671563f315f572e0031a52']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=510&amp;lang=vi&amp;view=article#dam/dk150927222213150927222237#0';
+$shURLCacheCreationDate=1496454116;
+$this->_urlCache['cfd4b9fa646708fdee70d9a48ec53731']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=511&amp;lang=vi&amp;view=article#dam/dk1514#0';
+$shURLCacheCreationDate=1496454427;
+$this->_urlCache['652597c5199c6a83fd9eba6a6fda650a']='index.php?option=com_search&amp;Itemid=445&amp;lang=vi&amp;view=article#search#0';
+$shURLCacheCreationDate=1496455568;

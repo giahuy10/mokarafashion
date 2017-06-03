@@ -231,7 +231,10 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 					<?php echo $this->escape($this->item->title); ?>
 				</h2>	
 		<div itemprop="articleBody">
-			<?php echo $this->item->text; ?>
+			<?php 
+			
+			$this->item->text = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $this->item->text);
+			echo $this->item->text; ?>
 		</div>
 		<div class="hidden">
 		 <h3 itemprop="author" itemscope itemtype="https://schema.org/Person">
