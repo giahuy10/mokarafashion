@@ -10,16 +10,15 @@
 defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('bootstrap.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('formbehavior.chosen', 'select');
+
 
 $user       = JFactory::getUser();
 $userId     = $user->get('id');
 $update = 0;
 $total = 0;
 //session_destroy();
-include ("./cartfunction.php");
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
+$productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
 ?>
 
 <?php
@@ -93,14 +92,14 @@ if(!empty(JRequest::getVar('quantity')) && $update == 0) {
 							</td>
 							<td data-th="Price">
 								<?php if ($cart['product_old_price']) {?>
-								<span class="old_price"><s><?php echo ed_number_format($cart['product_old_price'])?></s></span>
+								<span class="old_price"><s><?php echo $productMod->ed_number_format($cart['product_old_price'])?></s></span>
 								<br/>
 								<?php }?>
-								<?php echo ed_number_format($cart['product_price'])?></td>
+								<?php echo $productMod->ed_number_format($cart['product_price'])?></td>
 							<td data-th="Quantity">
 								<input type="number" class="form-control text-center quantity-box" value="<?php echo $cart['quantity']?>">
 							</td>
-							<td data-th="Subtotal" class="text-center"><?php echo ed_number_format($cart['quantity']*$cart['product_price'])?></td>
+							<td data-th="Subtotal" class="text-center"><?php echo $productMod->ed_number_format($cart['quantity']*$cart['product_price'])?></td>
 							<td class="actions" data-th="">
 								
 								<a href="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502&removeitem='.$key)?>">Xóa</button>		</a>						
@@ -110,7 +109,7 @@ if(!empty(JRequest::getVar('quantity')) && $update == 0) {
 					</tbody>
 					<tfoot>
 						<tr>
-							<td class="hidden-xs text-center" colspan="4"><strong>Tổng: <?php echo ed_number_format($total)?></strong></td>
+							<td class="hidden-xs text-center" colspan="4"><strong>Tổng: <?php echo $productMod->ed_number_format($total)?></strong></td>
 						</tr>	
 						<tr>
 							<td colspan="4"><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Quay lại mua hàng</a>
