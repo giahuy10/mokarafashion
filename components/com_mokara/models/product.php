@@ -206,7 +206,7 @@ class MokaraModelProduct extends JModelList
 
 
 	public function show_product_item ($item) { 
-	$html ='<div class="ed-inner-product" itemscope itemtype="http://schema.org/Product">';
+	$html ='<div class="ed-inner-product desk" itemscope itemtype="http://schema.org/Product">';
 	$html .= '<span itemprop="brand" class="hidden">Mokara</span>';
 	$item = $this->get_custom_field($item);
 	
@@ -268,7 +268,7 @@ class MokaraModelProduct extends JModelList
 	echo $html;
  }
  public function show_product_item_amp ($item) { 
-	$html ='<div class="ed-inner-product" itemscope itemtype="http://schema.org/Product">';
+	$html ='<div class="ed-inner-product amp" itemscope itemtype="http://schema.org/Product">';
 	$html .= '<span itemprop="brand" class="hidden">Mokara</span>';
 	$item = $this->get_custom_field($item);
 	
@@ -280,6 +280,7 @@ class MokaraModelProduct extends JModelList
 				$img_link = $item->sku."/".$pro_image[0];
 			}
 		
+			$item->slug    = $item->id . ':' . $item->alias;
 			$link = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language));
 			$html .='<div class="ed-item-img">';
 			$html .='	<a href="'.$link.'"><amp-img src="images/san-pham/'.$img_link.'"

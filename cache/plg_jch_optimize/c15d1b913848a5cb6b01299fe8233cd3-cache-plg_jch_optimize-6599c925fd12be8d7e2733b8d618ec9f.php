@@ -1,1 +1,0 @@
-<?php die("Access Denied"); ?>#x#a:2:{s:6:"result";s:187:"try{jQuery(document).ready(function(){jQuery(".chat_fb").click(function(){jQuery('.fchat').toggle('slow');});});}catch(e){console.error('Error in script declaration; Error:'+e.message);};";s:6:"output";s:0:"";}

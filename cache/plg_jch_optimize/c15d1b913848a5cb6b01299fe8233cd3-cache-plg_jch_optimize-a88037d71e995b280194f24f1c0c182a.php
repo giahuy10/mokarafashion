@@ -1,1 +1,0 @@
-<?php die("Access Denied"); ?>#x#a:2:{s:6:"result";s:167:"try{var asoptions={lower_limit:3,max_results:5};var asstrings={show_all:"Show all results"};}catch(e){console.error('Error in script declaration; Error:'+e.message);};";s:6:"output";s:0:"";}

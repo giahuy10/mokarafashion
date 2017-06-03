@@ -249,7 +249,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 		  </div>
 		   <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
 			<div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-			  <img src="https://mokara.com.vn/images/logo-mokara-black.png"/>
+			  
 			  <meta itemprop="url" content="https://mokara.com.vn/images/logo-mokara-black.png">
 			  <meta itemprop="width" content="360">
 			  <meta itemprop="height" content="90">

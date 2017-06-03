@@ -121,3 +121,14 @@ $this->_urlCache['cfd4b9fa646708fdee70d9a48ec53731']='index.php?option=com_conte
 $shURLCacheCreationDate=1496454427;
 $this->_urlCache['652597c5199c6a83fd9eba6a6fda650a']='index.php?option=com_search&amp;Itemid=445&amp;lang=vi&amp;view=article#search#0';
 $shURLCacheCreationDate=1496455568;
+$this->_urlCache['946b2fda77ba09146884907e5ac917f3']='index.php?option=com_content&amp;Itemid=447&amp;catid=25&amp;id=614&amp;lang=vi&amp;view=article#vest/vk-635#0';
+$this->_urlCache['d0361d12fcea069ce0fad24d964e12de']='index.php?option=com_content&amp;Itemid=447&amp;catid=25&amp;id=615&amp;lang=vi&amp;view=article#vest/vk-636#0';
+$shURLCacheCreationDate=1496456448;
+$this->_urlCache['49c864814122869bff6ea3dc048d1b3b']='index.php?option=com_inventory&amp;Itemid=543&amp;lang=vi&amp;view=products#dam-kieu#0';
+$shURLCacheCreationDate=1496477111;
+$this->_urlCache['05bc2e70ff87527eabb3b91e2ef02e1c']='index.php?option=com_search&amp;Itemid=543&amp;lang=vi&amp;view=products#search#0';
+$shURLCacheCreationDate=1496477116;
+$this->_urlCache['102ddf4adf158262a232e205be619be8']='index.php?option=com_inventory&amp;Itemid=543&amp;lang=vi#dam-kieu#0';
+$shURLCacheCreationDate=1496477125;
+$this->_urlCache['12229b9e8ec9ff8b3a44cde0e06dd405']='index.php?option=com_search&amp;Itemid=543&amp;lang=vi&amp;view=product#search#0';
+$shURLCacheCreationDate=1496477134;

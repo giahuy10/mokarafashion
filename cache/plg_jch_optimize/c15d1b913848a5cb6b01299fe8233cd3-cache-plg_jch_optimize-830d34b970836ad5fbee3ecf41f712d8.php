@@ -1,1 +1,0 @@
-<?php die("Access Denied"); ?>#x#a:2:{s:6:"result";s:290:".ed-product-content{padding:5px 10px 20px}.ed-product-content .page-header{margin:0;padding:0}.ed-price-block{padding:10px 0}.ed-product-content .page-header h2{margin:0;font-size:20px}.ed-inner-product{box-shadow:0 0 6px 1px #ccc}.old_price{font-size:15px}.items-on-row{margin-bottom:30px}";s:6:"output";s:0:"";}
