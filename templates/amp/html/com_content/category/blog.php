@@ -10,7 +10,10 @@
 defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
-
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
+$productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
+$cat_id = JRequest::getVar('id');
+$fieds = $productMod->get_fields($cat_id);
 
 $dispatcher = JEventDispatcher::getInstance();
 
@@ -59,7 +62,7 @@ $afterDisplayContent = trim(implode("\n", $results));
 				<div class="item column-<?php echo $rowcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?>">
 					<?php
 					$this->item = & $item;
-					echo $this->loadTemplate('item');
+					$productMod->show_product_item_amp($this->item);
 					?>
 				</div>
 				<!-- end item -->

@@ -219,6 +219,27 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				<meta property="og:description" content="'.strip_tags($description).'"/>
 				');
 				?>
+					<div class="related-product" id="related-product">
+		
+			<?php foreach ($this->item->jcfields as $field) : ?>
+					<?php if ((($field->id > 7 && $field->id != 14) || $field->id == 1) && $field->value) {?>
+					
+				
+							 <h3>Sản phẩm cùng <?php echo $field->title?> (<?php if ($field->id == 1) echo $productMod->ed_number_format($field->value); else echo $field->value?>)</h3>
+							
+							<?php $productMod->get_related_products($field->id,$this->item->id, $this->item->catid, $this->item->product_price,'amp');?>
+						 
+					  
+					<?php }?>
+				<?php endforeach ?>
+			
+			
+		
+		 
+
+
+		
+		</div>
 	<?php }	else { //News layout?>
 		<div class="item-page<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
 		<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? JFactory::getConfig()->get('language') : $this->item->language; ?>" />

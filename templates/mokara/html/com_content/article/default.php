@@ -71,10 +71,8 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 					</div>
 					<div class="col-xs-12 col-sm-10" id="main_image">
 						<img itemprop="image" class="main-img" src="images/san-pham/<?php echo $this->item->sku.$full.$pro_image[0]?>" alt="<?php echo $this->item->title?>"/>
-						<br/><br/>
-						<div class="fb-like" data-href="<?php echo JUri::getInstance();?>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
-						<div class="fb-save" data-uri="<?php echo JUri::getInstance();?>"></div>
-						<div class="fb-send" data-href="<?php echo JUri::getInstance();?>"></div>
+						
+					
 					</div>
 					
 				</div>
@@ -101,7 +99,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 					Sản phẩm: <span itemprop="name"><?php echo $this->escape($this->item->title); ?></span> (<span itemprop="mpn"><?php echo $code?></span>)
 				</h2>
 				 <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="hidden">
-				<span itemprop="ratingValue">4.4</span> trên <span itemprop="reviewCount">89
+				<span itemprop="ratingValue"><?php echo ($this->item->hits-1)*5/$this->item->hits?></span> trên <span itemprop="reviewCount"><?php echo $this->item->hits?>
 				  </span> đánh giá
 				</span>
 				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528&cat_id='.$this->item->catid)?>"><?php echo $productMod->get_categories($this->item->catid)[0]->title?></a>
@@ -171,6 +169,11 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 						<a href="" class="btn btn-success"><i class="fa fa-phone" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 	
 						
 					</div>
+					<br/>
+						<div class="fb-like" data-href="<?php echo JUri::getInstance();?>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+						<div class="fb-save" data-uri="<?php echo JUri::getInstance();?>"></div>
+						<div class="fb-send" data-href="<?php echo JUri::getInstance();?>"></div>
+						
 			</div><!--END ART TO CART SECTION-->
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 ed-loyalty-block hidden">
 				<div class="ed-loyalty-inner">
@@ -200,7 +203,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				$doc->addCustomTag( '
 				<meta property="og:title" content="'.strip_tags($title).'"/>
 				<meta property="og:type" content="product"/>
-				<meta property="og:email" content="info@mokara.com.vn"/>
+				<meta property="og:email" content="web@mokara.com.vn"/>
 				<meta property="og:url" content="'.JURI::current().'"/>
 				<meta property="og:image" content="'.JURI::base().'images/san-pham/'.$this->item->sku.$full.$pro_image[0].'"/>
 				<meta property="og:site_name" content="Thời trang công sở cao cấp Mokara"/>
@@ -208,6 +211,37 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				<meta property="og:description" content="'.strip_tags($description).'"/>
 				');
 				?>
+		<div class="related-product" id="related-product">
+		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+			<?php foreach ($this->item->jcfields as $field) : ?>
+					<?php if ((($field->id > 7 && $field->id != 14) || $field->id == 1) && $field->value) {?>
+					
+					 <div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="heading<?php echo $field->id?>">
+						  <h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $field->id?>" aria-expanded="true" aria-controls="collapse<?php echo $field->id?>">
+							 Sản phẩm cùng <?php echo $field->title?> (<?php if ($field->id == 1) echo $productMod->ed_number_format($field->value); else echo $field->value?>)
+							</a>
+						  </h4>
+						</div>
+						<div id="collapse<?php echo $field->id?>" class="panel-collapse collapse <?php if ($field->id == 1) echo "in"?>" role="tabpanel" aria-labelledby="heading<?php echo $field->id?>">
+						  <div class="panel-body">
+							<?php $productMod->get_related_products($field->id,$this->item->id, $this->item->catid, $this->item->product_price);?>
+						  </div>
+						</div>
+					  </div>
+					<?php }?>
+				<?php endforeach ?>
+			
+			
+		
+		 
+
+
+		</div>
+		</div>
+				
+				
 	<?php }	else { //News layout?>
 		<div class="item-page<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
 		<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? JFactory::getConfig()->get('language') : $this->item->language; ?>" />

@@ -13,6 +13,9 @@ jimport('joomla.application.component.modellist');
 JLoader::register('ContentHelperRoute', JPATH_SITE . '/components/com_content/helpers/route.php');
 JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_content/models', 'ContentModel');
 
+$articleMod = JModelLegacy::getInstance('Article', 'ContentModel', array('ignore_request' => true));
+$appParams = JFactory::getApplication()->getParams();
+$articleMod->setState('params', $appParams);
 use Joomla\Utilities\ArrayHelper;
 /**
  * Methods supporting a list of Mokara records.
@@ -29,7 +32,52 @@ class MokaraModelProduct extends JModelList
 	 * @see        JController
 	 * @since      1.6
 	 */
-	 
+	public function get_related_products ($field_id, $item_id, $cat_id, $price, $template = NULL) {
+		$db = JFactory::getDbo();
+		$query2 = $db->getQuery(true);
+		//$query="SELECT item_id FROM `#__fields_values` WHERE `field_id` = ".$field_id." and item_id != ".$item_id." and value in ( SELECT value FROM `#__fields_values` WHERE `field_id` = ".$field_id." AND `item_id` = ".$item_id." ) group by item_id";
+		
+		$query2->select(array('b.*', 'a.item_id'));
+		$query2->from($db->quoteName('#__fields_values','a'));
+		$query2->join('INNER', $db->quoteName('#__content', 'b') . ' ON (' . $db->quoteName('a.item_id') . ' = ' . $db->quoteName('b.id') . ')');
+		$query2->where($db->quoteName('state') . ' = '. $db->quote('1'));
+		$query2->where($db->quoteName('catid') . ' = '. $db->quote($cat_id));
+		$query2->where($db->quoteName('field_id') . ' = '. $db->quote($field_id));
+		$query2->where($db->quoteName('item_id') . ' != '. $db->quote($item_id));
+		if ($field_id == 15)
+			$query2->where($db->quoteName('value') . ' != 12');
+		if ($field_id == 1) {
+			$min = $price-100000;
+			$max = $price+100000;
+			$query2->where($db->quoteName('value') . ' > '.$min);
+			$query2->where($db->quoteName('value') . ' < '.$max);
+		}else {
+			$query2->where($db->quoteName('value') . ' IN ( SELECT value FROM `#__fields_values` WHERE `field_id` = '.$field_id.' AND `item_id` ='.$item_id.')');
+		}
+		
+		
+		$query2->group($db->quoteName('item_id'));
+		$query2->order('ordering ASC');
+		$db->setQuery($query2,0,4);
+		$items = $db->loadObjectList();
+		$clear = 0;
+		foreach ($items as $item) {
+			echo '<div  class="col-xs-6 col-sm-4 col-md-3 col-lg-3 items-on-row">';	
+			if (isset($template) && $template = "amp") {
+				$this->show_product_item_amp($item);
+			}else {
+				$this->show_product_item($item);
+			}
+			
+			echo '</div>';
+			$clear++;
+					if ($clear%2==0) {
+					
+						echo '<div class="clearfix visible-sm"></div>';
+					}
+		}
+		echo '<div class="clearfix"></div>';
+	} 
 	public function get_items ($field_id = NULL, $value_id = NULL, $cat_id = NULL, $page = NULL) {
 		$start = 0;
 		$num = 20;

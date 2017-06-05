@@ -40,6 +40,7 @@ $dontInclude = array(
 '/media/system/js/core.js',
 '/media/system/js/mootools-core.js',
 '/media/jui/js/bootstrap.min.js',
+'/media/jui/js/bootstrap.js',
 '/media/system/js/multiselect.js',
 '/media/jui/js/chosen.jquery.min.js'
 );
@@ -69,7 +70,7 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-footer.css'?>" rel="stylesheet" type="text/css" />
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-filter.css'?>" rel="stylesheet" type="text/css" />
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-responsive.css'?>" rel="stylesheet" type="text/css" />
-
+	<script src="<?php echo $this->baseurl . '/templates/' . $this->template . '/js/bootstrap.min.js'?>"></script>
 	<meta property="fb:app_id" content="1907423642863145" />
 	<meta property="fb:admins" content="100002787759779"/>
 

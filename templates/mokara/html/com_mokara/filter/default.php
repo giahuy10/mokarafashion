@@ -50,7 +50,7 @@ jQuery(function($) {
 </script>
 <div class="" id="search-box">
 <div class="sticky-fillter" >
-<form id="myForm" action="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528')?>">
+<form id="myForm" action="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528')?>" method="post">
 	<h3 class="field-title">Danh mục</h3>
 	<div class="filer-box">
 	<?php $cats = $productMod->get_categories();

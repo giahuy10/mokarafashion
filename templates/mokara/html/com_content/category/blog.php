@@ -49,7 +49,7 @@ $afterDisplayContent = trim(implode("\n", $results));
 
 	<?php if (empty($this->lead_items) && empty($this->link_items) && empty($this->intro_items)) : ?>
 		<?php if ($this->params->get('show_no_articles', 1)) : ?>
-			<p><?php echo JText::_('COM_CONTENT_NO_ARTICLES'); ?></p>
+			<p><?php echo JText::_('COM_CONTENT_NO_PRODUCTS'); ?></p>
 		<?php endif; ?>
 	<?php endif; ?>
 
@@ -72,7 +72,7 @@ $afterDisplayContent = trim(implode("\n", $results));
 					>
 					<?php
 					$this->item = & $item;
-					echo $this->loadTemplate('item');
+					$productMod->show_product_item($this->item);
 					?>
 				</div>
 				<!-- end item -->
@@ -120,10 +120,13 @@ $afterDisplayContent = trim(implode("\n", $results));
 			<?php }?>
 	</div>
 <?php } ?>
+
 	</div>
 		</div>
+		
 </form>
 <script>
+
 	function resetForm(ele) {
     for(var i=0;i<ele.length;i++)
       ele[i].checked = false;
