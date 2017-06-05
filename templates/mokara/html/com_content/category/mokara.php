@@ -12,7 +12,10 @@ defined('_JEXEC') or die;
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
 
 
-
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
+$productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
+$cat_id = JRequest::getVar('id');
+$fieds = $productMod->get_fields($cat_id);
 $dispatcher = JEventDispatcher::getInstance();
 
 $this->category->text = $this->category->description;
@@ -67,7 +70,8 @@ $afterDisplayContent = trim(implode("\n", $results));
 			<button type="submit" name="filter_submit" class="btn btn-primary"><?php echo JText::_('COM_CONTENT_FORM_FILTER_SUBMIT'); ?></button>
 		</div>
 	</div>
-<div class="blog<?php echo $this->pageclass_sfx; ?>">
+	<div class="row">
+<div class="blog<?php echo $this->pageclass_sfx; ?> col-xs-12 col-sm-9">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 		<div class="page-header">
 			<h1> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1>
@@ -166,4 +170,48 @@ $afterDisplayContent = trim(implode("\n", $results));
 			<?php echo $this->pagination->getPagesLinks(); ?> </div>
 	<?php endif; ?>
 </div>
+<div class="col-xs-12 col-sm-3">
+		<?php foreach ($fieds as $field) {?>
+	<?php 
+	$value = JRequest::getVar('field_'.$field->id);	
+	?>
+	<h3><?php echo $field->title?>
+		<?php if ($value) {?>
+			<button class="btn btn-danger remove-selected"onclick="resetForm(<?php echo 'field_'.$field->id?>)" title="Xóa lựa chọn <?php echo $field->title?>"><i class="fa fa-times" aria-hidden="true"></i></button>
+		<?php }?>
+	</h3>
+	
+	<div class="filer-box">
+		<?php  
+
+			$options = json_decode($field->fieldparams)->options;
+			
+		?>
+		<?php foreach ($options as $option) {?>
+				<label for="field_<?php echo $field->id."_".$option->value?>">
+				<span class="<?php echo 'btn btn_field btn_field_'.$field->name.' btn_field_value_'.$option->value?> <?php if ($option->value == $value) echo "active";?>"><?php echo $option->name?></span>
+				
+				</label>
+				<input class="hidden" type="radio" name="field_<?php echo $field->id?>" value="<?php echo $option->value?>" id="field_<?php echo $field->id."_".$option->value?>" <?php if ($option->value == $value) echo "checked";?> onchange="SubmitForm('adminForm');"/>
+				
+			<?php }?>
+	</div>
+<?php } ?>
+	</div>
+	</div>
 </form>
+<script>
+	function resetForm(ele) {
+    for(var i=0;i<ele.length;i++)
+      ele[i].checked = false;
+}
+function SubmitForm(formId) {
+    var oForm = document.getElementById(formId);
+    if (oForm) {
+        oForm.submit(); 
+    }
+    else {
+        alert("DEBUG - could not find element " + formId);
+    }
+}
+</script>
