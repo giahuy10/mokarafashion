@@ -29,6 +29,44 @@ $results = $dispatcher->trigger('onContentAfterDisplay', array($this->category->
 $afterDisplayContent = trim(implode("\n", $results));
 
 ?>
+<form action="<?php echo htmlspecialchars(JUri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm" class="form-inline">
+<fieldset class="filters btn-toolbar clearfix">
+		<legend class="hide"><?php echo JText::_('COM_CONTENT_FORM_FILTER_LEGEND'); ?></legend>
+
+			<div class="btn-group">
+				<?php if ($this->params->get('filter_field') !== 'tag') : ?>
+					<label class="filter-search-lbl element-invisible" for="filter-search">
+						<?php echo JText::_('COM_CONTENT_' . $this->params->get('filter_field') . '_FILTER_LABEL') . '&#160;'; ?>
+					</label>
+					<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="inputbox" onchange="this.form.submit()" title="<?php echo JText::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo JText::_('COM_CONTENT_' . $this->params->get('filter_field') . '_FILTER_LABEL'); ?>" />
+				<?php else : ?>
+					<select name="filter_tag" id="filter_tag" onchange="this.form.submit()" >
+						<option value=""><?php echo JText::_('JOPTION_SELECT_TAG'); ?></option>
+						<?php echo JHtml::_('select.options', JHtml::_('tag.options', true, true), 'value', 'text', $this->state->get('filter.tag')); ?>
+					</select>
+				<?php endif; ?>
+			</div>
+		
+		<?php if ($this->params->get('show_pagination_limit')) : ?>
+			<div class="btn-group pull-right">
+				<label for="limit" class="element-invisible">
+					<?php echo JText::_('JGLOBAL_DISPLAY_NUM'); ?>
+				</label>
+				<?php echo $this->pagination->getLimitBox(); ?>
+			</div>
+		<?php endif; ?>
+
+		<input type="hidden" name="filter_order" value="" />
+		<input type="hidden" name="filter_order_Dir" value="" />
+		<input type="hidden" name="limitstart" value="" />
+		<input type="hidden" name="task" value="" />
+	</fieldset>
+
+	<div class="control-group hide pull-right">
+		<div class="controls">
+			<button type="submit" name="filter_submit" class="btn btn-primary"><?php echo JText::_('COM_CONTENT_FORM_FILTER_SUBMIT'); ?></button>
+		</div>
+	</div>
 <div class="blog<?php echo $this->pageclass_sfx; ?>">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 		<div class="page-header">
@@ -128,3 +166,4 @@ $afterDisplayContent = trim(implode("\n", $results));
 			<?php echo $this->pagination->getPagesLinks(); ?> </div>
 	<?php endif; ?>
 </div>
+</form>

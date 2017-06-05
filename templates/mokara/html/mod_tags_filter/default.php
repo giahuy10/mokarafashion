@@ -15,7 +15,7 @@ $fieds = $productMod->get_fields($cat_id);
 $filters = array();
 $selected = array();
 ?>
-<form id="myForm" action="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528')?>">
+<form id="myForm" action="<?php echo htmlspecialchars(JUri::getInstance()->toString()); ?>">
 
 <?php $n=0; foreach ($fieds as $field) {?>
 	<?php 
@@ -29,15 +29,9 @@ $selected = array();
 	
 	<div class="filer-box">
 		<?php  
-			if ($value > 0) {
-				$selected[$field->id]['check'] = 1; 
-				$n = $n+count($productMod->get_items($field->id, $value, $cat_id));
-				$filters[]=$productMod->get_items($field->id, $value, $cat_id, $page);
-				$selected[$field->id]['value'] = $value;
-		
-			}
+
 			$options = json_decode($field->fieldparams)->options;
-			$selected[$field->id]['options'] = $options;
+			
 		?>
 		<?php foreach ($options as $option) {?>
 				<label for="field_<?php echo $field->id."_".$option->value?>">
@@ -50,9 +44,12 @@ $selected = array();
 	</div>
 <?php } ?>
 <br/>
-<input type="hidden" name="option" value="com_mokara"/>
-<input type="hidden" name="view" value="filter"/>
-<input type="hidden" name="Itemid" value="528"/>
-<input type="hidden" name="page" value="1"/>
+
 <input type="hidden" name="cat_id" value="<?php echo $cat_id?>"/>
 		</form>
+		<script>
+	function resetForm(ele) {
+    for(var i=0;i<ele.length;i++)
+      ele[i].checked = false;
+}
+</script>

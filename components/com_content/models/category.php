@@ -116,6 +116,9 @@ class ContentModelCategory extends JModelList
 
 		$value = $app->input->get('filter_tag', 0, 'uint');
 		$this->setState('filter.tag', $value);
+		
+		$value = $app->input->get('field_14', 0, 'uint');
+		$this->setState('filter.price', $value);
 
 		// Load the parameters. Merge Global and Menu Item params into new object
 		$params = $app->getParams();
@@ -226,6 +229,7 @@ class ContentModelCategory extends JModelList
 	public function getItems()
 	{
 		$limit = $this->getState('list.limit');
+		
 
 		if ($this->_articles === null && $category = $this->getCategory())
 		{
@@ -242,6 +246,7 @@ class ContentModelCategory extends JModelList
 			$model->setState('list.direction', $this->getState('list.direction'));
 			$model->setState('list.filter', $this->getState('list.filter'));
 			$model->setState('filter.tag', $this->getState('filter.tag'));
+			$model->setState('filter.price', $this->getState('filter.price'));
 
 			// Filter.subcategories indicates whether to include articles from subcategories in the list or blog
 			$model->setState('filter.subcategories', $this->getState('filter.subcategories'));

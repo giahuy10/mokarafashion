@@ -10,7 +10,8 @@
 defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
+$productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
 // Create some shortcuts.
 $params    = &$this->item->params;
 $n         = count($this->items);
@@ -32,12 +33,7 @@ if (!empty($this->items))
 	}
 }
 
-// For B/C we also add the css classes inline. This will be removed in 4.0.
-JFactory::getDocument()->addStyleDeclaration('
-.hide { display: none; }
-.table-noheader { border-collapse: collapse; }
-.table-noheader thead { display: none; }
-');
+
 
 $tableClass = $this->params->get('show_headings') != 1 ? ' table-noheader' : '';
 ?>
@@ -88,6 +84,7 @@ $tableClass = $this->params->get('show_headings') != 1 ? ' table-noheader' : '';
 		<p><?php echo JText::_('COM_CONTENT_NO_ARTICLES'); ?></p>
 	<?php endif; ?>
 <?php else : ?>
+	
 	<table class="category table table-striped table-bordered table-hover<?php echo $tableClass; ?>">
 		<caption class="hide"><?php echo JText::sprintf('COM_CONTENT_CATEGORY_LIST_TABLE_CAPTION', $this->category->title); ?></caption>
 		<thead>

@@ -245,20 +245,7 @@ class MokaraModelProduct extends JModelList
 				 }
 			$html .='<div class="clearfix"></div>';
 			$html .='</div>';	
-			$html .='<form action="'.JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502').'" method="post" class="pull-left">';
-			$html .='<input type="hidden" min="1" name="quantity" value="1" />';
-			$html .='<button type="submit" name="submit" class="btn btn-buy"><i class="fa fa-shopping-cart"></i> '.JText::_('COM_CONTENT_ADD_TO_CART').'</button>';
-				$html .='	<input type="hidden" name="product_id" value="'.$item->id.'"/>';
-				$html .='	<input type="hidden" name="option" value="com_mokara"/>';
-				$html .='	<input type="hidden" name="view" value="orders"/>';
-				$html .='	<input type="hidden" name="task" value="add2cart"/>';
-				$html .='	<input type="hidden" name="Itemid" value="502"/>';
-				$html .='	<input type="hidden" name="product_name" value="'.$item->title.'"/>';
-				$html .='	<input type="hidden" name="product_price" value="'.$item->product_price.'"/>';
-				$html .='	<input type="hidden" name="product_img" value="images/san-pham/'.$img_link.'"/>';
-				$html .='	<input type="hidden" name="product_old_price" value="'.$item->product_old_price.'"/>';
-				$html .='	<input type="hidden" name="product_category_id" value="'.$item->catid.'>"/>';
-				$html .='</form>';
+			
 				$html .='<a class="btn pull-right add2cart-btn" href="'.$link.'">';
 				$html .= JText::_('COM_CONTENT_VIEW');
 				$html .='</a>';
