@@ -55,7 +55,7 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 <head>
-
+	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<jdoc:include type="head" />
 	<link rel="amphtml" href="<?php echo JUri::current();?>?template=amp" />
@@ -69,6 +69,7 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-footer.css'?>" rel="stylesheet" type="text/css" />
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-filter.css'?>" rel="stylesheet" type="text/css" />
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-responsive.css'?>" rel="stylesheet" type="text/css" />
+
 	<meta property="fb:app_id" content="1907423642863145" />
 	<meta property="fb:admins" content="100002787759779"/>
 
