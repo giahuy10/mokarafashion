@@ -10,7 +10,10 @@
 defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
-
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
+$productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
+$cat_id = JRequest::getVar('id');
+$fieds = $productMod->get_fields($cat_id);
 
 $dispatcher = JEventDispatcher::getInstance();
 
@@ -28,7 +31,9 @@ $results = $dispatcher->trigger('onContentAfterDisplay', array($this->category->
 $afterDisplayContent = trim(implode("\n", $results));
 
 ?>
-<div class="blog<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Blog">
+<form action="<?php echo htmlspecialchars(JUri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm" class="form-inline">
+<div class="row">
+<div class="product<?php echo $this->pageclass_sfx; ?> col-xs-12 col-sm-9">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 		<div class="page-header">
 			<h1> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1>
@@ -38,23 +43,9 @@ $afterDisplayContent = trim(implode("\n", $results));
 	
 	<?php echo $afterDisplayTitle; ?>
 
-	<?php if ($this->params->get('show_cat_tags', 1) && !empty($this->category->tags->itemTags)) : ?>
-		<?php $this->category->tagLayout = new JLayoutFile('joomla.content.tags'); ?>
-		<?php echo $this->category->tagLayout->render($this->category->tags->itemTags); ?>
-	<?php endif; ?>
+	
 
-	<?php if ($beforeDisplayContent || $afterDisplayContent || $this->params->get('show_description', 1) || $this->params->def('show_description_image', 1)) : ?>
-		<div class="category-desc clearfix">
-			<?php if ($this->params->get('show_description_image') && $this->category->getParams()->get('image')) : ?>
-				<img src="<?php echo $this->category->getParams()->get('image'); ?>" alt="<?php echo htmlspecialchars($this->category->getParams()->get('image_alt'), ENT_COMPAT, 'UTF-8'); ?>"/>
-			<?php endif; ?>
-			<?php echo $beforeDisplayContent; ?>
-			<?php if ($this->params->get('show_description') && $this->category->description) : ?>
-				<?php echo JHtml::_('content.prepare', $this->category->description, '', 'com_content.category'); ?>
-			<?php endif; ?>
-			<?php echo $afterDisplayContent; ?>
-		</div>
-	<?php endif; ?>
+
 
 	<?php if (empty($this->lead_items) && empty($this->link_items) && empty($this->intro_items)) : ?>
 		<?php if ($this->params->get('show_no_articles', 1)) : ?>
@@ -62,21 +53,7 @@ $afterDisplayContent = trim(implode("\n", $results));
 		<?php endif; ?>
 	<?php endif; ?>
 
-	<?php $leadingcount = 0; ?>
-	<?php if (!empty($this->lead_items)) : ?>
-		<div class="items-leading clearfix">
-			<?php foreach ($this->lead_items as &$item) : ?>
-				<div class="leading-<?php echo $leadingcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?>"
-					itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-					<?php
-					$this->item = & $item;
-					echo $this->loadTemplate('item');
-					?>
-				</div>
-				<?php $leadingcount++; ?>
-			<?php endforeach; ?>
-		</div><!-- end items-leading -->
-	<?php endif; ?>
+
 
 	<?php
 	$introcount = count($this->intro_items);
@@ -92,7 +69,7 @@ $afterDisplayContent = trim(implode("\n", $results));
 			<?php endif; ?>
 			<div class="col-xs-12 col-sm-<?php echo round(12 / $this->columns); ?>">
 				<div class="item column-<?php echo $rowcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?>"
-					itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+					>
 					<?php
 					$this->item = & $item;
 					echo $this->loadTemplate('item');
@@ -107,19 +84,7 @@ $afterDisplayContent = trim(implode("\n", $results));
 		<?php endforeach; ?>
 	<?php endif; ?>
 
-	<?php if (!empty($this->link_items)) : ?>
-		<div class="items-more">
-			<?php echo $this->loadTemplate('links'); ?>
-		</div>
-	<?php endif; ?>
-
-	<?php if ($this->maxLevel != 0 && !empty($this->children[$this->category->id])) : ?>
-		<div class="cat-children">
-			<?php if ($this->params->get('show_category_heading_title_text', 1) == 1) : ?>
-				<h3> <?php echo JText::_('JGLOBAL_SUBCATEGORIES'); ?> </h3>
-			<?php endif; ?>
-			<?php echo $this->loadTemplate('children'); ?> </div>
-	<?php endif; ?>
+	
 	<?php if (($this->params->def('show_pagination', 1) == 1 || ($this->params->get('show_pagination') == 2)) && ($this->pagination->get('pages.total') > 1)) : ?>
 		<div class="pagination">
 			<?php if ($this->params->def('show_pagination_results', 1)) : ?>
@@ -128,3 +93,48 @@ $afterDisplayContent = trim(implode("\n", $results));
 			<?php echo $this->pagination->getPagesLinks(); ?> </div>
 	<?php endif; ?>
 </div>
+	<div class="col-xs-12 col-sm-3">
+		<?php foreach ($fieds as $field) {?>
+	<?php 
+	$value = JRequest::getVar('field_'.$field->id);	
+	?>
+	<h3><?php echo $field->title?>
+		<?php if ($value) {?>
+			<button class="btn btn-danger remove-selected"onclick="resetForm(<?php echo 'field_'.$field->id?>)" title="Xóa lựa chọn <?php echo $field->title?>"><i class="fa fa-times" aria-hidden="true"></i></button>
+		<?php }?>
+	</h3>
+	
+	<div class="filer-box">
+		<?php  
+
+			$options = json_decode($field->fieldparams)->options;
+			
+		?>
+		<?php foreach ($options as $option) {?>
+				<label for="field_<?php echo $field->id."_".$option->value?>">
+				<span class="<?php echo 'btn btn_field btn_field_'.$field->name.' btn_field_value_'.$option->value?> <?php if ($option->value == $value) echo "active";?>"><?php echo $option->name?></span>
+				
+				</label>
+				<input class="hidden" type="radio" name="field_<?php echo $field->id?>" value="<?php echo $option->value?>" id="field_<?php echo $field->id."_".$option->value?>" <?php if ($option->value == $value) echo "checked";?> onchange="SubmitForm('adminForm');"/>
+				
+			<?php }?>
+	</div>
+<?php } ?>
+	</div>
+		</div>
+</form>
+<script>
+	function resetForm(ele) {
+    for(var i=0;i<ele.length;i++)
+      ele[i].checked = false;
+}
+function SubmitForm(formId) {
+    var oForm = document.getElementById(formId);
+    if (oForm) {
+        oForm.submit(); 
+    }
+    else {
+        alert("DEBUG - could not find element " + formId);
+    }
+}
+</script>
