@@ -268,7 +268,7 @@ class MokaraModelProduct extends JModelList
 			$item->slug    = $item->id . ':' . $item->alias;
 			$link = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language));
 			$html .='<div class="ed-item-img">';
-			$html .='	<a href="'.$link.'"><img itemprop="image" src="images/san-pham/'.$img_link.'" alt="'.$item->title.'"/></a>';
+			$html .='	<a href="'.$link.'"><img itemprop="image" src="https://cdn.mokara.com.vn/images/san-pham/'.$img_link.'" alt="'.$item->title.'"/></a>';
 			$html .='</div>';
 			$html .='<div class="ed-product-content">';
 			$html .='<div class="page-header">';
@@ -316,7 +316,7 @@ class MokaraModelProduct extends JModelList
 			$item->slug    = $item->id . ':' . $item->alias;
 			$link = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language));
 			$html .='<div class="ed-item-img">';
-			$html .='	<a href="'.$link.'"><amp-img src="images/san-pham/'.$img_link.'"
+			$html .='	<a href="'.$link.'"><amp-img src="https://cdn.mokara.com.vn/images/san-pham/'.$img_link.'"
 					  width="300"
 					  height="433"
 					  layout="responsive"

@@ -65,12 +65,12 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 						<?php for ($i = 0; $i< count($pro_image); $i++) {?>
 							<div class="thumb_img">
 								
-								<img  class="" src="images/san-pham/<?php echo $this->item->sku.$pro_image[$i]?>" alt="<?php echo $this->item->title?>"/>
+								<img  class="" src="https://cdn.mokara.com.vn/images/san-pham/<?php echo $this->item->sku.$pro_image[$i]?>" alt="<?php echo $this->item->title?>"/>
 							</div>
 						<?php }?>
 					</div>
 					<div class="col-xs-12 col-sm-10" id="main_image">
-						<img itemprop="image" class="main-img" src="images/san-pham/<?php echo $this->item->sku.$full.$pro_image[0]?>" alt="<?php echo $this->item->title?>"/>
+						<img itemprop="image" class="main-img" src="https://cdn.mokara.com.vn/images/san-pham/<?php echo $this->item->sku.$full.$pro_image[0]?>" alt="<?php echo $this->item->title?>"/>
 						
 					
 					</div>
@@ -82,7 +82,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 						$('.thumb_img').click(function(){
 							var imgelem = $(this).find('img').attr('src');
 							<?php if ($this->item->id <646) {?>
-							imgelem = imgelem.replace("<?php echo $this->item->sku?>", "<?php echo $this->item->sku?>/full_");
+							imgelem = imgelem.replace("<?php echo $this->item->sku?>", "<?php echo $this->item->sku?>full_");
 							<?php }?>
 							$('#main_image').html('<img src="'+imgelem+'"/>' );
 
@@ -159,7 +159,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 						<input type="hidden" name="task" value="add2cart"/>
 						<input type="hidden" name="Itemid" value="502"/>
 						<input type="hidden" name="product_name" value="<?php echo $this->item->title?>"/>
-						<input type="hidden" name="product_img" value="<?php echo "images/san-pham/".$this->item->sku.$full.$pro_image[0]?>"/>
+						<input type="hidden" name="product_img" value="<?php echo "https://cdn.mokara.com.vn/images/san-pham/".$this->item->sku.$full.$pro_image[0]?>"/>
 						<input type="hidden" name="product_price" value="<?php echo $this->item->product_price?>"/>
 						<input type="hidden" name="product_old_price" value="<?php echo $this->item->product_old_price?>"/>
 						<input type="hidden" name="product_category_id" value="<?php echo $this->item->catid?>"/>
