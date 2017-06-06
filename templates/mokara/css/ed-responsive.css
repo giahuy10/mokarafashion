@@ -25,6 +25,19 @@
 }
 
 @media (max-width: 767px) {
+	.custombanner-top-right i {
+    padding: 0 10px;
+    font-size: 34px;
+    transition: .3s;
+}
+	.custombanner-top-right {
+    
+    height: auto;
+}
+	.ajax-search {
+   
+    margin: 0 auto;
+}
 	.thumb-list {
     padding: 0;
     text-align: center;
@@ -52,7 +65,7 @@
     width: 100%;
     top: initial;
 }
-.ed-search, .custombanner-top-right {
+.ed-search {
     
     height: auto;
     padding-top: 10px;

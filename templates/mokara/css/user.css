@@ -1,6 +1,11 @@
 div#ed-main-body {
     margin-top: 20px;
 }
+.btn-primary {
+    color: #fff;
+    background-color: #252525;
+    border-color: #252525;
+}
 .pagination {
     DISPLAY: block;
 }

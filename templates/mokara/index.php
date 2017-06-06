@@ -87,16 +87,17 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	<div class="ed-header" id="ed-header">
 		<div class="container">
 			<div class="row">
-				<div class="col-xs-12 col-sm-4">
+				<div class="col-xs-12 col-sm-4 hidden-xs">
 					<div class="ed-search">		
 						<jdoc:include type="modules" name="banner-top-left" style="none" />
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-4">
+				<div class="col-xs-12 col-sm-4 logo-block">
 					<jdoc:include type="modules" name="logo" style="none" />
+					
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					
+					<button class="mobile-menu btn btn-primary">Menu</button>
 					<jdoc:include type="modules" name="banner-top" style="none" />
 				</div>
 			</div>	
@@ -107,7 +108,7 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 			<div class="row">
 				<div class="col-xs-12">
 					
-					<div class="ed-navigation">			
+					<div class="ed-navigation hidden-xs">			
 						<jdoc:include type="modules" name="main-menu" style="none" />
 					</div>
 				</div>
@@ -181,6 +182,9 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 				</a>
 			</p>	
 	</footer>
+	
+
+
 	<jdoc:include type="modules" name="debug" style="none" />
 	<div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -214,6 +218,13 @@ jQuery('.fchat').toggle('slow');
   ga('create', 'UA-100364839-1', 'auto');
   ga('send', 'pageview');
 
+</script>
+<script>
+jQuery(function($) {
+    $("button").click(function(){
+        $(".ed-navigation").toggleClass('hidden-xs');
+    });
+});
 </script>
 <!-- Google Code dành cho Thẻ tiếp thị lại -->
 <!--------------------------------------------------
