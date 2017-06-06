@@ -280,7 +280,7 @@ ul.pagination li.active a {
 				<div class="logo">
 					<div class="container">
 					<a href="/" class="pull-left">
-						<amp-img src="https://cdn.mokara.com.vn/images/logo-mokara-white.png"
+						<amp-img src="images/logo-mokara-white.png"
 						  width="200"
 						  height="50"
 						
@@ -358,7 +358,7 @@ ul.pagination li.active a {
 	<footer class="ed-footer" id="ed-footer">
 		<div class="container">
 			<div class="col-xs-12 col-sm-3">
-				<amp-img src="https://cdn.mokara.com.vn/images/logo-mokara-white.png"
+				<amp-img src="images/logo-mokara-white.png"
 					  width="1051"
 					  height="262"
 					  layout="responsive"

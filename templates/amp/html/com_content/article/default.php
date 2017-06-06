@@ -71,7 +71,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 								on="tap:lightbox<?php echo $i?>"
 								  role="button"
 								  tabindex="0"
-									src="https://cdn.mokara.com.vn/images/san-pham/<?php echo $this->item->sku.$pro_image[$i]?>" alt="<?php echo $this->item->title?>"
+									src="images/san-pham/<?php echo $this->item->sku.$pro_image[$i]?>" alt="<?php echo $this->item->title?>"
 								  width="330"
 								  height="433"
 								  layout="responsive"
@@ -163,7 +163,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 						<input type="hidden" name="task" value="add2cart"/>
 						<input type="hidden" name="Itemid" value="502"/>
 						<input type="hidden" name="product_name" value="<?php echo $this->item->title?>"/>
-						<input type="hidden" name="product_img" value="<?php echo "https://cdn.mokara.com.vn/images/san-pham/".$this->item->sku.$full.$pro_image[0]?>"/>
+						<input type="hidden" name="product_img" value="<?php echo "images/san-pham/".$this->item->sku.$full.$pro_image[0]?>"/>
 						<input type="hidden" name="product_price" value="<?php echo $this->item->product_price?>"/>
 						<input type="hidden" name="product_old_price" value="<?php echo $this->item->product_old_price?>"/>
 						<input type="hidden" name="product_category_id" value="<?php echo $this->item->catid?>"/>
@@ -213,7 +213,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				<meta property="og:type" content="product"/>
 				<meta property="og:email" content="info@mokara.com.vn"/>
 				<meta property="og:url" content="'.JURI::current().'"/>
-				<meta property="og:image" content="'.JURI::base().'https://cdn.mokara.com.vn/images/san-pham/'.$this->item->sku.$full.$pro_image[0].'"/>
+				<meta property="og:image" content="'.JURI::base().'images/san-pham/'.$this->item->sku.$full.$pro_image[0].'"/>
 				<meta property="og:site_name" content="Thời trang công sở cao cấp Mokara"/>
 				<meta property="fb:admins" content="Eddy Nguyen"/>
 				<meta property="og:description" content="'.strip_tags($description).'"/>
