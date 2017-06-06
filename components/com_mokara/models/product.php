@@ -141,6 +141,7 @@ class MokaraModelProduct extends JModelList
 	// Load the results as a list of stdClass objects (see later for more options on retrieving data).
 	$fieds = $db->loadObjectList();
 	return $fieds;
+	
 	}
 	public function get_categories($cat_id = NULL) {
 	// Get a db connection.

@@ -23,6 +23,9 @@ $params = $app->getTemplate(true)->params;
 
 // Detecting Active Variables
 $option   = $app->input->getCmd('option', '');
+if ($option=="com_users" || $option=="com_mokara") {
+	header('Location: '.JUri::getInstance().'&template=mokara');
+	}
 $view     = $app->input->getCmd('view', '');
 $layout   = $app->input->getCmd('layout', '');
 $task     = $app->input->getCmd('task', '');
