@@ -71,6 +71,8 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-filter.css'?>" rel="stylesheet" type="text/css" />
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-responsive.css'?>" rel="stylesheet" type="text/css" />
 	<script src="<?php echo $this->baseurl . '/templates/' . $this->template . '/js/bootstrap.min.js'?>"></script>
+	
+	
 	<meta property="fb:app_id" content="1907423642863145" />
 	<meta property="fb:admins" content="100002787759779"/>
 
@@ -97,7 +99,7 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 					
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<button class="mobile-menu btn btn-primary visible-xs">Menu</button>
+					<button class="mobile-menu btn btn-primary visible-xs pull-left">Menu</button>
 					<jdoc:include type="modules" name="banner-top" style="none" />
 				</div>
 			</div>	

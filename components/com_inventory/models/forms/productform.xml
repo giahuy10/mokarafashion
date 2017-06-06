@@ -57,7 +57,7 @@
       <option value="8">COM_INVENTORY_PRODUCTS_NECK_OPTION_8</option>
       <option value="9">COM_INVENTORY_PRODUCTS_NECK_OPTION_9</option>
     </field>
-    <field name="sleeve" type="list" required="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_SLEEVE" description="COM_INVENTORY_FORM_DESC_PRODUCT_SLEEVE" hint="COM_INVENTORY_FORM_LBL_PRODUCT_SLEEVE" showon="category!:23">
+    <field name="sleeve" type="list" required="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_SLEEVE" description="COM_INVENTORY_FORM_DESC_PRODUCT_SLEEVE" hint="COM_INVENTORY_FORM_LBL_PRODUCT_SLEEVE">
       <option value="1">COM_INVENTORY_PRODUCTS_SLEEVE_OPTION_1</option>
       <option value="2">COM_INVENTORY_PRODUCTS_SLEEVE_OPTION_2</option>
       <option value="3">COM_INVENTORY_PRODUCTS_SLEEVE_OPTION_3</option>

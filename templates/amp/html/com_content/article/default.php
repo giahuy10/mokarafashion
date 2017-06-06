@@ -170,10 +170,11 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 					</form>
 					<div class="clearfix"></div>
 					<div class="support">
-						<a href="" class="btn btn-warning bottom-10"><i class="fa fa-bar-chart" aria-hidden="true"></i> Xem bảng size</a> 
-						<a href="" class="btn btn-success bottom-10"><i class="fa fa-phone" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 	
+						<a	<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=647&Itemid=530')?>" class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i> Xem bảng size</a> 
+						<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=646&Itemid=529')?>" class="btn btn-success"><i class="fa fa-info-circle" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 		
 						
 					</div>
+					
 					 
 			</div><!--END ART TO CART SECTION-->
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 ed-loyalty-block hidden">

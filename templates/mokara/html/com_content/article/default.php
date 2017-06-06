@@ -166,8 +166,13 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 					</form>
 					<div class="support">
 						<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=647&Itemid=530')?>" class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i> Xem bảng size</a> 
-						<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=646&Itemid=529')?>" class="btn btn-success"><i class="fa fa-phone" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 	
+						<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=646&Itemid=529')?>" class="btn btn-success"><i class="fa fa-info-circle" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 	
+						<div class="call-to-action hidden">
 						
+							<a href="tel:0906147557">
+								<i class="fa fa-phone" aria-hidden="true"></i>
+							</a>	
+						</div>	
 					</div>
 					<br/>
 						<div class="fb-like" data-href="<?php echo JUri::getInstance();?>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>

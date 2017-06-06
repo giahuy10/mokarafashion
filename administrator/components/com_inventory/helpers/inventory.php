@@ -33,10 +33,11 @@ class InventoryHelper
 		);
 
 		JHtmlSidebar::addEntry(
-			JText::_('COM_INVENTORY_TITLE_FILTERS'),
-			'index.php?option=com_inventory&view=filters',
-			$vName == 'filters'
+			JText::_('COM_INVENTORY_TITLE_SALES'),
+			'index.php?option=com_inventory&view=sales',
+			$vName == 'sales'
 		);
+		
 	}
 
 	/**

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="filter">
+        <field name="search" type="text" hint="COM_INVENTORY_SEARCH_FILTER_SUBMIT"
+               label="COM_USERS_FILTER_SEARCH_DESC"
+               class="js-stools-search-string" />
+
+        <field name="state"
+               type="status"
+               label="COM_INVENTORY_FILTER_STATE"
+               description="COM_INVENTORY_FILTER_STATE_DESC"
+               onchange="this.form.submit();"
+        >
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+        </field>
+
+        <field name="created_from_dateformat" label="COM_INVENTORY_LIST_LBL_SALE_CREATED_FILTER_FROM" type="calendar" onchange="this.form.submit();" filter="safehtml" class="inputbox" hint="COM_INVENTORY_LIST_LBL_SALE_CREATED_FILTER_FROM"/>
+<field name="created_to_dateformat" label="COM_INVENTORY_LIST_LBL_SALE_CREATED_FILTER_TO" type="calendar" onchange="this.form.submit();" filter="safehtml" class="inputbox" hint="COM_INVENTORY_LIST_LBL_SALE_CREATED_FILTER_TO"/>
+<field name="status" label="COM_INVENTORY_FORM_LBL_SALE_STATUS" type="list" onchange="this.form.submit();" default="COM_INVENTORY_SALES_STATUS_FILTER">
+  <option value="">COM_INVENTORY_SALES_STATUS_FILTER</option>
+  <option value="1">COM_INVENTORY_SALES_STATUS_OPTION_1</option>
+  <option value="2">COM_INVENTORY_SALES_STATUS_OPTION_2</option>
+  <option value="3">COM_INVENTORY_SALES_STATUS_OPTION_3</option>
+  <option value="4">COM_INVENTORY_SALES_STATUS_OPTION_4</option>
+  <option value="5">COM_INVENTORY_SALES_STATUS_OPTION_5</option>
+  <option value="6">COM_INVENTORY_SALES_STATUS_OPTION_6</option>
+  <option value="7">COM_INVENTORY_SALES_STATUS_OPTION_7</option>
+</field>
+
+
+    </fields>
+
+    <fields name="list">
+
+        <field name="fullordering"
+               type="list"
+               label="COM_CONTENT_LIST_FULL_ORDERING"
+               description="COM_CONTENT_LIST_FULL_ORDERING_DESC"
+               onchange="this.form.submit();"
+               default="a.id DESC"
+        >
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="a.`id` asc">ID Ascending</option><option value="a.`id` desc">ID Descending</option><option value="a.`ordering` asc">Order Ascending</option><option value="a.`ordering` desc">Order Descending</option><option value="a.`state` asc">State Ascending</option><option value="a.`state` desc">State Descending</option><option value="a.`user_id` asc">User  Ascending</option><option value="a.`user_id` desc">User  Descending</option><option value="a.`created` asc">Created Ascending</option><option value="a.`created` desc">Created Descending</option><option value="a.`total` asc">Total Ascending</option><option value="a.`total` desc">Total Descending</option><option value="a.`status` asc">Status Ascending</option><option value="a.`status` desc">Status Descending</option>
+
+        </field>
+
+        <field name="limit"
+               type="limitbox"
+               class="input-mini"
+               default="25"
+               onchange="this.form.submit();"
+        />
+
+    </fields>
+
+</form>

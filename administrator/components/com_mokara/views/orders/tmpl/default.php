@@ -254,9 +254,9 @@ if (!empty($this->extra_sidebar))
 				<?php endif; ?>
 				<?php if ($canEdit) : ?>
 					<a href="<?php echo JRoute::_('index.php?option=com_mokara&task=order.edit&id='.(int) $item->id); ?>">
-					<?php echo $this->escape($item->user_id); ?></a>
+					<?php echo JFactory::getUser($item->user_id)->name; ?></a>
 				<?php else : ?>
-					<?php echo $this->escape($item->user_id); ?>
+					<?php echo JFactory::getUser($item->user_id)->name; ?>
 				<?php endif; ?>
 
 				</td>				<td>

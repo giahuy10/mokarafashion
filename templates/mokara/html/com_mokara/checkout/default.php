@@ -77,7 +77,7 @@ $userId     = $user->get('id');
 		}
 		 unset($_SESSION['itemcart']);
 		?>
-		Thanks for your purchasing!!!
+		<p class="text-success">Quý khách đã đặt hàng thành công. Chúng tôi sẽ liên hệ với quý khách trong thời gian sớm nhất để xác nhận đơn hàng.</p>
 	<?php } else {
 
 ?>

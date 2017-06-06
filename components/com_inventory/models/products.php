@@ -183,26 +183,11 @@ class InventoryModelProducts extends JModelList
 		if ($filter_neck != '') {
 			$query->where("a.neck = '".$db->escape($filter_neck)."'");
 		}
-		// Filtering category
-		$filter_category = $this->state->get("filter.category");
-		if ($filter_category != '') {
-			$query->where("a.category = '".$db->escape($filter_category)."'");
-		}
 
 		// Filtering sleeve
 		$filter_sleeve = $this->state->get("filter.sleeve");
-		if ($filter_sleeve != '' && $filter_category != 23) {
+		if ($filter_sleeve != '') {
 			$query->where("a.sleeve = '".$db->escape($filter_sleeve)."'");
-		}
-		// Filtering skirt
-		$filter_skirt = $this->state->get("filter.skirt");
-		if ($filter_skirt != '' && $filter_category == 23) {
-			$query->where("a.skirt = '".$db->escape($filter_skirt)."'");
-		}
-		// Filtering price
-		$filter_price = $this->state->get("filter.price");
-		if ($filter_price != '') {
-			$query->where("a.price BETWEEN ".$filter_price);
 		}
 
 		// Filtering type
