@@ -297,7 +297,7 @@ ul.pagination li.active a {
 				
 				<div class="container">
 					<div class="header-icon">
-					<a href="/cart?view=orders">Giỏ hàng </a> | <a href="/log-in/">Đăng nhập</a> 	
+					<a href="index.php?option=com_mokara&view=orders&Itemid=502">Giỏ hàng </a> | <a href="index.php?option=com_users&view=login&Itemid=322">Đăng nhập</a> 	
 					</div>
 		
 				</div>	
