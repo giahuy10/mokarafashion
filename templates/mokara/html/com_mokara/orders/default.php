@@ -10,12 +10,6 @@
 defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-header("Content-type: application/json");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Origin: *.ampproject.org");
-header("AMP-Access-Control-Allow-Source-Origin: https://www.mokara.com.vn");
-header("Access-Control-Expose-Headers: AMP-Access-Control-Allow-Source-Origin");
-
 $user       = JFactory::getUser();
 $userId     = $user->get('id');
 $update = 0;
@@ -65,7 +59,6 @@ if(!empty(JRequest::getVar('quantity')) && $update == 0) {
 ?>
 
 
-<div class="container">
 <?php if ($_SESSION["itemcart"] && count($_SESSION["itemcart"]) >= 1) { ?>
 	<table id="cart" class="table table-hover table-condensed">
     				<thead>
@@ -81,7 +74,7 @@ if(!empty(JRequest::getVar('quantity')) && $update == 0) {
 						<?php foreach($_SESSION["itemcart"] as $key => $cart) {?>
 						<?php $total += $cart['quantity']*$cart['product_price'];?>
 						<tr>
-							<td data-th="Product">
+							<td data-th="Sản phẩm">
 								<div class="row">
 									<div class="col-sm-2 hidden-xs"><img src="<?php echo $cart['product_img']?>" alt="<?php echo $cart['title']?>" class="img-responsive"></div>
 									<div class="col-sm-10">
@@ -93,16 +86,16 @@ if(!empty(JRequest::getVar('quantity')) && $update == 0) {
 									</div>
 								</div>
 							</td>
-							<td data-th="Price">
+							<td data-th="Giá">
 								<?php if ($cart['product_old_price']) {?>
 								<span class="old_price"><s><?php echo $productMod->ed_number_format($cart['product_old_price'])?></s></span>
 								<br/>
 								<?php }?>
 								<?php echo $productMod->ed_number_format($cart['product_price'])?></td>
-							<td data-th="Quantity">
+							<td data-th="Số lượng">
 								<input type="number" class="form-control text-center" value="<?php echo $cart['quantity']?>">
 							</td>
-							<td data-th="Subtotal" class="text-center"><?php echo $productMod->ed_number_format($cart['quantity']*$cart['product_price'])?></td>
+							<td data-th="Thành tiền" class="text-center"><?php echo $productMod->ed_number_format($cart['quantity']*$cart['product_price'])?></td>
 							<td class="actions" data-th="">
 								
 								<a href="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502&removeitem='.$key)?>"><i class="fa fa-trash-o"></i></button>		</a>						
@@ -127,5 +120,5 @@ if(!empty(JRequest::getVar('quantity')) && $update == 0) {
 	<a href="index.php?field_5=1&option=com_mokara&view=filter&Itemid=528" class="btn btn-danger"> đang giảm giá</a> hoặc các sản phẩm
 	<a href="index.php?option=com_mokara&view=filter&Itemid=528" class="btn btn-success"> mới nhất</a>
 <?php }?>	
-</div>
+
 

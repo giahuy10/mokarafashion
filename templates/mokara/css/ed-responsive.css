@@ -25,6 +25,9 @@
 }
 
 @media (max-width: 767px) {
+	table#cart a {
+    color: #fff;
+}
 	.custombanner-top-right i {
     padding: 0 10px;
     font-size: 34px;

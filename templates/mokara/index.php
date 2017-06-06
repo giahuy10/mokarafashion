@@ -97,7 +97,7 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 					
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<button class="mobile-menu btn btn-primary">Menu</button>
+					<button class="mobile-menu btn btn-primary visible-xs">Menu</button>
 					<jdoc:include type="modules" name="banner-top" style="none" />
 				</div>
 			</div>	

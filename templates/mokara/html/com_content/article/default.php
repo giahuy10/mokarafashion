@@ -165,8 +165,8 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 						<input type="hidden" name="product_category_id" value="<?php echo $this->item->catid?>"/>
 					</form>
 					<div class="support">
-						<a href="" class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i> Xem bảng size</a> 
-						<a href="" class="btn btn-success"><i class="fa fa-phone" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 	
+						<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=647&Itemid=530')?>" class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i> Xem bảng size</a> 
+						<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=646&Itemid=529')?>" class="btn btn-success"><i class="fa fa-phone" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 	
 						
 					</div>
 					<br/>
