@@ -85,7 +85,7 @@ class Params
 
 		$set->cdn = rtrim($params->{'cdn' . $setid}, '/');
 
-		$set->protocol = 'http://';
+		$set->protocol = 'https://';
 
 		$set->filetypes         = $filetypes;
 		$set->ignorefiles       = self::getFileTypes($params->{'ignorefiles' . $setid});
