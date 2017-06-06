@@ -8,7 +8,7 @@
  */
 
 defined('_JEXEC') or die;
-JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_content/models', 'MokaraModel');
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
 $model = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
 
 ?>
