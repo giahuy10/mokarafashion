@@ -102,7 +102,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				<span itemprop="ratingValue"><?php echo ($this->item->hits-1)*5/$this->item->hits?></span> trên <span itemprop="reviewCount"><?php echo $this->item->hits?>
 				  </span> đánh giá
 				</span>
-				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528&cat_id='.$this->item->catid)?>"><?php echo $productMod->get_categories($this->item->catid)[0]->title?></a>
+				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid)?>"><?php echo $productMod->get_categories($this->item->catid)[0]->title?></a>
 				<?php foreach ($this->item->jcfields as $field) : ?>
 					<?php if ($field->id > 7 && $field->id != 14 && $field->value) {?>
 					<?php $description .= ' | '.$field->label.': '.$field->value;?>
