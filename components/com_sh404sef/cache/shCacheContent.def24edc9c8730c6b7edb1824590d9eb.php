@@ -132,3 +132,17 @@ $this->_urlCache['102ddf4adf158262a232e205be619be8']='index.php?option=com_inven
 $shURLCacheCreationDate=1496477125;
 $this->_urlCache['12229b9e8ec9ff8b3a44cde0e06dd405']='index.php?option=com_search&amp;Itemid=543&amp;lang=vi&amp;view=product#search#0';
 $shURLCacheCreationDate=1496477134;
+$this->_urlCache['526d9511d77d802ef78b5eed4088737a']='index.php?option=com_content&amp;Itemid=101&amp;format=feed&amp;lang=vi&amp;type=rss&amp;view=featured#feed/rss/#0';
+$this->_urlCache['0aeb0daa4b44cf0e6555b4050a43a1a0']='index.php?option=com_content&amp;Itemid=101&amp;format=feed&amp;lang=vi&amp;type=atom&amp;view=featured#feed/atom/#0';
+$this->_urlCache['7895d20b175647b0223d38c48cef3846']='index.php?option=com_content&amp;Itemid=480&amp;id=21&amp;lang=vi&amp;layout=blog&amp;view=category#dam/#0';
+$this->_urlCache['996718aa64baa55de57eba7ccb040818']='index.php?option=com_content&amp;Itemid=446&amp;id=13&amp;lang=vi&amp;layout=mokara%3Amokara&amp;view=category#tin-tuc/#0';
+$this->_urlCache['d1a11b9b60f5fed325bc07361a16c0c7']='index.php?option=com_search&amp;Itemid=101&amp;lang=vi&amp;view=featured#search#0';
+$shURLCacheCreationDate=1497023630;
+$this->_urlCache['f0863e14b90e27f64cf1eec9822f5779']='index.php?option=com_content&amp;Itemid=447&amp;catid=24&amp;id=626&amp;lang=vi&amp;view=article#mang-to/mt1504#0';
+$this->_urlCache['9a8807cfab744c7011ea076739d2f64e']='index.php?option=com_content&amp;Itemid=447&amp;catid=24&amp;id=627&amp;lang=vi&amp;view=article#mang-to/mt1507#0';
+$this->_urlCache['4a215f41f8b38ad19b4d6149709ce94f']='index.php?option=com_content&amp;Itemid=447&amp;catid=24&amp;id=628&amp;lang=vi&amp;view=article#mang-to/mt1508#0';
+$shURLCacheCreationDate=1497023649;
+$this->_urlCache['68a7c3d04ce9062013136154534a82da']='index.php?option=com_search&amp;lang=vi#search#0';
+$shURLCacheCreationDate=1497023679;
+$this->_urlCache['4a74f1a1968d4048e9590a980fcb2b88']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=517&amp;lang=vi&amp;view=article#dam/dk1518#0';
+$shURLCacheCreationDate=1497024313;

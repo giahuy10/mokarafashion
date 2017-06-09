@@ -37,7 +37,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 
 	$this->item = $productMod->get_custom_field($this->item);
 
-	$description = 'Thời trang công sở cao cấp Mokara - '.$productMod->get_categories($this->item->catid)[0]->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | Giá: '.$productMod->ed_number_format($this->item->product_price);
+	$description = $productMod->get_categories($this->item->catid)[0]->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | Giá: '.$productMod->ed_number_format($this->item->product_price);
 	$title = $productMod->get_categories($this->item->catid)[0]->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | '.$productMod->ed_number_format($this->item->product_price);
 	$code = $this->item->sku;
 	?>
@@ -106,7 +106,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				  </span> đánh giá
 				</span>
 				<div class="bottom-10">
-				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_mokara&view=filter&Itemid=528&cat_id='.$this->item->catid)?>"><?php echo $productMod->get_categories($this->item->catid)[0]->title?></a>
+				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid)?>"><?php echo $productMod->get_categories($this->item->catid)[0]->title?></a>
 				</div>
 				<?php foreach ($this->item->jcfields as $field) : ?>
 					<?php if ($field->id > 7 && $field->id != 14) {?>
@@ -206,6 +206,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 		</div>
 		
 		<?php 
+			
 				$doc = JFactory::getDocument();
 				$doc->setDescription(strip_tags($description));
 				$doc->setTitle(strip_tags($title));

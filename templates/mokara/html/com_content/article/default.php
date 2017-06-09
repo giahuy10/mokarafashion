@@ -37,7 +37,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 	
 	$this->item = $productMod->get_custom_field($this->item);
 
-	$description = 'Thời trang công sở cao cấp Mokara - '.$productMod->get_categories($this->item->catid)[0]->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | Giá: '.$productMod->ed_number_format($this->item->product_price);
+	$description = $productMod->get_categories($this->item->catid)[0]->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | Giá: '.$productMod->ed_number_format($this->item->product_price);
 	$title = $productMod->get_categories($this->item->catid)[0]->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | '.$productMod->ed_number_format($this->item->product_price);
 	
 	?>
@@ -202,6 +202,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 		</div>
 		</div>
 		<?php 
+			
 				$doc = JFactory::getDocument();
 				$doc->setDescription(strip_tags($description));
 				$doc->setTitle(strip_tags($title));
