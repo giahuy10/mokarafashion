@@ -104,9 +104,16 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				</span>
 				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid)?>"><?php echo $productMod->get_categories($this->item->catid)[0]->title?></a>
 				<?php foreach ($this->item->jcfields as $field) : ?>
-					<?php if ($field->id > 7 && $field->id != 14 && $field->value) {?>
+					<?php 
+					
+					if ($field->id > 7 && $field->id != 14 && $field->value) {?>
 					<?php $description .= ' | '.$field->label.': '.$field->value;?>
 					<div class="product-custom-field"><strong><?php echo $field->label . ': </strong>' . $field->value; ?></div>
+					<?php 
+					echo "<pre>";
+					var_dump($field->rawvalue);
+					echo "</pre>";
+					?>
 					<?php }?>
 				<?php endforeach ?>
 			

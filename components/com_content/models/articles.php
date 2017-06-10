@@ -51,7 +51,7 @@ class ContentModelArticles extends JModelList
 				'publish_down', 'a.publish_down',
 				'images', 'a.images',
 				'urls', 'a.urls',
-				'filter_tag'
+				'filter_tag','field_14'
 			);
 		}
 
@@ -76,6 +76,7 @@ class ContentModelArticles extends JModelList
 	 */
 	protected function populateState($ordering = 'ordering', $direction = 'ASC')
 	{
+	
 		$app = JFactory::getApplication();
 
 		// List state information
@@ -88,8 +89,7 @@ class ContentModelArticles extends JModelList
 		$value = $app->input->get('filter_tag', 0, 'uint');
 		$this->setState('filter.tag', $value);
 		
-		$value = $app->input->get('field_14', 0, 'uint');
-		$this->setState('filter.price', $value);
+
 		
 		
 

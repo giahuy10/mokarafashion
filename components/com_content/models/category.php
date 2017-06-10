@@ -88,7 +88,7 @@ class ContentModelCategory extends JModelList
 				'publish_up', 'a.publish_up',
 				'publish_down', 'a.publish_down',
 				'author', 'a.author',
-				'filter_tag'
+				'filter_tag','field_14'
 			);
 		}
 

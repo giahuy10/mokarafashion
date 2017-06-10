@@ -198,19 +198,7 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 }(document, 'script', 'facebook-jssdk'));</script>
 
 
-  <script>
-  jQuery(document).ready(function () {
-  jQuery(".chat_fb").click(function() {
-jQuery('.fchat').toggle('slow');
-  });
-  });
-  </script>
-<div id="cfacebook">
-  <a href="javascript:;" class="chat_fb" onclick="return:false;"><i class="fa fa-facebook-square"></i> Hỗ trợ trực tuyến</a>
-  <div class="fchat">
-  <div class="fb-page" data-tabs="messages" data-href="https://www.facebook.com/Mokara-Fashion-1357088934371320/" data-width="250" data-height="400" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"></div>
-  </div>
-  </div>
+
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -246,6 +234,22 @@ var google_remarketing_only = true;
 <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/853498944/?guid=ON&amp;script=0"/>
 </div>
 </noscript>
-
+<script type="text/javascript">
+var LHCChatOptions = {};
+LHCChatOptions.opt = {widget_height:340,widget_width:300,popup_height:520,popup_width:500,domain:'mokara.com'};
+<?php if ($user->id) {?>
+LHCChatOptions.attr_online = new Array();
+LHCChatOptions.attr_online.push({'name':'email','value':'<?php echo $user->email?>'});
+LHCChatOptions.attr_online.push({'name':'phone','value':'<?php echo $user->phone?>'});
+LHCChatOptions.attr_online.push({'name':'username','value':'<?php echo $user->name?>'});
+<?php }?>
+(function() {
+var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+var referrer = (document.referrer) ? encodeURIComponent(document.referrer.substr(document.referrer.indexOf('://')+1)) : '';
+var location  = (document.location) ? encodeURIComponent(window.location.href.substring(window.location.protocol.length)) : '';
+po.src = '//mokara.com/livechat/index.php/vnm/chat/getstatus/(click)/internal/(position)/bottom_right/(ma)/br/(check_operator_messages)/true/(top)/350/(units)/pixels/(leaveamessage)/true/(department)/1?r='+referrer+'&l='+location;
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+})();
+</script>
 </body>
 </html>
