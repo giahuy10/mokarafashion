@@ -110,9 +110,9 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 					<?php $description .= ' | '.$field->label.': '.$field->value;?>
 					<div class="product-custom-field"><strong><?php echo $field->label . ': </strong>' . $field->value; ?></div>
 					<?php 
-					echo "<pre>";
-					var_dump($field->rawvalue);
-					echo "</pre>";
+					//echo "<pre>";
+					////var_dump($field->rawvalue);
+					//echo "</pre>";
 					?>
 					<?php }?>
 				<?php endforeach ?>
