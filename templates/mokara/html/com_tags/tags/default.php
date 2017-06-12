@@ -21,7 +21,7 @@ $descriptionImage = $this->params->get('all_tags_description_image');
 		 
 		// Select all records from the user profile table where key begins with "custom.".
 		// Order it by the ordering field.
-		$query->select('a.*');
+		$query->select('b.*');
 
 		$query->from($db->quoteName('#__fields_values','a'));
 		$query->join('INNER', $db->quoteName('#__content','b') . ' ON (' . $db->quoteName('a.item_id') . ' = ' . $db->quoteName('b.id') . ')');
@@ -34,7 +34,7 @@ $descriptionImage = $this->params->get('all_tags_description_image');
 		$items = $db->loadObjectlist();
 		$list_item = "0";
 		 foreach ($items as $key=> $item) {
-			 $list_item.=",".$item->item_id;
+			 $list_item.=",".$item->id;
 			$profile[$key] = new stdClass();
 			$profile[$key]->core_type_alias = "com_content.article";
 			$profile[$key]->core_title = $item->title;
@@ -66,6 +66,7 @@ $descriptionImage = $this->params->get('all_tags_description_image');
 			//echo "</pre>";
 		
 		}
+		
 ?>
 <?php 
 
