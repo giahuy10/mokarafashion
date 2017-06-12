@@ -32,7 +32,7 @@ class MokaraModelProduct extends JModelList
 	 * @see        JController
 	 * @since      1.6
 	 */
-	 public function check_filter_value ($product_ids, $field_id, $value) {
+	 public function check_filter_value ($product_ids, $field_id, $value, $cat_id) {
 		 $product_ids = implode(",",$product_ids);
 		 $db = JFactory::getDbo();
 		 
@@ -43,11 +43,17 @@ class MokaraModelProduct extends JModelList
 		// Order it by the ordering field.
 		$query->select($db->quoteName('item_id'));
 		
-		$query->from($db->quoteName('#__fields_values'));
+		$query->from($db->quoteName('#__content','a'));
+		$query->join('INNER', $db->quoteName('#__fields_values', 'b') . ' ON (' . $db->quoteName('b.item_id') . ' = ' . $db->quoteName('a.id') . ')');
+		if ($cat_id !=20) {
+			$query->join('INNER', $db->quoteName('#__categories','c') . ' ON (' . $db->quoteName('a.catid') . ' = ' . $db->quoteName('c.id') . ')');
+			$query->where($db->quoteName('c.id') . ' = '. $db->quote($cat_id));
+		}
 		
-		$query->where($db->quoteName('field_id') . ' = '. $field_id);
-		$query->where($db->quoteName('value') . ' = '. $value);
-		$query->where($db->quoteName('item_id') . ' in ('. $product_ids.')');
+		$query->where($db->quoteName('a.state') . ' = '. $db->quote('1'));
+		$query->where($db->quoteName('b.field_id') . ' = '. $field_id);
+		$query->where($db->quoteName('b.value') . ' = '. $value);
+		$query->where($db->quoteName('b.item_id') . ' in ('. $product_ids.')');
 		 
 		// Reset the query using our newly populated query object.
 		$db->setQuery($query);
