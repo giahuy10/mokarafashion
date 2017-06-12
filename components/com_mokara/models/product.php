@@ -41,11 +41,11 @@ class MokaraModelProduct extends JModelList
 		 
 		// Select all records from the user profile table where key begins with "custom.".
 		// Order it by the ordering field.
-		$query->select($db->quoteName('alias'));
+		$query->select($db->quoteName('oldurl'));
 		
-		$query->from($db->quoteName('#__menu'));
+		$query->from($db->quoteName('#__sh404sef_urls'));
 		
-		$query->where($db->quoteName('link') . ' = '. $db->quote($link));
+		$query->where($db->quoteName('newurl') . ' = '. $db->quote($link));
 		
 		 
 		// Reset the query using our newly populated query object.
