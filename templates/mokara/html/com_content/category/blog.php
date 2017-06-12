@@ -136,14 +136,14 @@ if ($tag_id > 0) {
 		?>
 		<?php foreach ($options as $option) {?>
 			<?php $existed = $productMod->check_filter_value($product_ids, $field->id, $option->value)?>
-				<?php if ($existed > 0) {?>
-				<label for="field_<?php echo $field->id."_".$option->value?>" >
 				
-				<span class="<?php echo 'btn btn_field btn_field_'.$field->name.' btn_field_value_'.$option->value?> <?php if ($option->value == $value) echo "active";?>"><?php echo $option->name?> (<?php echo $existed?>)</span>
+				<label for="field_<?php echo $field->id."_".$option->value?>" class="<?php if (!$existed) echo "hidden"?>" >
+				
+				<span class="<?php echo 'btn btn_field btn_field_'.$field->name.' btn_field_value_'.$option->value?> <?php if ($option->value == $value) echo "active";?>"><?php echo $option->name?></span>
 				
 				</label>
 				<input class="hidden" type="radio" name="field_<?php echo $field->id?>" value="<?php echo $option->value?>" id="field_<?php echo $field->id."_".$option->value?>" <?php if ($option->value == $value) echo "checked";?> onchange="SubmitForm('adminForm');"/>
-				<?php }?>
+				
 			<?php }?>
 	</div>
 <?php } ?>
