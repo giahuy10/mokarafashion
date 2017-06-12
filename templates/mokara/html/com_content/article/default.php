@@ -108,11 +108,25 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 					
 					if ($field->id > 7 && $field->id != 14 && $field->value) {?>
 					<?php $description .= ' | '.$field->label.': '.$field->value;?>
-					<div class="product-custom-field"><strong><?php echo $field->label . ': </strong>' . $field->value; ?></div>
+					
+					
+				
+					
 					<?php 
-					//echo "<pre>";
-					////var_dump($field->rawvalue);
-					//echo "</pre>";
+					if (is_array($field->rawvalue)) {
+						$field_value = explode(", ",$field->value);
+						$c=array_combine($field->rawvalue,$field_value);
+						echo '<div class="product-custom-field"><strong>'.$field->label . ': </strong>' ;
+						foreach ($c as $key=>$value) {
+							echo '<a href="'.JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid.'&field_'.$field->id.'='.$key).'"> '.$value.' </a>';
+						}
+						echo '</div>';
+					}else {
+						echo '<div class="product-custom-field"><strong>'.$field->label . ': </strong>' ;
+						echo '<a href="'.JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid.'&field_'.$field->id.'='.$field->rawvalue).'"> '.$field->value.' </a>';
+						echo '</div>';
+					}
+					
 					?>
 					<?php }?>
 				<?php endforeach ?>

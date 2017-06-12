@@ -167,3 +167,6 @@ $this->_urlCache['446b1839eb4c51c1fd9e17b1f4ac5fcc']='index.php?option=com_conte
 $shURLCacheCreationDate=1497094134;
 $this->_urlCache['0acfa6cd64cbcfadf537e84558bb3685']='index.php?option=com_search&amp;Itemid=448&amp;lang=vi&amp;view=article#search#0';
 $shURLCacheCreationDate=1497106361;
+$this->_urlCache['477a91d838916e9a091a385cf7296c6d']='index.php?option=com_content&amp;Itemid=450&amp;catid=2&amp;id=310&amp;lang=vi&amp;view=article#showroom-dai-ly#0';
+$this->_urlCache['302fa87efd612c4d958ce21eb9a5217b']='index.php?option=com_search&amp;Itemid=450&amp;lang=vi&amp;view=article#search#0';
+$shURLCacheCreationDate=1497148990;

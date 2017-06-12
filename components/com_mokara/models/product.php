@@ -32,6 +32,142 @@ class MokaraModelProduct extends JModelList
 	 * @see        JController
 	 * @since      1.6
 	 */
+	 public function order_history ($order_id) {
+		  // Get a db connection.
+		$db = JFactory::getDbo();
+		 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName(array('order_id', 'status', 'updated', 'comment')));
+		
+		$query->from($db->quoteName('#__inventory_sale_history'));
+		
+		$query->where($db->quoteName('order_id') . ' = '. $db->quote($order_id));
+		$query->order('updated DESC');
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		$histories = $db->loadObjectList();
+		return ($histories);
+	 }
+	 public function order_detail ($order_id) {
+		 // Get a db connection.
+		$db = JFactory::getDbo();
+		 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName(array('order_id', 'product_id', 'quantity', 'product_price','size','title','alias','catid','language')));
+		
+		$query->from($db->quoteName('#__inventory_order_detail','a'));
+		$query->join('INNER', $db->quoteName('#__content', 'b') . ' ON (' . $db->quoteName('a.product_id') . ' = ' . $db->quoteName('b.id') . ')');
+		$query->where($db->quoteName('order_id') . ' = '. $db->quote($order_id));
+		$query->order('b.id ASC');
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		$products = $db->loadObjectList();
+		$html="";
+		$html.='<table id="cart" class="table table-hover table-condensed">
+    				<thead>
+						<tr>
+							<th style="width:50%">Sản phẩm</th>
+							<th style="width:10%">Giá</th>
+							<th style="width:8%">Số lượng</th>
+							<th style="width:22%" class="text-center">Thành tiền</th>
+							<th style="width:10%"></th>
+						</tr>
+					</thead>
+					<tbody>';
+		$total = 0;foreach($products as $key => $product) {
+		$product->slug    = $product->product_id . ':' . $product->alias;
+			$link = JRoute::_(ContentHelperRoute::getArticleRoute($product->slug, $product->catid, $product->language));
+		$total += $product->quantity*$product->product_price;
+		$html.='<tr>
+					<td data-th="Product">
+							
+									
+										<h4 class="nomargin">
+										<a href="'.$link.'">'.$product->title.'</a>';
+									
+										
+		$html.='</h4>
+										<strong>Size: </strong> '.$product->size;
+										
+		
+								
+			$html.='				</td>
+							<td data-th="Price">';
+							if (isset($product->old_price))
+							$html.='	<s>'.$this->ed_number_format($product->old_price).'</s>';
+		$html.='<br/>
+								'.$this->ed_number_format($product->product_price).'</td>
+							<td data-th="Quantity" class="text-center">
+								'.$product->quantity.'
+							</td>
+							<td data-th="Subtotal" class="text-center">'.$this->ed_number_format($product->quantity*$product->product_price).'</td>
+						
+						</tr>';
+						}
+		$html.='</tbody>
+					<tfoot>
+						<tr class="visible-xs">
+							<td class="text-center"><strong>Tổng: '.$this->ed_number_format($total).'</strong></td>
+						</tr>
+						<tr>
+							
+							<td colspan="2" class="hidden-xs"></td>
+							<td  class="hidden-xs text-center"><strong>Tổng: </strong></td>
+							<td class="hidden-xs text-center"><strong>'.$this->ed_number_format($total).'</strong></td>
+				
+						</tr>
+					</tfoot>
+				</table>';
+		return ($html);
+	 }
+	public function save_user_filter ($user_id = "", $ip, $field_id, $value) {
+		// Create and populate an object.
+			$profile = new stdClass();
+			$profile->user_id = $user_id;
+			$profile->ip = $ip;
+			
+			$profile->field_id = $field_id;
+			$profile->value = $value;
+
+		
+			 
+			// Insert the object into the user profile table.
+			$result = JFactory::getDbo()->insertObject('#__user_filter', $profile);
+	}
+	public function save_user_log ($user_id = "", $ip, $component, $view, $layout="", $task="", $item, $ref, $mobile=0) {
+		
+		// Create and populate an object.
+			$profile = new stdClass();
+			$profile->user_id = $user_id;
+			$profile->ip = $ip;
+			$profile->component = $component;
+			$profile->view = $view;
+			$profile->layout = $layout;
+			$profile->task = $task;
+			$profile->item = $item;
+			$profile->ref = $ref;
+			$profile->mobile = $mobile;
+
+		
+			 
+			// Insert the object into the user profile table.
+			$result = JFactory::getDbo()->insertObject('#__user_logs', $profile);
+		
+	} 
 	public function get_related_products ($field_id, $item_id, $cat_id, $price, $template = NULL) {
 		$db = JFactory::getDbo();
 		$query2 = $db->getQuery(true);

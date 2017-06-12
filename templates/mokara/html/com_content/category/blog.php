@@ -29,7 +29,7 @@ $beforeDisplayContent = trim(implode("\n", $results));
 
 $results = $dispatcher->trigger('onContentAfterDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
 $afterDisplayContent = trim(implode("\n", $results));
-
+		
 ?>
 <form action="<?php echo htmlspecialchars(JUri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm" class="form-inline">
 <div class="row">
@@ -111,7 +111,7 @@ $afterDisplayContent = trim(implode("\n", $results));
 			
 		?>
 		<?php foreach ($options as $option) {?>
-				<label for="field_<?php echo $field->id."_".$option->value?>">
+				<label for="field_<?php echo $field->id."_".$option->value?>" >
 				<span class="<?php echo 'btn btn_field btn_field_'.$field->name.' btn_field_value_'.$option->value?> <?php if ($option->value == $value) echo "active";?>"><?php echo $option->name?></span>
 				
 				</label>

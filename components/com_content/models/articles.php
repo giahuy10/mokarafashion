@@ -636,6 +636,7 @@ class ContentModelArticles extends JModelList
 
 		return $query;
 	}
+	
 
 	/**
 	 * Method to get a list of articles.

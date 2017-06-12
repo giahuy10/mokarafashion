@@ -16,6 +16,7 @@ JHtml::_('formbehavior.chosen', 'select');
 
 $user       = JFactory::getUser();
 $userId     = $user->get('id');
+$userProfile = JUserHelper::getProfile( $userId );
 
 	if (JRequest::getVar('product_id')) {
 	
@@ -31,7 +32,7 @@ $userId     = $user->get('id');
 		// Select all records from the user profile table where key begins with "custom.".
 		// Order it by the ordering field.
 		$query->select('MAX(id)');
-		$query->from($db->quoteName('#__mokara_orders'));
+		$query->from($db->quoteName('#__inventory_sales'));
 
 		 
 		// Reset the query using our newly populated query object.
@@ -41,29 +42,34 @@ $userId     = $user->get('id');
 		$orer_id = $db->loadResult();
 		
 		$order = new stdClass();
+		$history = new stdClass();
 		$order->id = $orer_id + 1;
+		$history->order_id = $order->id;
+		
 		$order->status = 1;
 		$order->address = JRequest::getVar('address');
-		$order->user_name = JRequest::getVar('name');
+		$order->name = JRequest::getVar('name');
 		
 		$order->phone = JRequest::getVar('phone');
 		$order->email = JRequest::getVar('email');
-		$order->comment = JRequest::getVar('comment');
+		$order->note = JRequest::getVar('comment');
 		$order->user_id = JRequest::getVar('user_id');
 		$order->total = JRequest::getVar('total');
-		
+
 		$order->ordering = $order->id;
 		$order->state = 1;
 		$order->checked_out = 0;
 		$order->created_by = 481;
 		$order->modified_by = 481;
 		//var_dump($order);
-		$result = JFactory::getDbo()->insertObject('#__mokara_orders', $order);
+		$result = JFactory::getDbo()->insertObject('#__inventory_sales', $order);
+		$result = JFactory::getDbo()->insertObject('#__inventory_sale_history', $history);
 		
 		$product_id = JRequest::getVar('product_id');
 		$product_price = JRequest::getVar('product_price');
 		$product_old_price = JRequest::getVar('product_old_price');
 		$quantity = JRequest::getVar('quantity');
+		$size = JRequest::getVar('size');
 		
 		foreach ($product_id as $key=>$value) {
 			$order_id[$key] = new stdClass();
@@ -72,7 +78,8 @@ $userId     = $user->get('id');
 			$order_id[$key]->product_price = $product_price[$key];
 			$order_id[$key]->product_old_price = $product_old_price[$key];
 			$order_id[$key]->quantity = $quantity[$key];
-			$order_detail = JFactory::getDbo()->insertObject('#__mokara_order_detail', $order_id[$key]);
+			$order_id[$key]->size = $size[$key];
+			$order_detail = JFactory::getDbo()->insertObject('#__inventory_order_detail', $order_id[$key]);
 			
 		}
 		 unset($_SESSION['itemcart']);
@@ -117,8 +124,9 @@ JPluginHelper::importPlugin('captcha');
 						<input type="hidden" name="product_price[]" value="<?php echo $cart['product_price']?>">
 						<input type="hidden" name="product_old_price[]" value="<?php echo $cart['product_old_price']?>">
 						<input type="hidden" name="quantity[]" value="<?php echo $cart['quantity']?>">
+						<input type="hidden" name="size[]" value="<?php echo $cart['size']?>">
 						<tr>
-							<td data-th="Product">
+							<td data-th="Sản phẩm">
 								<div class="row">
 									<div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive"></div>
 									<div class="col-sm-10">
@@ -127,18 +135,19 @@ JPluginHelper::importPlugin('captcha');
 										<?php echo $cart['title']?> 
 										
 										</h4>
+										<strong>Size: </strong> <?php echo $cart['size']?>
 										
 									</div>
 								</div>
 							</td>
-							<td data-th="Price">
+							<td data-th="Giá">
 								<s><?php echo $cart['product_old_price']?></s>
 								<br/>
 								<?php echo $cart['product_price']?></td>
-							<td data-th="Quantity">
+							<td data-th="Số lượng">
 								<input type="number" disabled class="form-control text-center" value="<?php echo $cart['quantity']?>">
 							</td>
-							<td data-th="Subtotal" class="text-center"><?php echo $cart['quantity']*$cart['product_price']?></td>
+							<td data-th="Thành tiền" class="text-center"><?php echo $cart['quantity']*$cart['product_price']?></td>
 						
 						</tr>
 						<?php }?>
@@ -167,11 +176,11 @@ JPluginHelper::importPlugin('captcha');
 		</tr>
 		<tr>
 			<td><strong>Địa chỉ giao hàng</strong></td>
-			<td><input class="form-control" type="text" name="address" value="<?php echo $user->address?>" required/></td>
+			<td><input class="form-control" type="text" name="address" value="<?php echo $userProfile->profile['address1']?>" required/></td>
 		</tr>
 		<tr>
 			<td><strong>Điện thoại</strong></td>
-			<td><input class="form-control" type="text" name="phone" value="<?php echo $user->phone?>" required/></td>
+			<td><input class="form-control" type="text" name="phone" value="<?php echo $userProfile->profile['phone']?>" required/></td>
 		</tr>
 		<tr>
 			<td><strong>Email</strong></td>

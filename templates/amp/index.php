@@ -32,8 +32,15 @@ $layout   = $app->input->getCmd('layout', '');
 $task     = $app->input->getCmd('task', '');
 $itemid   = $app->input->getCmd('Itemid', '');
 $sitename = $app->get('sitename');
-
-
+$item   = $app->input->getCmd('id', '');
+$session = JFactory::getSession();
+if (!$session->get('ref')) {
+	$session->set('ref', $_SERVER["HTTP_REFERER"]);
+}
+if (!$session->get($option.'-'.$view.'-'.$item.'-'.$_SERVER['REMOTE_ADDR'])) {
+	$session->set($option.'-'.$view.'-'.$item.'-'.$_SERVER['REMOTE_ADDR'], 1);
+	$productMod->save_user_log ($user->id , $_SERVER['REMOTE_ADDR'], $option, $view, $layout, $task, $item, $session->get('ref'),1);
+}
 
 $doc = JFactory::getDocument();
 unset($doc->base);

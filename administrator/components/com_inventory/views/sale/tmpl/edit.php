@@ -18,6 +18,13 @@ JHtml::_('behavior.keepalive');
 // Import CSS
 $document = JFactory::getDocument();
 $document->addStyleSheet(JUri::root() . 'media/com_inventory/css/form.css');
+$user      = JFactory::getUser();
+$userId    = $user->get('id');
+
+$can_edit = 0;
+if ($userId == $created_by || in_array('8',$user->groups)) {
+	$can_edit = 1;
+}
 ?>
 <script type="text/javascript">
 	js = jQuery.noConflict();
@@ -61,14 +68,16 @@ $document->addStyleSheet(JUri::root() . 'media/com_inventory/css/form.css');
 			<div class="span10 form-horizontal">
 				<fieldset class="adminform">
 
-									<input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>" />
+				<input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>" />
 				<input type="hidden" name="jform[ordering]" value="<?php echo $this->item->ordering; ?>" />
 				<input type="hidden" name="jform[state]" value="<?php echo $this->item->state; ?>" />
 				<input type="hidden" name="jform[checked_out]" value="<?php echo $this->item->checked_out; ?>" />
 				<input type="hidden" name="jform[checked_out_time]" value="<?php echo $this->item->checked_out_time; ?>" />
 
 				<?php echo $this->form->renderField('created_by'); ?>
-				<?php echo $this->form->renderField('modified_by'); ?>				<?php echo $this->form->renderField('user_id'); ?>
+				<?php echo $this->form->renderField('modified_by'); ?>	
+				<?php if ($can_edit) {?>		
+				<?php echo $this->form->renderField('user_id'); ?>
 
 			<?php
 				foreach((array)$this->item->user_id as $value): 
@@ -76,13 +85,17 @@ $document->addStyleSheet(JUri::root() . 'media/com_inventory/css/form.css');
 						echo '<input type="hidden" class="user_id" name="jform[user_idhidden]['.$value.']" value="'.$value.'" />';
 					endif;
 				endforeach;
-			?>				<?php echo $this->form->renderField('created'); ?>
+			?>	
+			
+				<?php echo $this->form->renderField('created'); ?>
 				<?php echo $this->form->renderField('total'); ?>
 				<?php echo $this->form->renderField('discount'); ?>
 				<?php echo $this->form->renderField('status'); ?>
 				<?php echo $this->form->renderField('comment'); ?>
 				<?php echo $this->form->renderField('note'); ?>
-
+				<?php } else {?>
+				
+				<?php }?>
 
 					<?php if ($this->state->params->get('save_history', 1)) : ?>
 					<div class="control-group">

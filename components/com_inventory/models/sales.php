@@ -139,7 +139,9 @@ class InventoryModelSales extends JModelList
 		{
 			$query->where('a.state = 1');
 		}
-
+		$user      = JFactory::getUser();
+		$userId    = $user->get('id');
+		$query->where('a.user_id = '.$userId);	
 		// Filter by search in title
 		$search = $this->getState('filter.search');
 
@@ -181,8 +183,8 @@ class InventoryModelSales extends JModelList
 		}
 
 		// Add the list ordering clause.
-		$orderCol  = $this->state->get('list.ordering', 'ordering');
-		$orderDirn = $this->state->get('list.direction', 'asc');
+		$orderCol  = $this->state->get('list.ordering', 'a.created');
+		$orderDirn = $this->state->get('list.direction', 'desc');
 
 		if ($orderCol && $orderDirn)
 		{
@@ -228,6 +230,7 @@ class InventoryModelSales extends JModelList
 			$item->user_id = !empty($textValue) ? implode(', ', $textValue) : $item->user_id;
 
 			}
+			$item->order_number = "MKR-".sprintf("%06d",$item->id);
 					$item->status = JText::_('COM_INVENTORY_SALES_STATUS_OPTION_' . strtoupper($item->status));
 		}
 

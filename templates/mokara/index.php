@@ -12,6 +12,9 @@ defined('_JEXEC') or die;
 /** @var JDocumentHtml $this */
 
 $app  = JFactory::getApplication();
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
+$productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
+
 $user = JFactory::getUser();
 
 // Output as HTML5
@@ -26,8 +29,17 @@ $view     = $app->input->getCmd('view', '');
 $layout   = $app->input->getCmd('layout', '');
 $task     = $app->input->getCmd('task', '');
 $itemid   = $app->input->getCmd('Itemid', '');
+$item   = $app->input->getCmd('id', '');
 $sitename = $app->get('sitename');
 $doc = JFactory::getDocument();
+$session = JFactory::getSession();
+if (!$session->get('ref')) {
+	$session->set('ref', $_SERVER["HTTP_REFERER"]);
+}
+if (!$session->get($option.'-'.$view.'-'.$item.'-'.$_SERVER['REMOTE_ADDR'])) {
+	$session->set($option.'-'.$view.'-'.$item.'-'.$_SERVER['REMOTE_ADDR'], 1);
+	$productMod->save_user_log ($user->id , $_SERVER['REMOTE_ADDR'], $option, $view, $layout, $task, $item, $session->get('ref'));
+}
 
 $dontInclude = array(
 
@@ -78,7 +90,7 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 
 </head>
 
-<body class="site <?php echo $option
+<body class="site user-<?php echo $user->id;?> <?php echo $option
 	. ' view-' . $view
 	. ($layout ? ' layout-' . $layout : ' no-layout')
 	. ($task ? ' task-' . $task : ' no-task')

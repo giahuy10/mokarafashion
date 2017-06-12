@@ -224,7 +224,7 @@ class InventoryModelSales extends JModelList
 					if (!empty($value))
 					{
 						$db = JFactory::getDbo();
-						$query = "SELECT id, CONCAT(name,'-',email) as value FROM #__users";
+						$query = "SELECT id, CONCAT(name,'-',email) as value FROM #__users where id =".$oneItem->user_id;
 						$db->setQuery($query);
 						$results = $db->loadObject();
 						if ($results) {
@@ -236,6 +236,7 @@ class InventoryModelSales extends JModelList
 			$oneItem->user_id = !empty($textValue) ? implode(', ', $textValue) : $oneItem->user_id;
 
 			}
+			$oneItem->order_number = "MKR-".sprintf("%06d",$oneItem->id);
 					$oneItem->status = JText::_('COM_INVENTORY_SALES_STATUS_OPTION_' . strtoupper($oneItem->status));
 		}
 		return $items;

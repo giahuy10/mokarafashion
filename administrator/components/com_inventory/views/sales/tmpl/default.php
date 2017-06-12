@@ -72,6 +72,9 @@ $sortFields = $this->getSortFields();
 				<?php echo JHtml::_('searchtools.sort',  'COM_INVENTORY_SALES_ID', 'a.`id`', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
+				<?php echo JHtml::_('searchtools.sort',  'COM_INVENTORY_SALES_ORDER_NUMBER', 'a.`id`', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
 				<?php echo JHtml::_('searchtools.sort',  'COM_INVENTORY_SALES_USER_ID', 'a.`user_id`', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
@@ -139,7 +142,17 @@ $sortFields = $this->getSortFields();
 										<td>
 
 					<?php echo $item->id; ?>
-				</td>				<td>
+				</td>	
+				<td><?php if (isset($item->checked_out) && $item->checked_out && ($canEdit || $canChange)) : ?>
+					<?php echo JHtml::_('jgrid.checkedout', $i, $item->uEditor, $item->checked_out_time, 'sales.', $canCheckin); ?>
+				<?php endif; ?>
+				<?php if ($canEdit) : ?>
+					<a href="<?php echo JRoute::_('index.php?option=com_inventory&task=sale.edit&id='.(int) $item->id); ?>">
+					<?php echo $item->order_number; ?></a>
+				<?php else : ?>
+					<?php echo $item->order_number; ?>
+				<?php endif; ?></td>
+				<td>
 
 					<?php echo $item->user_id; ?>
 				</td>				<td>
