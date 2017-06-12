@@ -528,6 +528,7 @@ class ContentModelArticles extends JModelList
 		$dress_type = $app->input->get('field_10', 0, 'uint');
 		$sheve = $app->input->get('field_11', 0, 'uint');
 		$material = $app->input->get('field_12', 0, 'uint');
+		$neck = $app->input->get('field_17', 0, 'uint');
 		
 		$check = 0;
 		$filter_where = "";
@@ -579,6 +580,16 @@ class ContentModelArticles extends JModelList
 				$filter_where .= " OR ";
 			}
 			$filter_where.= "(`field_id` = 5 and `value` = ".$status.")"; 
+			$check ++;
+		}
+		if (!empty($neck))
+		{
+			
+			
+			if ($check > 0) {
+				$filter_where .= " OR ";
+			}
+			$filter_where.= "(`field_id` = 17 and `value` = ".$neck.")"; 
 			$check ++;
 		}
 		if (!empty($dress_type))
