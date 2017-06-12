@@ -120,18 +120,13 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 						echo '<div class="product-custom-field"><strong>'.$field->label . ': </strong>' ;
 						foreach ($c as $key=>$value) {
 							
-							$link = 'index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid.'&filter_tag='.$key;
-							 $link = $productMod->get_alias_url($link);
-							
-							echo '<a rel="nofollow" href="'.$link.'"> '.$value.' </a>';
+						
+							echo '<a rel="nofollow" href="'.JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid.'&filter_tag='.$key).'"> '.$value.' </a>';
 						}
 						echo '</div>';
 					}else {
 						echo '<div class="product-custom-field"><strong>'.$field->label . ': </strong>' ;
-						$link2 = 'index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid.'&filter_tag='.$field->rawvalue;
-							 $link2 = $productMod->get_alias_url($link2);
-						
-						echo '<a rel="nofollow" href="'.$link2.'"> '.$field->value.' </a>';
+						echo '<a rel="nofollow" href="'.JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid.'&filter_tag='.$field->rawvalue).'"> '.$field->value.' </a>';
 						echo '</div>';
 					}
 					
