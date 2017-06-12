@@ -32,6 +32,31 @@ class MokaraModelProduct extends JModelList
 	 * @see        JController
 	 * @since      1.6
 	 */
+	 public function check_filter_value ($product_ids, $field_id, $value) {
+		 $product_ids = implode(",",$product_ids);
+		 $db = JFactory::getDbo();
+		 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName('item_id'));
+		
+		$query->from($db->quoteName('#__fields_values'));
+		
+		$query->where($db->quoteName('field_id') . ' = '. $field_id);
+		$query->where($db->quoteName('value') . ' = '. $value);
+		$query->where($db->quoteName('item_id') . ' in ('. $product_ids.')');
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		$db->execute();
+		 $num_rows = $db->getNumRows();
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		
+		return $num_rows;
+	 }
 	 public function get_tag_title ($tag_id) {
 		    // Get a db connection.
 		$db = JFactory::getDbo();

@@ -111,7 +111,28 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				<?php foreach ($this->item->jcfields as $field) : ?>
 					<?php if ($field->id > 7 && $field->id != 14) {?>
 					<?php $description .= ' | '.$field->label.': '.$field->value;?>
-					<div class="product-custom-field bottom-10"><strong><?php echo $field->label . ': </strong>' . $field->value; ?></div>
+					<?php 
+					
+					if (is_array($field->rawvalue)) {
+						$field_value = explode(", ",$field->value);
+						$c=array_combine($field->rawvalue,$field_value);
+						echo '<div class="product-custom-field"><strong>'.$field->label . ': </strong>' ;
+						foreach ($c as $key=>$value) {
+							$link = 'index.php?option=com_content&filter_tag='.$key.'&id='.$this->item->catid.'&lang=en&layout=blog&view=category';
+							
+							$link = $productMod->get_alias_url($link);
+							echo ' <a title="Xem thêm các sản phẩm '.$productMod->get_categories($this->item->catid)[0]->title.' cùng '.$field->label . ': '.$value.'" href="'.$link.'">'.$value.'</a> ';
+						}
+						echo '</div>';
+					}else {
+						echo '<div class="product-custom-field"><strong>'.$field->label . ': </strong>' ;
+						$link = 'index.php?option=com_content&filter_tag='.$field->rawvalue.'&id='.$this->item->catid.'&lang=en&layout=blog&view=category';
+							$link = $productMod->get_alias_url($link);
+						echo ' <a title="Xem thêm các sản phẩm '.$productMod->get_categories($this->item->catid)[0]->title.' cùng '.$field->label . ': '.$field->value.'" href="'.$link.'">'.$field->value.'</a> ';
+						echo '</div>';
+					}
+					
+					?>
 					<?php }?>
 				<?php endforeach ?>
 			

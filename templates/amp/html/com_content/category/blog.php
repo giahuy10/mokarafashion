@@ -29,20 +29,41 @@ $beforeDisplayContent = trim(implode("\n", $results));
 
 $results = $dispatcher->trigger('onContentAfterDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
 $afterDisplayContent = trim(implode("\n", $results));
-
+$tag_id = JRequest::getVar('filter_tag');
+$doc = JFactory::getDocument();
+$title = $this->category->title;
+if ($tag_id > 0) {
+	
+	$title = $this->category->title.' - '.$productMod->get_tag_title($tag_id);
+	$description = $this->category->description.' - '.$productMod->get_tag_title($tag_id);
+	
+				$doc->setDescription(strip_tags($description));
+				$doc->setTitle(strip_tags($title));
+}
+				
+				$doc->addCustomTag( '
+				<meta property="og:title" content="'.strip_tags($title).'"/>
+				<meta property="og:type" content="product"/>
+				<meta property="og:email" content="web@mokara.com.vn"/>
+				<meta property="og:url" content="'.JURI::current().'"/>
+				<meta property="og:image" content="'.JURI::base().'images/san-pham/img_products/DK_1712_-_2140000.jpg"/>
+				<meta property="og:site_name" content="Thời trang công sở cao cấp Mokara"/>
+				<meta property="fb:admins" content="Eddy Nguyen"/>
+				<meta property="og:description" content="'.strip_tags($description).'"/>
+				');	
 ?>
 <div class="blog<?php echo $this->pageclass_sfx; ?>" >
-	<?php if ($this->params->get('show_page_heading')) : ?>
-		<div class="page-header">
-			<h1> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1>
-		</div>
-	<?php endif; ?>
+		<h1> <?php echo $title?> </h1>
 
 
 	<?php echo $afterDisplayTitle; ?>
 
 
-
+<?php if (empty($this->lead_items) && empty($this->link_items) && empty($this->intro_items)) : ?>
+		<?php if ($this->params->get('show_no_articles', 1)) : ?>
+			<p><?php echo JText::_('COM_CONTENT_NO_PRODUCTS'); ?></p>
+		<?php endif; ?>
+	<?php endif; ?>
 	
 
 	

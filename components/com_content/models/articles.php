@@ -535,19 +535,19 @@ class ContentModelArticles extends JModelList
 		{
 			
 			switch ($price) {
-				case 1:
+				case 17:
 					$price_range = "0 AND 499000";
 					break;
-				case 2:
+				case 18:
 					$price_range = "500000 AND 999000";
 					break;
-				case 3:
+				case 19:
 					$price_range = "1000000 AND 1499000";
 					break;
-				case 4:
+				case 20:
 					$price_range = "1500000 AND 1999000";
 					break;
-				case 5:
+				case 21:
 					$price_range = "2000000 AND 4990000";
 					break;
 				default:
