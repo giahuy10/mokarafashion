@@ -617,7 +617,7 @@ class ContentModelArticles extends JModelList
 			
 			
 			if ($check > 0) {
-				$filter_where .= " OR ";
+				$filter_where .= " OR "; 
 			}
 			$filter_where.= "(`field_id` = 12 and `value` = ".$material.")"; 
 			$check ++;
