@@ -116,6 +116,7 @@ if ($tag_id > 0) {
 			<?php echo $this->pagination->getPagesLinks(); ?> </div>
 	<?php endif; ?>
 </div>
+<?php if ($product_ids) {?>
 	<div class="col-xs-12 col-sm-3">
 
 		<?php foreach ($fieds as $field) {?>
@@ -135,7 +136,7 @@ if ($tag_id > 0) {
 			
 		?>
 		<?php foreach ($options as $option) {?>
-			<?php $existed = $productMod->check_filter_value($product_ids, $field->id, $option->value,$this->category->id)?>
+			<?php $existed = $productMod->check_filter_value($product_ids, $field->id, $option->value)?>
 				
 				<label for="field_<?php echo $field->id."_".$option->value?>" class="<?php if (!$existed) echo "hidden"?>" >
 				
@@ -149,6 +150,7 @@ if ($tag_id > 0) {
 <?php } ?>
 
 	</div>
+<?php }?>
 		</div>
 		
 </form>
