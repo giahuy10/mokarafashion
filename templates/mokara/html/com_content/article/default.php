@@ -121,14 +121,14 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 						foreach ($c as $key=>$value) {
 							$link = 'index.php?option=com_content&filter_tag='.$key.'&id='.$this->item->catid.'&lang=en&layout=blog&view=category';
 							$link = $productMod->get_alias_url($link);
-							echo '<a rel="nofollow" href="'.$link.'"> '.$value.' </a>';
+							echo ' <a rel="nofollow" href="'.$link.'">'.$value.'</a> ';
 						}
 						echo '</div>';
 					}else {
 						echo '<div class="product-custom-field"><strong>'.$field->label . ': </strong>' ;
 						$link = 'index.php?option=com_content&filter_tag='.$field->rawvalue.'&id='.$this->item->catid.'&lang=en&layout=blog&view=category';
 							$link = $productMod->get_alias_url($link);
-						echo '<a rel="nofollow" href="'.$link.'"> '.$field->value.' </a>';
+						echo ' <a rel="nofollow" href="'.$link.'">'.$field->value.'</a> ';
 						echo '</div>';
 					}
 					
