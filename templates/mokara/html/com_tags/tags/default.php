@@ -59,7 +59,7 @@ $descriptionImage = $this->params->get('all_tags_description_image');
 			$profile[$key]->core_catid =  $item->catid;
 			$profile[$key]->core_xreference =  $item->xreference;
 			$profile[$key]->core_type_id =  1;
-			//$result = JFactory::getDbo()->insertObject('#__ucm_content', $profile[$key]);
+			$result = JFactory::getDbo()->insertObject('#__ucm_content', $profile[$key]);
 	
 			//echo "<pre>";
 			//var_dump($profile[$key]);
