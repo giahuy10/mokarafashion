@@ -6,7 +6,7 @@
  * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
-
+// http://www.itoctopus.com/how-to-remove-the-article-id-from-sef-urls-in-joomla-3-7
 defined('_JEXEC') or die;
 
 /**
