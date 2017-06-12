@@ -122,14 +122,14 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 							$link = 'index.php?option=com_content&filter_tag='.$key.'&id='.$this->item->catid.'&lang=en&layout=blog&view=category';
 							
 							$link = $productMod->get_alias_url($link);
-							echo ' <a href="'.$link.'">'.$value.'</a> ';
+							echo ' <a title="Xem thêm các sản phẩm '.$productMod->get_categories($this->item->catid)[0]->title.' cùng '.$field->label . ': '.$value.'" href="'.$link.'">'.$value.'</a> ';
 						}
 						echo '</div>';
 					}else {
 						echo '<div class="product-custom-field"><strong>'.$field->label . ': </strong>' ;
 						$link = 'index.php?option=com_content&filter_tag='.$field->rawvalue.'&id='.$this->item->catid.'&lang=en&layout=blog&view=category';
 							$link = $productMod->get_alias_url($link);
-						echo ' <a href="'.$link.'">'.$field->value.'</a> ';
+						echo ' <a title="Xem thêm các sản phẩm '.$productMod->get_categories($this->item->catid)[0]->title.' cùng '.$field->label . ': '.$field->value.'" href="'.$link.'">'.$field->value.'</a> ';
 						echo '</div>';
 					}
 					

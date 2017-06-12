@@ -71,10 +71,12 @@ span.btn_field_mausac.btn_field_value_15 {
     border: 1px solid;
 }
 span.btn_field_label {
+	color: #fff;
 	
 }
 span.btn_field_label.btn_field_value_8 {
     background: #a20000;
+	
 }
 span.btn_field_label.btn_field_value_39 {
     background: #5cb85c;
