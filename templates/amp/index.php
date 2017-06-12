@@ -14,7 +14,8 @@ defined('_JEXEC') or die;
 
 $app  = JFactory::getApplication();
 $user = JFactory::getUser();
-
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
+$productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
 // Output as HTML5
 $this->setHtml5(true);
 
