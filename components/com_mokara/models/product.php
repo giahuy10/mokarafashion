@@ -32,6 +32,30 @@ class MokaraModelProduct extends JModelList
 	 * @see        JController
 	 * @since      1.6
 	 */
+	 public function get_tag_title ($tag_id) {
+		    // Get a db connection.
+		$db = JFactory::getDbo();
+		 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName('title'));
+		
+		$query->from($db->quoteName('#__tags'));
+		
+		$query->where($db->quoteName('id') . ' = '. $tag_id);
+		
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		$tag_title = $db->loadResult();
+		return $tag_title;
+		
+	 }
 	 public function get_alias_url ($link) {
 		   // Get a db connection.
 		$db = JFactory::getDbo();

@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
 JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
 $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
+
 $cat_id = JRequest::getVar('id');
 $fieds = $productMod->get_fields($cat_id);
 
@@ -29,16 +30,36 @@ $beforeDisplayContent = trim(implode("\n", $results));
 
 $results = $dispatcher->trigger('onContentAfterDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
 $afterDisplayContent = trim(implode("\n", $results));
-		
+
+$tag_id = JRequest::getVar('filter_tag');
+$doc = JFactory::getDocument();
+$title = $this->category->title;
+if ($tag_id > 0) {
+	
+	$title = $this->category->title.' - '.$productMod->get_tag_title($tag_id);
+	$description = $this->category->description.' - '.$productMod->get_tag_title($tag_id);
+	
+				$doc->setDescription(strip_tags($description));
+				$doc->setTitle(strip_tags($title));
+}
+				
+				$doc->addCustomTag( '
+				<meta property="og:title" content="'.strip_tags($title).'"/>
+				<meta property="og:type" content="product"/>
+				<meta property="og:email" content="web@mokara.com.vn"/>
+				<meta property="og:url" content="'.JURI::current().'"/>
+				<meta property="og:image" content="'.JURI::base().'images/san-pham/img_products/DK_1712_-_2140000.jpg"/>
+				<meta property="og:site_name" content="Thời trang công sở cao cấp Mokara"/>
+				<meta property="fb:admins" content="Eddy Nguyen"/>
+				<meta property="og:description" content="'.strip_tags($description).'"/>
+				');		
 ?>
 <form action="<?php echo htmlspecialchars(JUri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm" class="form-inline">
 <div class="row">
 <div class="product<?php echo $this->pageclass_sfx; ?> col-xs-12 col-sm-9">
-	<?php if ($this->params->get('show_page_heading')) : ?>
-		<div class="page-header">
-			<h1> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1>
-		</div>
-	<?php endif; ?>
+	
+			<h1> <?php echo $title?> </h1>
+		
 
 	
 	<?php echo $afterDisplayTitle; ?>

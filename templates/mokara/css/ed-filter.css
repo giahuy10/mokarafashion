@@ -21,47 +21,47 @@ span.btn_field_mausac.active, span.btn_field_mausac:hover, span.btn.btn-price.ac
     box-shadow: 0 0 2px 2px #192201;
 	color: #fff;
 }
-span.btn_field_mausac.btn_field_value_1 {
-    background: blue;
-}
-span.btn_field_mausac.btn_field_value_2 {
-    background: red;
-}
-span.btn_field_mausac.btn_field_value_3 {
-    background: violet;
-}
-span.btn_field_mausac.btn_field_value_4 {
-    background: yellow;
-}
-span.btn_field_mausac.btn_field_value_5 {
-    background: brown;
-}
-span.btn_field_mausac.btn_field_value_6 {
-    background: black;
-}
-span.btn_field_mausac.btn_field_value_7 {
-    background: white;
-}
-span.btn_field_mausac.btn_field_value_8 {
-    background: pink;
-}
-span.btn_field_mausac.btn_field_value_9 {
-    background: orange;
-}
-span.btn_field_mausac.btn_field_value_10 {
-    background: grey;
-}
-span.btn_field_mausac.btn_field_value_11 {
-    background: wheat;
-}
-span.btn_field_mausac.btn_field_value_12 {
-    background: url(../images/hoa-van.jpg);
-}
 span.btn_field_mausac.btn_field_value_13 {
     background: blue;
 }
-span.btn_field_mausac.btn_field_value_14 {
-    background: blue;
+span.btn_field_mausac.btn_field_value_22 {
+    background: red;
+}
+span.btn_field_mausac.btn_field_value_28 {
+    background: violet;
+}
+span.btn_field_mausac.btn_field_value_23 {
+    background: yellow;
+}
+span.btn_field_mausac.btn_field_value_29 {
+    background: brown;
+}
+span.btn_field_mausac.btn_field_value_25 {
+    background: black;
+}
+span.btn_field_mausac.btn_field_value_34 {
+    background: white;
+}
+span.btn_field_mausac.btn_field_value_24 {
+    background: pink;
+}
+span.btn_field_mausac.btn_field_value_35 {
+    background: orange;
+}
+span.btn_field_mausac.btn_field_value_27 {
+    background: grey;
+}
+span.btn_field_mausac.btn_field_value_26 {
+    background: wheat;
+}
+span.btn_field_mausac.btn_field_value_30 {
+    background: url(../images/hoa-van.jpg);
+}
+span.btn_field_mausac.btn_field_value_36 {
+    background: #fff;
+}
+span.btn_field_mausac.btn_field_value_37 {
+    background: #fff;
 }
 span.btn_field_mausac.btn_field_value_15 {
     background: blue;
@@ -71,12 +71,12 @@ span.btn_field_mausac.btn_field_value_15 {
     border: 1px solid;
 }
 span.btn_field_label {
-	color: white;
+	
 }
-span.btn_field_label.btn_field_value_1 {
+span.btn_field_label.btn_field_value_8 {
     background: #a20000;
 }
-span.btn_field_label.btn_field_value_2 {
+span.btn_field_label.btn_field_value_39 {
     background: #5cb85c;
 }
 span.btn_field_label.btn_field_value_3 {
