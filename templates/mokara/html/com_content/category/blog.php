@@ -135,7 +135,7 @@ if ($tag_id > 0) {
 			
 		?>
 		<?php foreach ($options as $option) {?>
-			<?php $existed = $productMod->check_filter_value($product_ids, $field->id, $option->value)?>
+			<?php $existed = $productMod->check_filter_value($product_ids, $field->id, $option->value,$this->category->id)?>
 				
 				<label for="field_<?php echo $field->id."_".$option->value?>" class="<?php if (!$existed) echo "hidden"?>" >
 				
