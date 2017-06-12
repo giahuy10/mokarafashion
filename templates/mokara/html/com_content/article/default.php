@@ -119,14 +119,14 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 						$c=array_combine($field->rawvalue,$field_value);
 						echo '<div class="product-custom-field"><strong>'.$field->label . ': </strong>' ;
 						foreach ($c as $key=>$value) {
-							
+							//echo 'index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid.'&filter_tag='.$key;
 						
-							echo '<a rel="nofollow" href="'.JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid.'&filter_tag='.$key).'"> '.$value.' </a>';
+							echo '<a rel="nofollow" href="index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid.'&filter_tag='.$key.'"> '.$value.' </a>';
 						}
 						echo '</div>';
 					}else {
 						echo '<div class="product-custom-field"><strong>'.$field->label . ': </strong>' ;
-						echo '<a rel="nofollow" href="'.JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid.'&filter_tag='.$field->rawvalue).'"> '.$field->value.' </a>';
+						echo '<a rel="nofollow" href="index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid.'&filter_tag='.$field->rawvalue.'"> '.$field->value.' </a>';
 						echo '</div>';
 					}
 					
