@@ -270,6 +270,7 @@ class MokaraModelProduct extends JModelList
 		$items = $db->loadObjectList();
 		$clear = 0;
 		foreach ($items as $item) {
+			$item->jcfields    = FieldsHelper::getFields('com_content.article', $item, true);
 			echo '<div  class="col-xs-6 col-sm-4 col-md-3 col-lg-3 items-on-row">';	
 			if (isset($template) && $template = "amp") {
 				$this->show_product_item_amp($item);
