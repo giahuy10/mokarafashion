@@ -70,7 +70,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 						<?php }?>
 					</div>
 					<div class="col-xs-12 col-sm-10" id="main_image">
-						<img itemprop="image" class="main-img" src="images/san-pham/<?php echo $this->item->sku.$full.$pro_image[0]?>" alt="<?php echo $this->item->title?>"/>
+						<img itemprop="image" class="main-img" src="<?php echo $this->item->product_thumb;?>" alt="<?php echo $this->item->title?>"/>
 						
 					
 					</div>
@@ -252,7 +252,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 		<div class="related-product" id="related-product">
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 			<?php foreach ($this->item->jcfields as $field) : ?>
-					<?php if ((($field->id > 7 && $field->id != 14) || $field->id == 1) && $field->value) {?>
+					<?php if ((($field->id > 7 && $field->id != 14 && $field->id < 24) || $field->id == 1) && $field->value) {?>
 					
 					 <div class="panel panel-default">
 						<div class="panel-heading" role="tab" id="heading<?php echo $field->id?>">
