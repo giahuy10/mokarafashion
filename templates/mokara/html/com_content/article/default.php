@@ -46,28 +46,17 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 		 <span itemprop="brand" class="hidden">Mokara</span>
 		<div class="row">
 			<div class="col-xs-12 col-sm-6 col-md-6 ed-media-block">
-				<?php 
-					$code = $this->item->sku;
-					if ($this->item->id <646) {
-						$pro_image = $productMod->get_product_image_2($this->item->id);
-						
-						$this->item->sku = "img_products/";
-						$full ="full_";
-					}else {
-						$pro_image = $productMod->get_product_image($this->item->sku);
-						$this->item->sku .="/";
-						$full = "";
-					}
-					?>
+			
 					
 				<div class="row">
 					<div class="col-xs-12 col-sm-2 thumb-list">
-						<?php for ($i = 0; $i< count($pro_image); $i++) {?>
-							<div class="thumb_img">
-								
-								<img  class="" src="images/san-pham/<?php echo $this->item->sku.$pro_image[$i]?>" alt="<?php echo $this->item->title?>"/>
-							</div>
-						<?php }?>
+						<?php foreach ($this->item->jcfields as $field) { ?>
+							<?php if ($field->id > 23 &&  $field->id < 28) {?>
+								<div class="thumb_img">
+									
+									<img class="" src="<?php echo $field->rawvalue?>" alt="<?php echo $this->item->title?>"/>
+								</div>
+							<?php }}?>
 					</div>
 					<div class="col-xs-12 col-sm-10" id="main_image">
 						<img itemprop="image" class="main-img" src="<?php echo $this->item->product_thumb;?>" alt="<?php echo $this->item->title?>"/>
@@ -81,9 +70,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 					jQuery(function($) {
 						$('.thumb_img').click(function(){
 							var imgelem = $(this).find('img').attr('src');
-							<?php if ($this->item->id <646) {?>
-							imgelem = imgelem.replace("<?php echo $this->item->sku?>", "<?php echo $this->item->sku?>full_");
-							<?php }?>
+						
 							$('#main_image').html('<img src="'+imgelem+'"/>' );
 
 						});
@@ -96,7 +83,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 			
 				
 				<h1 class="product-title-detail">
-					Sản phẩm: <span itemprop="name"><?php echo $this->escape($this->item->title); ?></span> (<span itemprop="mpn"><?php echo $code?></span>)
+					Sản phẩm: <span itemprop="name"><?php echo $this->escape($this->item->title); ?></span> (<span itemprop="mpn"><?php echo $this->item->sku?></span>)
 				</h1>
 				 <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="hidden">
 				<span itemprop="ratingValue"><?php echo ($this->item->hits-1)*5/$this->item->hits?></span> trên <span itemprop="reviewCount"><?php echo $this->item->hits?>
@@ -105,9 +92,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid)?>"><?php echo $productMod->get_categories($this->item->catid)[0]->title?></a>
 				
 				<?php foreach ($this->item->jcfields as $field) : ?>
-					<?php 
-					$fieldsById[$field->id]     = $field;
-					if ($field->id > 7 && $field->id != 14 && $field->value && $field->id < 24) {?>
+					<?php if ($field->id > 7 && $field->id != 14 && $field->value && $field->id < 24) {?>
 					<?php $description .= ' | '.$field->label.': '.$field->value;?>
 					
 					

@@ -49,29 +49,18 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				</h2>
 		<div class="product-detail">
 			<div class="col-xs-12 col-sm-6 col-md-6 ed-media-block">
-				<?php 
-					
-					if ($this->item->id <646) {
-						$pro_image = $productMod->get_product_image_2($this->item->id);
-						
-						$this->item->sku = "img_products/";
-						$full ="full_";
-					}else {
-						$pro_image = $productMod->get_product_image($this->item->sku);
-						$this->item->sku .="/";
-						$full = "";
-					}
-					?>
+				
 					
 				<div class="row ">
 					<div class="col-xs-12 col-sm-2 thumb-list">
-						<?php for ($i = 0; $i< count($pro_image); $i++) {?>
-							<div class="thumb_img">
+						<?php foreach ($this->item->jcfields as $field) { ?>
+							<?php if ($field->id > 23 &&  $field->id < 28) {?>
+								<div class="thumb_img">
 								<amp-img 
-								on="tap:lightbox<?php echo $i?>"
+								on="tap:lightbox<?php echo $field->id?>"
 								  role="button"
 								  tabindex="0"
-									src="images/san-pham/<?php echo $this->item->sku.$pro_image[$i]?>" alt="<?php echo $this->item->title?>"
+									src="<?php echo $field->rawvalue?>" alt="<?php echo $this->item->title?>"
 								  width="330"
 								  height="433"
 								  layout="responsive"
@@ -79,9 +68,10 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 								  alt="<?php echo $item->title?>"></amp-img>
 								
 							</div>
-							<amp-image-lightbox id="lightbox<?php echo $i?>"
+							<amp-image-lightbox id="lightbox<?php echo $field->id?>"
   layout="nodisplay"></amp-image-lightbox>
-						<?php }?>
+							<?php }}?>
+						
 					</div>
 					<div class="col-xs-12 col-sm-10" id="main_image">
 		
@@ -109,7 +99,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid)?>"><?php echo $productMod->get_categories($this->item->catid)[0]->title?></a>
 				</div>
 				<?php foreach ($this->item->jcfields as $field) : ?>
-					<?php if ($field->id > 7 && $field->id != 14) {?>
+					<?php if ($field->id > 7 && $field->id != 14 && $field->id < 24) {?>
 					<?php $description .= ' | '.$field->label.': '.$field->value;?>
 					<?php 
 					
@@ -245,7 +235,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 					<div class="related-product" id="related-product">
 		
 			<?php foreach ($this->item->jcfields as $field) : ?>
-					<?php if ((($field->id > 7 && $field->id != 14) || $field->id == 1) && $field->value) {?>
+					<?php if ((($field->id > 7 && $field->id != 14 && $field->id < 24) || $field->id == 1) && $field->value) {?>
 					
 				
 							 <h3>Sản phẩm cùng <?php echo $field->title?> (<?php if ($field->id == 1) echo $productMod->ed_number_format($field->value); else echo $field->value?>)</h3>
