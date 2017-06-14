@@ -75,14 +75,14 @@ span.btn_field_label {
 	
 }
 span.btn_field_label.btn_field_value_8 {
-    background: #a20000;
+    background: #c9302c;
 	
 }
 span.btn_field_label.btn_field_value_39 {
-    background: #5cb85c;
-}
-span.btn_field_label.btn_field_value_3 {
     background: #f0ad4e;
+}
+span.btn_field_label.btn_field_value_60 {
+    background: #5cb85c;
 }
 h3.field-title {
     margin-top: 0;
