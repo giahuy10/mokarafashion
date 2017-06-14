@@ -13,7 +13,8 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
-
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
+$productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
 $user       = JFactory::getUser();
 $userId     = $user->get('id');
 $userProfile = JUserHelper::getProfile( $userId );
@@ -141,26 +142,28 @@ JPluginHelper::importPlugin('captcha');
 								</div>
 							</td>
 							<td data-th="Giá">
-								<s><?php echo $cart['product_old_price']?></s>
+								<?php if ($cart['product_old_price']) {?>
+								<s><?php echo $productMod->ed_number_format($cart['product_old_price'])?></s>
+								<?php }?>
 								<br/>
-								<?php echo $cart['product_price']?></td>
+								<?php echo $productMod->ed_number_format($cart['product_price'])?></td>
 							<td data-th="Số lượng">
 								<input type="number" disabled class="form-control text-center" value="<?php echo $cart['quantity']?>">
 							</td>
-							<td data-th="Thành tiền" class="text-center"><?php echo $cart['quantity']*$cart['product_price']?></td>
+							<td data-th="Thành tiền" class="text-center"><?php echo $productMod->ed_number_format($cart['quantity']*$cart['product_price'])?></td>
 						
 						</tr>
 						<?php }?>
 					</tbody>
 					<tfoot>
 						<tr class="visible-xs">
-							<td class="text-center"><strong>Tổng: <?php echo $total?></strong></td>
+							<td class="text-center"><strong>Tổng: <?php echo $productMod->ed_number_format($total)?></strong></td>
 						</tr>
 						<tr>
 							
 							<td colspan="2" class="hidden-xs"></td>
 							<td  class="hidden-xs text-center"><strong>Tổng: </strong></td>
-							<td class="hidden-xs text-center"><strong><?php echo $total?></strong></td>
+							<td class="hidden-xs text-center"><strong><?php echo $productMod->ed_number_format($total)?></strong></td>
 				
 						</tr>
 					</tfoot>

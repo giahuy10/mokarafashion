@@ -381,40 +381,26 @@ class MokaraModelProduct extends JModelList
 
 
 	public function get_custom_field ($item) {
-		$db = JFactory::getDbo();
- 
-		// Create a new query object.
-		$query = $db->getQuery(true);
-		 
-		// Select all records from the user profile table where key begins with "custom.".
-		// Order it by the ordering field.
-		$query->select($db->quoteName(array('field_id', 'value')));
-		$query->from($db->quoteName('#__fields_values'));
-		$query->where($db->quoteName('item_id') . ' = '. $item->id);
-		// Reset the query using our newly populated query object.
-		$db->setQuery($query);
-		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
-		$results = $db->loadObjectList();
-		$field = array();
-		foreach ($results as $fields) {
-			$field[$fields->field_id]= $fields->value;
+	
+		$item->product_price = $item->jcfields[1]->rawvalue;
+		if(isset($item->jcfields[7]->rawvalue)) {
+			$item->sku = $item->jcfields[7]->rawvalue;
 			
-		}
-		$item->product_price = $field[1];
-		if(isset($field[7])) {
-			$item->sku = $field[7];
 		$item->sku = strtolower($item->sku);
 		$item->sku = str_replace(" ", "", $item->sku);
 		}
+		if(isset($item->jcfields[24]->rawvalue)) 
+			$item->product_thumb = $item->jcfields[24]->rawvalue;	
+			
 		
-		if (isset($field[4]))
-			$item->product_old_price = $field[4];
+		if (isset($item->jcfields[4]->rawvalue))
+			$item->product_old_price = $item->jcfields[4]->rawvalue;
 		else 
 			$item->product_old_price = NULL;	
-		if (isset($field[5]))
-			$item->product_label = $field[5];
-		if (isset($field[3]))
-			$item->product_status = $field[3];
+		if (isset($item->jcfields[5]->rawvalue))
+			$item->product_label =$item->jcfields[5]->rawvalue;
+		if (isset($item->jcfields[3]->rawvalue))
+			$item->product_status = $item->jcfields[3]->rawvalue;
 		else 
 			$item->product_status = 1;
 		return $item;
@@ -467,17 +453,11 @@ class MokaraModelProduct extends JModelList
 	$html .= '<span itemprop="brand" class="hidden">Mokara</span>';
 	$item = $this->get_custom_field($item);
 	
-			if ($item->id <646) {
-				$pro_image = $this->get_product_image_2($item->id);
-				$img_link = "img_products/".$pro_image[0];
-			}else {
-				$pro_image = $this->get_product_image($item->sku);
-				$img_link = $item->sku."/".$pro_image[0];
-			}
+			
 			$item->slug    = $item->id . ':' . $item->alias;
 			$link = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language));
 			$html .='<div class="ed-item-img">';
-			$html .='	<a href="'.$link.'"><img itemprop="image" src="images/san-pham/'.$img_link.'" alt="'.$item->title.'"/></a>';
+			$html .='	<a href="'.$link.'"><img itemprop="image" class="product-thumb-desk" src="'.$item->product_thumb.'" alt="'.$item->title.'"/></a>';
 			$html .='</div>';
 			$html .='<div class="ed-product-content">';
 			$html .='<div class="page-header">';
@@ -514,18 +494,12 @@ class MokaraModelProduct extends JModelList
 	$html .= '<span itemprop="brand" class="hidden">Mokara</span>';
 	$item = $this->get_custom_field($item);
 	
-			if ($item->id <646) {
-				$pro_image = $this->get_product_image_2($item->id);
-				$img_link = "img_products/".$pro_image[0];
-			}else {
-				$pro_image = $this->get_product_image($item->sku);
-				$img_link = $item->sku."/".$pro_image[0];
-			}
+		
 		
 			$item->slug    = $item->id . ':' . $item->alias;
 			$link = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language));
 			$html .='<div class="ed-item-img">';
-			$html .='	<a href="'.$link.'"><amp-img src="images/san-pham/'.$img_link.'"
+			$html .='	<a href="'.$link.'"><amp-img src="'.$item->product_thumb.'"
 					  width="300"
 					  height="433"
 					  layout="responsive"

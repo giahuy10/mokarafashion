@@ -80,6 +80,7 @@ if ($tag_id > 0) {
 	$introcount = count($this->intro_items);
 	$counter = 0;
 	$product_ids = array();
+	//echo count($this->items);
 	?>
 
 	<?php if (!empty($this->intro_items)) : ?>

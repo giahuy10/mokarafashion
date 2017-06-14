@@ -32,8 +32,8 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 	<?php if ($params->get('access-view')) : ?>	
 	<?php if ($this->item->jcfields) { // Product layout?>
 	<?php
-	
-	
+	//echo $this->item->jcfields[24]->rawvalue;
+	//$this->item->product_price = FieldsHelper::render('com_content.article','field.render',array('field'  => $this->item->jcfields[1]));
 	
 	$this->item = $productMod->get_custom_field($this->item);
 
@@ -93,20 +93,21 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ed-shopping-block">
-					
-				<h1 class="hidden"><?php echo strip_tags($title)?></h1>
-				<h2 class="product-title-detail">
+			
+				
+				<h1 class="product-title-detail">
 					Sản phẩm: <span itemprop="name"><?php echo $this->escape($this->item->title); ?></span> (<span itemprop="mpn"><?php echo $code?></span>)
-				</h2>
+				</h1>
 				 <span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="hidden">
 				<span itemprop="ratingValue"><?php echo ($this->item->hits-1)*5/$this->item->hits?></span> trên <span itemprop="reviewCount"><?php echo $this->item->hits?>
 				  </span> đánh giá
 				</span>
 				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid)?>"><?php echo $productMod->get_categories($this->item->catid)[0]->title?></a>
+				
 				<?php foreach ($this->item->jcfields as $field) : ?>
 					<?php 
-					
-					if ($field->id > 7 && $field->id != 14 && $field->value) {?>
+					$fieldsById[$field->id]     = $field;
+					if ($field->id > 7 && $field->id != 14 && $field->value && $field->id < 24) {?>
 					<?php $description .= ' | '.$field->label.': '.$field->value;?>
 					
 					
@@ -137,7 +138,11 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 					<?php }?>
 				<?php endforeach ?>
 			
+				<?php 
 				
+					 
+						
+				?>
 				
 			
 				<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
