@@ -381,26 +381,28 @@ class MokaraModelProduct extends JModelList
 
 
 	public function get_custom_field ($item) {
-	
-		$item->product_price = $item->jcfields[1]->rawvalue;
-		if(isset($item->jcfields[7]->rawvalue)) {
-			$item->sku = $item->jcfields[7]->rawvalue;
+		foreach ($item->jcfields as $field) {
+			$field_with_id[$field->id] = $field;
+		}
+		$item->product_price = $field_with_id[1]->rawvalue;
+		if(isset($field_with_id[7]->rawvalue)) {
+			$item->sku = $field_with_id[7]->rawvalue;
 			
 		$item->sku = strtolower($item->sku);
 		$item->sku = str_replace(" ", "", $item->sku);
 		}
-		if(isset($item->jcfields[24]->rawvalue)) 
-			$item->product_thumb = $item->jcfields[24]->rawvalue;	
+		if(isset($field_with_id[24]->rawvalue)) 
+			$item->product_thumb = $field_with_id[24]->rawvalue;	
 			
 		
-		if (isset($item->jcfields[4]->rawvalue))
-			$item->product_old_price = $item->jcfields[4]->rawvalue;
+		if (isset($field_with_id[4]->rawvalue))
+			$item->product_old_price = $field_with_id[4]->rawvalue;
 		else 
 			$item->product_old_price = NULL;	
-		if (isset($item->jcfields[5]->rawvalue))
-			$item->product_label =$item->jcfields[5]->rawvalue;
-		if (isset($item->jcfields[3]->rawvalue))
-			$item->product_status = $item->jcfields[3]->rawvalue;
+		if (isset($field_with_id[5]->rawvalue))
+			$item->product_label =$field_with_id[5]->rawvalue;
+		if (isset($field_with_id[3]->rawvalue))
+			$item->product_status = $field_with_id[3]->rawvalue;
 		else 
 			$item->product_status = 1;
 		return $item;
