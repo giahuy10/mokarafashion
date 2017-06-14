@@ -36,9 +36,9 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 	//$this->item->product_price = FieldsHelper::render('com_content.article','field.render',array('field'  => $this->item->jcfields[1]));
 	
 	$this->item = $productMod->get_custom_field($this->item);
-
-	$description = $productMod->get_categories($this->item->catid)[0]->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | Giá: '.$productMod->ed_number_format($this->item->product_price);
-	$title = $productMod->get_categories($this->item->catid)[0]->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | '.$productMod->ed_number_format($this->item->product_price);
+	$category = $productMod->get_categories($this->item->catid)[0];
+	$description = $category->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | Giá: '.$productMod->ed_number_format($this->item->product_price);
+	$title = $category->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | '.$productMod->ed_number_format($this->item->product_price);
 	
 	?>
 	
@@ -89,7 +89,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				<span itemprop="ratingValue"><?php echo ($this->item->hits-1)*5/$this->item->hits?></span> trên <span itemprop="reviewCount"><?php echo $this->item->hits?>
 				  </span> đánh giá
 				</span>
-				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid)?>"><?php echo $productMod->get_categories($this->item->catid)[0]->title?></a>
+				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid)?>"><?php echo $category->title?></a>
 				
 				<?php foreach ($this->item->jcfields as $field) : ?>
 					<?php if ($field->id > 7 && $field->id != 14 && $field->value && $field->id < 24) {?>
@@ -108,14 +108,14 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 							$link = 'index.php?option=com_content&filter_tag='.$key.'&id='.$this->item->catid.'&lang=en&layout=blog&view=category';
 							
 							$link = $productMod->get_alias_url($link);
-							echo ' <a title="Xem thêm các sản phẩm '.$productMod->get_categories($this->item->catid)[0]->title.' cùng '.$field->label . ': '.$value.'" href="'.$link.'">'.$value.'</a> ';
+							echo ' <a title="Xem thêm các sản phẩm '.$category->title.' cùng '.$field->label . ': '.$value.'" href="'.$link.'">'.$value.'</a> ';
 						}
 						echo '</div>';
 					}else {
 						echo '<div class="product-custom-field"><strong>'.$field->label . ': </strong>' ;
 						$link = 'index.php?option=com_content&filter_tag='.$field->rawvalue.'&id='.$this->item->catid.'&lang=en&layout=blog&view=category';
 							$link = $productMod->get_alias_url($link);
-						echo ' <a title="Xem thêm các sản phẩm '.$productMod->get_categories($this->item->catid)[0]->title.' cùng '.$field->label . ': '.$field->value.'" href="'.$link.'">'.$field->value.'</a> ';
+						echo ' <a title="Xem thêm các sản phẩm '.$category->title.' cùng '.$field->label . ': '.$field->value.'" href="'.$link.'">'.$field->value.'</a> ';
 						echo '</div>';
 					}
 					

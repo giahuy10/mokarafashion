@@ -78,6 +78,7 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	<script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
 	<script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
 	<script async custom-element="amp-image-lightbox" src="https://cdn.ampproject.org/v0/amp-image-lightbox-0.1.js"></script>
+	<script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
 	<script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
 	<script async custom-element="amp-analytics"src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
 	<meta http-equiv="origin-trial" data-feature="Web Share" data-expires="2017-04-04" content="Ajcrk411RcpUCQ3ovgC8le4e7Te/1kARZsW5Hd/OCnW6vIHTs5Kcq1PaABs7SzcrtfvT0TIlFh9Vdb5xWi9LiQsAAABSeyJvcmlnaW4iOiJodHRwczovL2FtcGJ5ZXhhbXBsZS5jb206NDQzIiwiZmVhdHVyZSI6IldlYlNoYXJlIiwiZXhwaXJ5IjoxNDkxMzM3MDEwfQ==">
@@ -92,11 +93,15 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	  body {
 		
 		  font-family: arial;
-		      padding-top: 65px;
+		      padding-top: 55px;
 
 	  }
 	  .header-icon {
     text-align: center;
+}
+.menu-top {
+    padding: 10px;
+    background: #bfbfbf;
 }
 a {
     color: #000;
@@ -244,6 +249,20 @@ ul.pagination li.active {
 ul.pagination li.active a {
     color: #fff;
 }
+ul.top-menu {
+    padding: 0;
+    list-style: none;
+	    text-align: center;
+		  margin: 0;
+}
+ul.top-menu li {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid;
+    margin-right: 5px;
+    border-radius: 5px;
+}
+  
   </style>
 	<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 
@@ -303,27 +322,16 @@ ul.pagination li.active a {
 					<div class="clearfix"></div>					
 				</div>
 				
-				<div class="container">
-					<div class="header-icon">
-					<a href="index.php?option=com_mokara&view=orders&Itemid=502">Giỏ hàng </a> | <a href="index.php?option=com_users&view=login&Itemid=322">Đăng nhập</a> 	
-					</div>
+				<div class="menu-top">
+					<jdoc:include type="modules" name="banner-top" style="none" />
 		
 				</div>	
 	</div>
-	<div class="ed-main-menu " id="ed-main-menu">
-		<div class="container ed-black-bg">
-		
-					
-			
-				
-			
-			
-			
-		</div>	
-	</div>
+	<?php if ($this->countModules( 'slider-amp' )){?>
 	<div class="ed-slider" id="ed-slider">
 		<jdoc:include type="modules" name="slider-amp" style="none" />
 	</div>
+	<?php }?>
 	<div class="ed-main-body" id="ed-main-body">
 		<div class="container">
 			<div class="row">

@@ -230,3 +230,11 @@ $this->_urlCache['45e4755911671563f315f572e0031a52']='index.php?option=com_conte
 $this->_urlCache['cfd4b9fa646708fdee70d9a48ec53731']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=511&amp;lang=vi&amp;view=article#dam/dk1514#0';
 $this->_urlCache['93d7dd3686380db778b41154daf8a947']='index.php?option=com_content&amp;Itemid=480&amp;catid=21&amp;id=512&amp;lang=vi&amp;view=article#dam/dk1503#0';
 $shURLCacheCreationDate=1497428886;
+$this->_urlCache['0cc931865ba9b19b6714afa4e3a7571e']='index.php?option=com_search&amp;Itemid=101&amp;lang=vi&amp;limit=5&amp;view=featured#search/page-1#0';
+$this->_urlCache['de6f7da94234e1b04c39102d0b97ee2d']='index.php?option=com_search&amp;Itemid=101&amp;lang=vi&amp;limit=5&amp;limitstart=5&amp;view=featured#search/page-2#0';
+$shURLCacheCreationDate=1497430448;
+$this->_urlCache['32b261302b8972b57ebe8e86028f0c43']='index.php?option=com_mokara&amp;Itemid=502&amp;lang=vi&amp;view=orders#cart#0';
+$shURLCacheCreationDate=1497430675;
+$this->_urlCache['696de9954b83c0c3bf5ac351cdbd5e5c']='index.php?option=com_banners&amp;id=1&amp;lang=vi&amp;task=click#banners/click1#0';
+$this->_urlCache['0ed7c40b5cd06f8ee63e67a40016c221']='index.php?option=com_banners&amp;id=2&amp;lang=vi&amp;task=click#banners/click2#0';
+$shURLCacheCreationDate=1497432549;

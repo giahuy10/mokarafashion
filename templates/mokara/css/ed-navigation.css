@@ -77,3 +77,13 @@ div#ed-header {
     top: 0;
     border-bottom: 1px solid #ccc;
 }
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    color: #fff;
+    background-color: #000000;
+}
+.top-menu li {
+    float: right;
+}
+ul.nav.menu.nav-pills.top-menu {
+    padding-top: 20px;
+}

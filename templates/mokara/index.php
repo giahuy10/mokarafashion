@@ -101,16 +101,12 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	<div class="ed-header" id="ed-header">
 		<div class="container">
 			<div class="row">
-				<div class="col-xs-12 col-sm-4 hidden-xs">
-					<div class="ed-search">		
-						<jdoc:include type="modules" name="banner-top-left" style="none" />
-					</div>
-				</div>
+				
 				<div class="col-xs-12 col-sm-4 logo-block">
 					<jdoc:include type="modules" name="logo" style="none" />
 					
 				</div>
-				<div class="col-xs-12 col-sm-4">
+				<div class="col-xs-12 col-sm-8">
 					<button class="mobile-menu btn btn-primary visible-xs pull-left">Menu</button>
 					<jdoc:include type="modules" name="banner-top" style="none" />
 				</div>

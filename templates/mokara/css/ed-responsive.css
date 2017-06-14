@@ -25,6 +25,12 @@
 }
 
 @media (max-width: 767px) {
+	ul.nav.menu.nav-pills.top-menu {
+    padding-top: 0;
+}
+.top-menu > li > a {
+    padding: 7px;
+}
 	table#cart a {
     color: #fff;
 }

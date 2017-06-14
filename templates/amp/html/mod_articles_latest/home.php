@@ -10,12 +10,14 @@
 defined('_JEXEC') or die;
 JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
 $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
+JLoader::register('FieldsHelper', JPATH_ADMINISTRATOR . '/components/com_fields/helpers/fields.php');
 ?>
 <div class="ed-mostread <?php echo $moduleclass_sfx; ?> row">
 <?php 
 	$i=0;
-foreach ($list as $item) : ?>
 	
+foreach ($list as $item) : ?>
+	<?php $item->jcfields    = FieldsHelper::getFields('com_content.article', $item, true); ?>
 	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
 	
 		<?php $productMod->show_product_item_amp($item)?>
