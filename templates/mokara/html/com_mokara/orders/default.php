@@ -117,8 +117,8 @@ if(!empty(JRequest::getVar('quantity')) && $update == 0) {
 				</table>
 <?php } else {?>
 	Quý khách chưa lựa chọn sản phẩm nào. Hãy xem các sản phẩm
-	<a href="index.php?option=com_content&filter_tag=8&id=20&lang=en&layout=blog&view=category" class="btn btn-danger"> đang giảm giá</a>. <a href="index.php?option=com_content&filter_tag=39&id=20&lang=en&layout=blog&view=category" class="btn btn-danger"> bán chạy</a> hoặc các sản phẩm
-	<a href="index.php?option=com_content&filter_tag=60&id=20&lang=en&layout=blog&view=category" class="btn btn-success"> mới nhất</a>
+	<a href="/khuyen-mai-giam-gia" class="btn btn-danger"> đang giảm giá</a> <a href="/ban-chay" class="btn btn-warning"> bán chạy</a> 
+	<a href="/hang-moi-ve" class="btn btn-success"> mới nhất</a> tại đây.
 <?php }?>	
 
 
