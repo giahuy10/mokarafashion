@@ -16,7 +16,7 @@ $baseurl = JUri::base();
 
 <div class="bannergroup<?php echo $moduleclass_sfx; ?>">
 
-<amp-carousel width="767"
+<amp-carousel width="600"
   height="360"
   layout="responsive"
   type="slides"
@@ -29,7 +29,7 @@ $baseurl = JUri::base();
 			<?php $height = $item->params->get('height'); ?>
 	<a href="<?php echo $link?>">			
   <amp-img src="<?php echo $imageurl?>"
-    width="767"
+    width="600"
     height="360"
     layout="responsive"
     alt="<?php echo $item->name?>"></amp-img>

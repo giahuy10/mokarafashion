@@ -176,7 +176,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 						<input type="hidden" name="task" value="add2cart"/>
 						<input type="hidden" name="Itemid" value="502"/>
 						<input type="hidden" name="product_name" value="<?php echo $this->item->title?>"/>
-						<input type="hidden" name="product_img" value="<?php echo "images/san-pham/".$this->item->sku.$full.$pro_image[0]?>"/>
+						<input type="hidden" name="product_img" value="<?php echo $this->item->product_thumb?>/>
 						<input type="hidden" name="product_price" value="<?php echo $this->item->product_price?>"/>
 						<input type="hidden" name="product_old_price" value="<?php echo $this->item->product_old_price?>"/>
 						<input type="hidden" name="product_category_id" value="<?php echo $this->item->catid?>"/>
