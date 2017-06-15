@@ -109,7 +109,7 @@ if(!empty(JRequest::getVar('quantity')) && $update == 0) {
 								</td>
 							<td data-th="Số lượng" class="text-center">
 								<input type="number" id="quantity_input_<?php echo $key?>" onchange="update_url(<?php echo $key?>)" class="form-control text-center" value="<?php echo $cart['quantity']?>">
-								<a id="quantity_<?php echo $key?>" href="#" title="Cập nhật số lượng"><i class="fa fa-retweet"></i>		</a>
+								<a id="quantity_<?php echo $key?>" href="#" data-toggle="tooltip" title="Cập nhật số lượng"><i class="fa fa-retweet"></i>		</a>
 								
 							</td>
 							<td data-th="Thành tiền" class="text-center"><?php echo $productMod->ed_number_format($cart['quantity']*$cart['product_price'])?></td>
@@ -194,3 +194,8 @@ if(!empty(JRequest::getVar('quantity')) && $update == 0) {
 	}
 </script>
 
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>

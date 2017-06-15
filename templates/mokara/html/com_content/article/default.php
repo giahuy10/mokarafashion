@@ -42,6 +42,29 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 	
 	?>
 	
+	<!-- Trigger the modal with a button -->
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 		<div itemscope itemtype="http://schema.org/Product">
 		 <span itemprop="brand" class="hidden">Mokara</span>
 		<div class="row">
@@ -89,7 +112,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 					<?php echo $this->item->event->afterDisplayTitle; ?>
 			
 				
-				<strong>Danh mục: </strong><a href="<?php echo JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid)?>"><?php echo $category->title?></a>
+				<strong>Danh mục: </strong><a class="more-product" data-toggle="tooltip" title="Xem thêm các sản phẩm trong danh mục <?php echo $category->title?>" href="<?php echo JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid)?>"><?php echo $category->title?></a>
 				
 				<?php foreach ($this->item->jcfields as $field) : ?>
 					<?php if ($field->id > 7 && $field->id != 14 && $field->value && $field->id < 24) {?>
@@ -108,14 +131,14 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 							$link = 'index.php?option=com_content&filter_tag='.$key.'&id='.$this->item->catid.'&lang=en&layout=blog&view=category';
 							
 							$link = $productMod->get_alias_url($link);
-							echo ' <a title="Xem thêm các sản phẩm '.$category->title.' cùng '.$field->label . ': '.$value.'" href="'.$link.'">'.$value.'</a> ';
+							echo ' <a class="more-product" data-toggle="tooltip" title="Xem thêm các sản phẩm '.$category->title.' cùng '.$field->label . ': '.$value.'" href="'.$link.'">'.$value.'</a> ';
 						}
 						echo '</div>';
 					}else {
 						echo '<div class="product-custom-field"><strong>'.$field->label . ': </strong>' ;
 						$link = 'index.php?option=com_content&filter_tag='.$field->rawvalue.'&id='.$this->item->catid.'&lang=en&layout=blog&view=category';
 							$link = $productMod->get_alias_url($link);
-						echo ' <a title="Xem thêm các sản phẩm '.$category->title.' cùng '.$field->label . ': '.$field->value.'" href="'.$link.'">'.$field->value.'</a> ';
+						echo ' <a class="more-product" data-toggle="tooltip" title="Xem thêm các sản phẩm '.$category->title.' cùng '.$field->label . ': '.$field->value.'" href="'.$link.'">'.$field->value.'</a> ';
 						echo '</div>';
 					}
 					
@@ -155,21 +178,39 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 					</div>
 				</div>	
 					<form action="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502')?>" method="post" class="buy-section">
-				
-					<div class="size">
+				<div class="cta">
+					<div class="container">
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="fa fa-phone-square" aria-hidden="true"></i> Cần tư vấn?</button>
+						<div class="support inline-block">
+							<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=647&Itemid=530')?>" class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i> Xem bảng size</a> 
+							<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=646&Itemid=529')?>" class="btn btn-success"><i class="fa fa-info-circle" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 	
+							<div class="call-to-action hidden">
+							
+								<a href="tel:0906147557">
+									<i class="fa fa-phone" aria-hidden="true"></i>
+								</a>	
+							</div>	
+						</div>
+						<button type="submit" name="submit" class="btn btn-buy pull-right"><i class="fa fa-shopping-cart"></i> <?php echo JText::_('COM_CONTENT_ADD_TO_CART')?></button>
+						<div class="size inline-block pull-right">
+						
+						
+						
+						<select name="size" required class="form-control select-size">
+							<option value="">Vui lòng chọn Size</option>
+							<option value="S">S</option>
+							<option value="M">M</option>
+							<option value="L">L</option>
+							<option value="XL">XL</option>
+						</select>
+						
+						</div>
+						 <input type="hidden"  name="quantity" value="1" />
+						
+					</div>		
+				</div>
 					
-					<strong>Vui lòng chọn: </strong>
 					
-					<select name="size" required>
-						<option value="">Size</option>
-						<option value="S">S</option>
-						<option value="M">M</option>
-						<option value="L">L</option>
-						<option value="XL">XL</option>
-					</select>
-					</div>
-					<strong>Số lượng:</strong> <input type="number" min="1" name="quantity" value="1" />
-						<button type="submit" name="submit" class="btn btn-buy"><i class="fa fa-shopping-cart"></i> <?php echo JText::_('COM_CONTENT_ADD_TO_CART')?></button>
 						<input type="hidden" name="product_id" value="<?php echo $this->item->id?>"/>
 						<input type="hidden" name="option" value="com_mokara"/>
 						<input type="hidden" name="view" value="orders"/>
@@ -184,16 +225,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 						<input type="hidden" name="product_old_price" value="<?php echo $this->item->product_old_price?>"/>
 						<input type="hidden" name="product_category_id" value="<?php echo $this->item->catid?>"/>
 					</form>
-					<div class="support">
-						<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=647&Itemid=530')?>" class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i> Xem bảng size</a> 
-						<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=646&Itemid=529')?>" class="btn btn-success"><i class="fa fa-info-circle" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 	
-						<div class="call-to-action hidden">
-						
-							<a href="tel:0906147557">
-								<i class="fa fa-phone" aria-hidden="true"></i>
-							</a>	
-						</div>	
-					</div>
+				
 					<br/>
 						<div class="fb-like" data-href="<?php echo JUri::getInstance();?>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
 						<div class="fb-save" data-uri="<?php echo JUri::getInstance();?>"></div>
@@ -318,7 +350,11 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 	<?php endif; ?>
 
 	
-
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
 	
 
 	

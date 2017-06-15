@@ -70,11 +70,9 @@ li.parent:hover ul.nav-child.unstyled.small {
 	display:block;
 }
 div#ed-header {
-    position: fixed;
-    width: 100%;
+
     background: #fff;
-    z-index: 999;
-    top: 0;
+  
     border-bottom: 1px solid #ccc;
 }
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {

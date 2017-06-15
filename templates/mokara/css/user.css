@@ -30,7 +30,7 @@ img {
     text-align: center;
 }
 body {
-	padding-top: 90px;
+	
 	font-family: arial;
 	font-size: 18px;
 }
@@ -111,4 +111,14 @@ div#coccoc-alo-phoneIcon {
 }
 .text-bold {
 	font-weight:bold;
+}
+.inline-block {
+	display: inline-block!important;
+}
+div#lhc_status_container {
+    bottom: 54px !important;
+    width: 235px !important;
+    border-radius: 11px 0 0 10px !important;
+    background: #dad8d8 !important;
+    border: 0 !important;
 }
