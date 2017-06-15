@@ -83,6 +83,7 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-footer.css'?>" rel="stylesheet" type="text/css" />
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-filter.css'?>" rel="stylesheet" type="text/css" />
 	<link href="<?php echo $this->baseurl . '/templates/' . $this->template . '/css/ed-responsive.css'?>" rel="stylesheet" type="text/css" />
+	<script src="<?php echo $this->baseurl . '/templates/' . $this->template . '/js/jquery-3.2.1.slim.min.js'?>"></script>
 	<script src="<?php echo $this->baseurl . '/templates/' . $this->template . '/js/bootstrap.min.js'?>"></script>
 	
 	
