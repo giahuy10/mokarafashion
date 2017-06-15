@@ -38,7 +38,7 @@ if (!$session->get('ref')) {
 }
 if (!$session->get($option.'-'.$view.'-'.$item.'-'.$_SERVER['REMOTE_ADDR'])) {
 	$session->set($option.'-'.$view.'-'.$item.'-'.$_SERVER['REMOTE_ADDR'], 1);
-	$productMod->save_user_log ($user->id , $_SERVER['REMOTE_ADDR'], $option, $view, $layout, $task, $item, $session->get('ref'));
+	//$productMod->save_user_log ($user->id , $_SERVER['REMOTE_ADDR'], $option, $view, $layout, $task, $item, $session->get('ref'));
 }
 
 $dontInclude = array(
@@ -68,7 +68,29 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 <head>
-	
+	<script type="text/javascript">
+    var startTime = new Date();        //Start the clock!
+    window.onbeforeunload = function()        //When the user leaves the page(closes the window/tab, clicks a link)...
+    {
+        var endTime = new Date();        //Get the current time.
+        var timeSpent = (endTime - startTime);        //Find out how long it's been.
+        var xmlhttp;        //Make a variable for a new ajax request.
+        if (window.XMLHttpRequest)        //If it's a decent browser...
+        {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();        //Open a new ajax request.
+        }
+        else        //If it's a bad browser...
+        {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");        //Open a different type of ajax call.
+        }
+		//$productMod->save_user_log ($user->id , $_SERVER['REMOTE_ADDR'], $option, $view, $layout, $task, $item, $session->get('ref'));
+        var url = "http://mokara.com/cartfunction.php?time="+timeSpent+"&option=<?php echo $option?>&view=<?php echo $view?>&layout=<?php echo $layout?>&task=<?php echo $task?>&item=<?php echo $item?>&ref=<?php echo $session->get('ref')?>&user_id=<?php echo $user->id?>";        //Send the time on the page to a php script of your choosing.
+        xmlhttp.open("GET",url,false);        //The false at the end tells ajax to use a synchronous call which wont be severed by the user leaving.
+        xmlhttp.send(null);        //Send the request and don't wait for a response.
+    }
+</script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<jdoc:include type="head" />
 	<link rel="amphtml" href="<?php echo JUri::current();?>?template=amp" />

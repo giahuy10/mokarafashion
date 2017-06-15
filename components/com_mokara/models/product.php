@@ -8,7 +8,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 defined('_JEXEC') or die;
-
+jimport('joomla.oauth2.client');
 jimport('joomla.application.component.modellist');
 JLoader::register('ContentHelperRoute', JPATH_SITE . '/components/com_content/helpers/route.php');
 JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_content/models', 'ContentModel');
@@ -465,7 +465,7 @@ class MokaraModelProduct extends JModelList
 			$html .='<div class="ed-product-content">';
 			$html .='<div class="page-header">';
 			$html .='<h2 itemprop="name">';
-			$html .='<a href="'.$link.' ?>" itemprop="url">'.$item->title.'</a>';
+			$html .='<a href="'.$link.'" itemprop="url">'.$item->title.'</a>';
 			$html .='</h2>';
 			$html .='</div>';
 			$html .='<span itemprop="aggregateRating" class="hidden" itemscope itemtype="http://schema.org/AggregateRating">
