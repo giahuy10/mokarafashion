@@ -481,7 +481,7 @@ class MokaraModelProduct extends JModelList
 			$html .='</div>';
 			if ($item->product_old_price) {
 					$html .= '<span itemprop="highPrice" class="hidden">'.$item->product_old_price.'</span>';
-					$html .='<div class="old_price pull-right"><s>'.$this->ed_number_format($item->product_old_price).'</s></div>';
+					$html .='<div class="old_price pull-right"><strike>'.$this->ed_number_format($item->product_old_price).'</strike></div>';
 				 }
 			$html .='<div class="clearfix"></div>';
 			$html .='</div>';	
