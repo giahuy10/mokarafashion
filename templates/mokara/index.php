@@ -278,7 +278,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po
             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");        //Open a different type of ajax call.
         }
 		//$productMod->save_user_log ($user->id , $_SERVER['REMOTE_ADDR'], $option, $view, $layout, $task, $item, $session->get('ref'));
-        var url = "//<?php echo $_SERVER['SERVER_NAME']?>/cartfunction.php?time="+timeSpent+"&option=<?php echo $option?>&view=<?php echo $view?>&layout=<?php echo $layout?>&task=<?php echo $task?>&item=<?php echo $item?>&ref=<?php echo $session->get('ref')?>&user_id=<?php echo $user->id?>";        //Send the time on the page to a php script of your choosing.
+        var url = "https://<?php echo $_SERVER['SERVER_NAME']?>/cartfunction.php?time="+timeSpent+"&option=<?php echo $option?>&view=<?php echo $view?>&layout=<?php echo $layout?>&task=<?php echo $task?>&item=<?php echo $item?>&ref=<?php echo $session->get('ref')?>&user_id=<?php echo $user->id?>";        //Send the time on the page to a php script of your choosing.
         xmlhttp.open("GET",url,false);        //The false at the end tells ajax to use a synchronous call which wont be severed by the user leaving.
         xmlhttp.send(null);        //Send the request and don't wait for a response.
     }
