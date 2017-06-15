@@ -56,6 +56,7 @@ $userProfile = JUserHelper::getProfile( $userId );
 		$order->note = JRequest::getVar('comment');
 		$order->user_id = JRequest::getVar('user_id');
 		$order->total = JRequest::getVar('total');
+		
 
 		$order->ordering = $order->id;
 		$order->state = 1;
@@ -71,6 +72,7 @@ $userProfile = JUserHelper::getProfile( $userId );
 		$product_old_price = JRequest::getVar('product_old_price');
 		$quantity = JRequest::getVar('quantity');
 		$size = JRequest::getVar('size');
+		$save_money = JRequest::getVar('save_money');
 		
 		foreach ($product_id as $key=>$value) {
 			$order_id[$key] = new stdClass();
@@ -80,8 +82,38 @@ $userProfile = JUserHelper::getProfile( $userId );
 			$order_id[$key]->product_old_price = $product_old_price[$key];
 			$order_id[$key]->quantity = $quantity[$key];
 			$order_id[$key]->size = $size[$key];
+			$order_id[$key]->save_money = $save_money[$key];
 			$order_detail = JFactory::getDbo()->insertObject('#__inventory_order_detail', $order_id[$key]);
 			
+		}
+		if (JRequest::getVar('total_save') && JRequest::getVar('total_save') > 0) {
+	
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName(array('id', 'user_id', 'points')));
+		$query->from($db->quoteName('#__user_points'));
+		$query->where($db->quoteName('user_id') . ' = '. $order->user_id);
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		$user_point = $db->loadObject();
+		if ($user_point) {
+			$user_point->points = $user_point->points + JRequest::getVar('total_save');
+			$result = JFactory::getDbo()->updateObject('#__user_points', $user_point, 'id');
+		}else {
+			$user_point = new stdClass();
+			$user_point->user_id = $order->user_id;
+			$user_point->points=JRequest::getVar('total_save');
+			
+			 
+			// Insert the object into the user profile table.
+			$result = JFactory::getDbo()->insertObject('#__user_points', $user_point);
+		}
 		}
 		 unset($_SESSION['itemcart']);
 		?>
@@ -89,18 +121,7 @@ $userProfile = JUserHelper::getProfile( $userId );
 	<?php } else {
 
 ?>
-<?php
 
-JPluginHelper::importPlugin('captcha');
-    $dispatcher = JDispatcher::getInstance();
-
-    // This will put the code to load reCAPTCHA's JavaScript file into your <head>
-    $dispatcher->trigger('onInit', 'dynamic_recaptcha_1');
-
-    // This will return the array of HTML code.
-    $recaptcha = $dispatcher->trigger('onDisplay', array(null, 'dynamic_recaptcha_1', 'class=""'));
-
-?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_mokara&view=checkout'); ?>" method="post"
       name="adminForm" id="adminForm">
@@ -115,21 +136,25 @@ JPluginHelper::importPlugin('captcha');
 							<th style="width:10%">Giá</th>
 							<th style="width:8%">Số lượng</th>
 							<th style="width:22%" class="text-center">Thành tiền</th>
-							<th style="width:10%"></th>
+							<th style="width:10%">Tích lũy</th>
+						
 						</tr>
 					</thead>
 					<tbody>
 						<?php $total = 0;foreach($_SESSION["itemcart"] as $key => $cart) {?>
-						<?php $total += $cart['quantity']*$cart['product_price'];?>
+						<?php $total += $cart['quantity']*$cart['product_price'];
+						
+						if($cart['save_money_value']) $total_save += $cart['quantity']*$cart['save_money_value'];?>
 						<input type="hidden" name="product_id[]" value="<?php echo $cart['product_id']?>">
 						<input type="hidden" name="product_price[]" value="<?php echo $cart['product_price']?>">
 						<input type="hidden" name="product_old_price[]" value="<?php echo $cart['product_old_price']?>">
 						<input type="hidden" name="quantity[]" value="<?php echo $cart['quantity']?>">
 						<input type="hidden" name="size[]" value="<?php echo $cart['size']?>">
+						<input type="hidden" name="save_money[]" value="<?php echo $cart['save_money_value']?>">
 						<tr>
 							<td data-th="Sản phẩm">
 								<div class="row">
-									<div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive"></div>
+									<div class="col-sm-2 hidden-xs"><img src="<?php echo $cart['product_img']?>" alt="<?php echo $cart['title']?>" class="img-responsive"></div>
 									<div class="col-sm-10">
 										<h4 class="nomargin">
 										<a href="<?php echo JRoute::_('index.php?option=com_content&view=article&id='.$cart['product_id'].'&catid='.$cart['product_category_id']);?>">
@@ -137,7 +162,10 @@ JPluginHelper::importPlugin('captcha');
 										
 										</h4>
 										<strong>Size: </strong> <?php echo $cart['size']?>
-										
+										<?php if($cart['save_money_value']) {?>
+										<br/>
+									Tích lũy: <?php echo $productMod->ed_number_format($cart['save_money_value'])?>
+								<?php }?>
 									</div>
 								</div>
 							</td>
@@ -151,6 +179,7 @@ JPluginHelper::importPlugin('captcha');
 								<input type="number" disabled class="form-control text-center" value="<?php echo $cart['quantity']?>">
 							</td>
 							<td data-th="Thành tiền" class="text-center"><?php echo $productMod->ed_number_format($cart['quantity']*$cart['product_price'])?></td>
+								<td data-th="Tích lũy" class="text-center"><?php echo $productMod->ed_number_format($cart['quantity']*$cart['save_money_value'])?></td>
 						
 						</tr>
 						<?php }?>
@@ -160,11 +189,52 @@ JPluginHelper::importPlugin('captcha');
 							<td class="text-center"><strong>Tổng: <?php echo $productMod->ed_number_format($total)?></strong></td>
 						</tr>
 						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="text-center text-bold"><?php echo $productMod->ed_number_format($total)?></td>
+							<td class="text-center text-bold"><?php echo $productMod->ed_number_format($total_save)?></td>
 							
-							<td colspan="2" class="hidden-xs"></td>
-							<td  class="hidden-xs text-center"><strong>Tổng: </strong></td>
-							<td class="hidden-xs text-center"><strong><?php echo $productMod->ed_number_format($total)?></strong></td>
-				
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							
+							<td></td>
+							
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						
+							
+							<td class="text-center text-bold">Giảm giá:</td>
+							<td class="text-center text-bold"><?php echo $productMod->ed_number_format($discount)?></td>
+							
+						</tr>
+						
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						
+							
+							<td class="text-center text-bold">Tích lũy:</td>
+							<td class="text-center text-bold"><?php echo $productMod->ed_number_format($total_save)?></td>
+							
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						
+							
+							<td class="text-center text-bold">Tổng thanh toán:</td>
+							<td class="text-center text-bold"><?php echo $productMod->ed_number_format($total)?></td>
+							
 						</tr>
 					</tfoot>
 				</table>
@@ -200,6 +270,7 @@ JPluginHelper::importPlugin('captcha');
 	<input type="hidden" name="option" value="com_mokara"/>
 	<input type="hidden" name="user_id" value="<?php echo $userId; ?>"/>
 	<input type="hidden" name="total" value="<?php echo $total; ?>"/>
+	<input type="hidden" name="total_save" value="<?php echo $total_save; ?>"/>
 
 	<?php echo JHtml::_('form.token'); ?>
 	

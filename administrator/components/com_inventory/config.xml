@@ -3,8 +3,8 @@
     <fieldset label="COM_INVENTORY" name="inventory">
         <field name="savemoney" type="radio" default="0" label="Save Money" description="">
 		  <option value="0">No</option>
-		  <option value="1">On Order</option>
-		  <option value="2">On Product</option>
+		  <option value="1">Yes</option>
+		
 		</field>
 		<field name="savemoney_on_order" type="text" default="0" label="Save (%) on order" description="" size="10" showon="savemoney:1" />
     </fieldset>

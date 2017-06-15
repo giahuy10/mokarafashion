@@ -14,8 +14,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "INSERT INTO ".$prefix."user_logs ( `user_id`, `ip`, `component`, `view`, `layout`, `task`, `item`, `ref`, `time`)
-VALUES ('".$_GET['user_id']."','".$_SERVER['REMOTE_ADDR']."','".$_GET['option']."','".$_GET['view']."','".$_GET['layout']."','".$_GET['task']."','".$_GET['item']."','".$_GET['ref']."','".$_GET['time']."')";
+$sql = "INSERT INTO ".$prefix."user_filter ( `user_id`, `ip`, `field_id`, `value`)
+VALUES ('".$_GET['user_id']."','".$_GET['ip']."','".$_GET['field_id']."','".$_GET['field_value']."')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";

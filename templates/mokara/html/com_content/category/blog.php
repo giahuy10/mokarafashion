@@ -8,7 +8,7 @@
  */
 
 defined('_JEXEC') or die;
-
+$user = JFactory::getUser();
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
 JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
 $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
@@ -139,7 +139,7 @@ if ($tag_id > 0) {
 		<?php foreach ($options as $option) {?>
 			<?php $existed = $productMod->check_filter_value($product_ids, $field->id, $option->value)?>
 				
-				<label for="field_<?php echo $field->id."_".$option->value?>" class="<?php if (!$existed) echo "hidden"?>" >
+				<label for="field_<?php echo $field->id."_".$option->value?>" class="<?php if (!$existed) echo "hidden"?>" onclick="save_filter(<?php echo $field->id?>, <?php echo $option->value?>)" >
 				
 				<span class="<?php echo 'btn btn_field btn_field_'.$field->name.' btn_field_value_'.$option->value?> <?php if ($option->value == $value) echo "active";?>"><?php echo $option->name?></span>
 				
@@ -156,7 +156,25 @@ if ($tag_id > 0) {
 		
 </form>
 <script>
-
+	function save_filter(field_id, field_value) {
+		
+		
+        var xmlhttp;        //Make a variable for a new ajax request.
+        if (window.XMLHttpRequest)        //If it's a decent browser...
+        {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();        //Open a new ajax request.
+        }
+        else        //If it's a bad browser...
+        {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");        //Open a different type of ajax call.
+        }
+		//$productMod->save_user_log ($user->id , $_SERVER['REMOTE_ADDR'], $option, $view, $layout, $task, $item, $session->get('ref'));
+        var url = "<?php echo $_SERVER['SERVER_NAME']?>/cartfunction_filter.php?field_id="+field_id+"&field_value="+field_value+"&user_id=<?php echo $user->id?>&ip=<?php echo $_SERVER['REMOTE_ADDR']?>";        //Send the time on the page to a php script of your choosing.
+        xmlhttp.open("GET",url,false);        //The false at the end tells ajax to use a synchronous call which wont be severed by the user leaving.
+        xmlhttp.send(null);        //Send the request and don't wait for a response.
+	}
 	function resetForm(ele) {
     for(var i=0;i<ele.length;i++)
       ele[i].checked = false;

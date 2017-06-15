@@ -382,28 +382,47 @@ class MokaraModelProduct extends JModelList
 
 
 	public function get_custom_field ($item) {
-		foreach ($item->jcfields as $field) {
-			$field_with_id[$field->id] = $field;
+		$app      = JFactory::getApplication();
+		$cparams = $app->getParams('com_inventory');
+		$savemoney=$cparams->get('savemoney');
+		if ($savemoney) {
+			$savemoney_on_order=$cparams->get('savemoney_on_order');
+			if ($savemoney_on_order > 0)
+			$item->save_money = $savemoney_on_order;
 		}
-		$item->product_price = $field_with_id[1]->rawvalue;
-		if(isset($field_with_id[7]->rawvalue)) {
-			$item->sku = $field_with_id[7]->rawvalue;
+		
+		
+		
+		foreach ($item->jcfields as $field) {
+			$field_with_id[$field->name] = $field;
+		}
+		$item->product_price = $field_with_id['price']->rawvalue;
+		if(isset($field_with_id['code']->rawvalue)) {
+			$item->sku = $field_with_id['code']->rawvalue;
 			
 		$item->sku = strtolower($item->sku);
 		$item->sku = str_replace(" ", "", $item->sku);
 		}
-		if(isset($field_with_id[24]->rawvalue)) 
-			$item->product_thumb = $field_with_id[24]->rawvalue;	
-			
+		if(isset($field_with_id['main-image']->rawvalue)) 
+			$item->product_thumb = $field_with_id['main-image']->rawvalue;	
+		if ($savemoney) {
+			if(isset($field_with_id['savemoney']->rawvalue) && $field_with_id['savemoney']->rawvalue > 0) 
+			$item->save_money = $field_with_id['savemoney']->rawvalue;	
+			if ($item->save_money) {
+				$item->save_money_value = round($item->product_price*$item->save_money/100,-3);
+			}
+		}
 		
-		if (isset($field_with_id[4]->rawvalue))
-			$item->product_old_price = $field_with_id[4]->rawvalue;
+			
+	
+		if (isset($field_with_id['old-price']->rawvalue))
+			$item->product_old_price = $field_with_id['old-price']->rawvalue;
 		else 
 			$item->product_old_price = NULL;	
-		if (isset($field_with_id[5]->rawvalue))
-			$item->product_label =$field_with_id[5]->rawvalue;
-		if (isset($field_with_id[3]->rawvalue))
-			$item->product_status = $field_with_id[3]->rawvalue;
+		if (isset($field_with_id['label']->rawvalue))
+			$item->product_label =$field_with_id['label']->rawvalue;
+		if (isset($field_with_id['status-of-stock']->rawvalue))
+			$item->product_status = $field_with_id['status-of-stock']->rawvalue;
 		else 
 			$item->product_status = 1;
 		return $item;
@@ -446,7 +465,7 @@ class MokaraModelProduct extends JModelList
 		echo "hello";
 	}
 	public function ed_number_format ($money){
-		$money = '<span  itemprop="price" content='.number_format($money,0,",",".").'>'.number_format($money).'</span><sup>đ</sup>';
+		$money = '<span  itemprop="price" content='.$money.'>'.number_format($money).'</span><sup>đ</sup>';
 		return $money;
 	}
 
