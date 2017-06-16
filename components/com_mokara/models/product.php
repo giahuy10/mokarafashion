@@ -240,6 +240,7 @@ class MokaraModelProduct extends JModelList
 			$result = JFactory::getDbo()->insertObject('#__user_logs', $profile);
 		
 	} 
+	
 	public function get_related_products ($field_id, $item_id, $cat_id, $price, $template = NULL) {
 		$db = JFactory::getDbo();
 		$query2 = $db->getQuery(true);
@@ -427,6 +428,7 @@ class MokaraModelProduct extends JModelList
 			$item->product_status = 1;
 		return $item;
 	}
+	
 
 
 	public function get_product_image ($sku) {
