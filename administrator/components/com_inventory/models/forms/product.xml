@@ -9,78 +9,77 @@
       <option value="2">JARCHIVED</option>
       <option value="-2">JTRASHED</option>
     </field>
+<field name="images"
+	type="repeatable"
+	icon="list"
+	description="PLG_TINY_FIELD_TEMPLATE_FIELD_ELEMENTS_DESC"
+	label="PLG_TINY_FIELD_TEMPLATE_FIELD_ELEMENTS_LABEL"
+	default='{"template":["Layout","Simple snippet"],
+		"location":["layout1.html","snippet1.html"],
+		"description":["HTMLLayout","Simple HTML snippet"]}'>
+	<fieldset hidden="true" name="images_modal" repeat="true">
+		<field name="template"
+			label="PLG_TINY_FIELD_TEMPLATE_FIELD_NAME_LABEL"
+			size="30"
+			type="text" />
+			<field name="myimage" type="media" directory="stories" />
+		<field name="location"
+			label="PLG_TINY_FIELD_TEMPLATE_FIELD_LOCATION_LABEL"
+			description="PLG_TINY_FIELD_TEMPLATE_LOCATION_DESC"
+			size="30"
+			type="filelist"
+			directory="media/editors/tinymce/templates"
+			exclude="index.html"
+			hide_default="true"
+			hide_none="true" />
+		<field name="description"
+			label="PLG_TINY_FIELD_TEMPLATE_FIELD_DESCRIPTION_LABEL"
+			size="30"
+			type="textarea" />
+	</fieldset>
+</field>
     <field name="checked_out" type="hidden" filter="unset"/>
     <field name="checked_out_time" default="0000-00-00 00:00:00" type="hidden" filter="unset"/>
     <field name="created_by" type="createdby" default="0" label="COM_INVENTORY_FORM_LBL_PRODUCT_CREATED_BY" description="COM_INVENTORY_FORM_DESC_PRODUCT_CREATED_BY" hidden="true" hint="COM_INVENTORY_FORM_LBL_PRODUCT_CREATED_BY"/>
     <field name="modified_by" type="modifiedby" default="0" label="COM_INVENTORY_FORM_LBL_PRODUCT_MODIFIED_BY" description="COM_INVENTORY_FORM_DESC_PRODUCT_MODIFIED_BY" hidden="true" hint="COM_INVENTORY_FORM_LBL_PRODUCT_MODIFIED_BY"/>
-    <field name="category" type="sql" query="SELECT id, title FROM #__categories WHERE parent_id=20 and published=1" key_field="id" value_field="title" required="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_CATEGORY" description="COM_INVENTORY_FORM_DESC_PRODUCT_CATEGORY" hint="COM_INVENTORY_FORM_LBL_PRODUCT_CATEGORY"/>
-    <field name="name" type="text" filter="raw" required="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_NAME" description="COM_INVENTORY_FORM_DESC_PRODUCT_NAME" hint="COM_INVENTORY_FORM_LBL_PRODUCT_NAME"/>
+    <field name="category" type="category" extension="com_inventory" required="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_CATEGORY" description="COM_INVENTORY_FORM_DESC_PRODUCT_CATEGORY" hint="COM_INVENTORY_FORM_LBL_PRODUCT_CATEGORY"/>
+	<field name="alias" type="text" label="JFIELD_ALIAS_LABEL"
+			description="JFIELD_ALIAS_DESC"
+			hint="JFIELD_ALIAS_PLACEHOLDER"
+			size="40" />
+    <field name="title" type="text" filter="raw" required="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_NAME" description="COM_INVENTORY_FORM_DESC_PRODUCT_NAME" hint="COM_INVENTORY_FORM_LBL_PRODUCT_NAME"/>
     <field name="code" type="text" required="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_CODE" description="COM_INVENTORY_FORM_DESC_PRODUCT_CODE" hint="COM_INVENTORY_FORM_LBL_PRODUCT_CODE"/>
     <field name="price" type="number" required="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_PRICE" description="COM_INVENTORY_FORM_DESC_PRODUCT_PRICE" hint="COM_INVENTORY_FORM_LBL_PRODUCT_PRICE"/>
     <field name="old_price" type="number" label="COM_INVENTORY_FORM_LBL_PRODUCT_OLD_PRICE" description="COM_INVENTORY_FORM_DESC_PRODUCT_OLD_PRICE" hint="COM_INVENTORY_FORM_LBL_PRODUCT_OLD_PRICE"/>
-    <field name="color" type="list" required="true" multiple="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_COLOR" description="COM_INVENTORY_FORM_DESC_PRODUCT_COLOR" hint="COM_INVENTORY_FORM_LBL_PRODUCT_COLOR">
-      <option value="1">COM_INVENTORY_PRODUCTS_COLOR_OPTION_1</option>
-      <option value="2">COM_INVENTORY_PRODUCTS_COLOR_OPTION_2</option>
-      <option value="3">COM_INVENTORY_PRODUCTS_COLOR_OPTION_3</option>
-      <option value="4">COM_INVENTORY_PRODUCTS_COLOR_OPTION_4</option>
-      <option value="5">COM_INVENTORY_PRODUCTS_COLOR_OPTION_5</option>
-      <option value="6">COM_INVENTORY_PRODUCTS_COLOR_OPTION_6</option>
-      <option value="7">COM_INVENTORY_PRODUCTS_COLOR_OPTION_7</option>
-      <option value="8">COM_INVENTORY_PRODUCTS_COLOR_OPTION_8</option>
-      <option value="9">COM_INVENTORY_PRODUCTS_COLOR_OPTION_9</option>
-      <option value="10">COM_INVENTORY_PRODUCTS_COLOR_OPTION_10</option>
-      <option value="11">COM_INVENTORY_PRODUCTS_COLOR_OPTION_11</option>
-      <option value="12">COM_INVENTORY_PRODUCTS_COLOR_OPTION_12</option>
-      <option value="13">COM_INVENTORY_PRODUCTS_COLOR_OPTION_13</option>
-      <option value="14">COM_INVENTORY_PRODUCTS_COLOR_OPTION_14</option>
-      <option value="15">COM_INVENTORY_PRODUCTS_COLOR_OPTION_15</option>
-    </field>
-    <field name="material" type="list" required="true" multiple="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_MATERIAL" description="COM_INVENTORY_FORM_DESC_PRODUCT_MATERIAL" hint="COM_INVENTORY_FORM_LBL_PRODUCT_MATERIAL">
-      <option value="1">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_1</option>
-      <option value="2">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_2</option>
-      <option value="3">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_3</option>
-      <option value="4">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_4</option>
-      <option value="5">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_5</option>
-      <option value="6">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_6</option>
-      <option value="7">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_7</option>
-      <option value="8">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_8</option>
-      <option value="9">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_9</option>
-      <option value="10">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_10</option>
-      <option value="11">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_11</option>
-    </field>
-    <field name="neck" type="list" required="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_NECK" description="COM_INVENTORY_FORM_DESC_PRODUCT_NECK" hint="COM_INVENTORY_FORM_LBL_PRODUCT_NECK">
-      <option value="1">COM_INVENTORY_PRODUCTS_NECK_OPTION_1</option>
-      <option value="2">COM_INVENTORY_PRODUCTS_NECK_OPTION_2</option>
-      <option value="3">COM_INVENTORY_PRODUCTS_NECK_OPTION_3</option>
-      <option value="4">COM_INVENTORY_PRODUCTS_NECK_OPTION_4</option>
-      <option value="5">COM_INVENTORY_PRODUCTS_NECK_OPTION_5</option>
-      <option value="6">COM_INVENTORY_PRODUCTS_NECK_OPTION_6</option>
-      <option value="7">COM_INVENTORY_PRODUCTS_NECK_OPTION_7</option>
-      <option value="8">COM_INVENTORY_PRODUCTS_NECK_OPTION_8</option>
-      <option value="9">COM_INVENTORY_PRODUCTS_NECK_OPTION_9</option>
-    </field>
-    <field name="sleeve" type="list" required="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_SLEEVE" description="COM_INVENTORY_FORM_DESC_PRODUCT_SLEEVE" hint="COM_INVENTORY_FORM_LBL_PRODUCT_SLEEVE">
-      <option value="1">COM_INVENTORY_PRODUCTS_SLEEVE_OPTION_1</option>
-      <option value="2">COM_INVENTORY_PRODUCTS_SLEEVE_OPTION_2</option>
-      <option value="3">COM_INVENTORY_PRODUCTS_SLEEVE_OPTION_3</option>
-      <option value="4">COM_INVENTORY_PRODUCTS_SLEEVE_OPTION_4</option>
-    </field>
-    <field name="type" type="list" required="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_TYPE" description="COM_INVENTORY_FORM_DESC_PRODUCT_TYPE" hint="COM_INVENTORY_FORM_LBL_PRODUCT_TYPE">
-      <option value="1">COM_INVENTORY_PRODUCTS_TYPE_OPTION_1</option>
-      <option value="2">COM_INVENTORY_PRODUCTS_TYPE_OPTION_2</option>
-      <option value="3">COM_INVENTORY_PRODUCTS_TYPE_OPTION_3</option>
-    </field>
-    <field name="skirt" type="list" multiple="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_SKIRT" description="COM_INVENTORY_FORM_DESC_PRODUCT_SKIRT" hint="COM_INVENTORY_FORM_LBL_PRODUCT_SKIRT" showon="category:23">
-      <option value="1">COM_INVENTORY_PRODUCTS_SKIRT_OPTION_1</option>
-      <option value="2">COM_INVENTORY_PRODUCTS_SKIRT_OPTION_2</option>
-      <option value="3">COM_INVENTORY_PRODUCTS_SKIRT_OPTION_3</option>
-      <option value="4">COM_INVENTORY_PRODUCTS_SKIRT_OPTION_4</option>
-      <option value="5">COM_INVENTORY_PRODUCTS_SKIRT_OPTION_5</option>
-      <option value="6">COM_INVENTORY_PRODUCTS_SKIRT_OPTION_6</option>
-      <option value="7">COM_INVENTORY_PRODUCTS_SKIRT_OPTION_7</option>
-      <option value="8">COM_INVENTORY_PRODUCTS_SKIRT_OPTION_8</option>
-      <option value="9">COM_INVENTORY_PRODUCTS_SKIRT_OPTION_9</option>
-    </field>
+    <field name="color" type="sql" required="true" query="SELECT id, title FROM #__tags WHERE parent_id = 15 and published=1"  key_field="id" value_field="title"  multiple="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_COLOR" description="COM_INVENTORY_FORM_DESC_PRODUCT_COLOR" hint="COM_INVENTORY_FORM_LBL_PRODUCT_COLOR"/>
+     
+	<field name="alias" type="text" label="JFIELD_ALIAS_LABEL"
+			description="JFIELD_ALIAS_DESC"
+			hint="JFIELD_ALIAS_PLACEHOLDER"
+			size="40" />
+
+
+		<field name="tags"
+			type="tag"
+			label="JTAG"
+			description="JTAG_DESC"
+			class="span12"
+			multiple="true"
+		>
+		</field>		
+		
+    <field name="material" type="sql"  query="SELECT id, title FROM #__tags WHERE parent_id = 40 and published=1"  key_field="id" value_field="title" required="true" multiple="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_MATERIAL" description="COM_INVENTORY_FORM_DESC_PRODUCT_MATERIAL" hint="COM_INVENTORY_FORM_LBL_PRODUCT_MATERIAL"/>
+    
+    <field name="neck"  type="sql"  query="SELECT id, title FROM #__tags WHERE parent_id = 53 and published=1"  key_field="id" value_field="title" required="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_NECK" description="COM_INVENTORY_FORM_DESC_PRODUCT_NECK" hint="COM_INVENTORY_FORM_LBL_PRODUCT_NECK"/>
+    
+    <field name="sleeve"  type="sql" required="true" query="SELECT id, title FROM #__tags WHERE parent_id = 14 and published=1"  key_field="id" value_field="title" label="COM_INVENTORY_FORM_LBL_PRODUCT_SLEEVE" description="COM_INVENTORY_FORM_DESC_PRODUCT_SLEEVE" hint="COM_INVENTORY_FORM_LBL_PRODUCT_SLEEVE"/>
+    
+  
+    <field name="type" type="sql" query="SELECT id, title FROM #__tags WHERE parent_id = 31 and published=1"  key_field="id" value_field="title" required="true" multiple="true" label="COM_INVENTORY_FORM_LBL_PRODUCT_TYPE" description="COM_INVENTORY_FORM_DESC_PRODUCT_TYPE" hint="COM_INVENTORY_FORM_LBL_PRODUCT_TYPE"/>
+   
+	<field name="shape"  type="sql" required="true" query="SELECT id, title FROM #__tags WHERE parent_id = 62 and published=1"  key_field="id" value_field="title" label="COM_INVENTORY_FORM_LBL_PRODUCT_SHAPE" description="COM_INVENTORY_FORM_DESC_PRODUCT_SHAPE" hint="COM_INVENTORY_FORM_LBL_PRODUCT_SHAPE"/>
+
+     
     <field name="input_price" type="text" label="COM_INVENTORY_FORM_LBL_PRODUCT_INPUT_PRICE" description="COM_INVENTORY_FORM_DESC_PRODUCT_INPUT_PRICE" hint="COM_INVENTORY_FORM_LBL_PRODUCT_INPUT_PRICE"/>
     <field name="size_s" type="text" label="COM_INVENTORY_FORM_LBL_PRODUCT_SIZE_S" description="COM_INVENTORY_FORM_DESC_PRODUCT_SIZE_S" hint="COM_INVENTORY_FORM_LBL_PRODUCT_SIZE_S"/>
     <field name="size_m" type="text" label="COM_INVENTORY_FORM_LBL_PRODUCT_SIZE_M" description="COM_INVENTORY_FORM_DESC_PRODUCT_SIZE_M" hint="COM_INVENTORY_FORM_LBL_PRODUCT_SIZE_M"/>

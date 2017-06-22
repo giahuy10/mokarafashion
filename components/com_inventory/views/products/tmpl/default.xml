@@ -5,4 +5,51 @@
                         <![CDATA[COM_INVENTORY_TITLE_LIST_VIEW_PRODUCTS_DESC]]>
         </message>
 	</layout>
+	<fields name="request">
+		<fieldset name="request"
+			addfieldpath="/administrator/components/com_categories/models/fields"
+		>
+			<field
+				name="id"
+				type="modal_category"
+				label="JGLOBAL_CHOOSE_CATEGORY_LABEL"
+				description="JGLOBAL_CHOOSE_CATEGORY_DESC"
+				extension="com_inventory"
+				required="true"
+				select="true"
+				new="true"
+				edit="true"
+				clear="true"
+			/>
+	
+				 <field name="color" type="sql"  query="SELECT id, title FROM #__tags WHERE parent_id = 15 and published=1"  key_field="id" value_field="title" label="COM_INVENTORY_FORM_LBL_PRODUCT_COLOR" description="COM_INVENTORY_FORM_DESC_PRODUCT_COLOR" hint="COM_INVENTORY_FORM_LBL_PRODUCT_COLOR"   >
+			<option value="">COM_INVENTORY_PRODUCTS_COLOR_FILTER</option>
+		 </field>
+       
+		<field name="material" label="COM_INVENTORY_FORM_LBL_PRODUCT_MATERIAL" type="sql" query="SELECT id, title FROM #__tags WHERE parent_id = 40 and published=1" key_field="id" value_field="title"  default="0">
+		  <option value="">COM_INVENTORY_PRODUCTS_MATERIAL_FILTER</option>
+		 
+		</field>
+<field name="neck" label="COM_INVENTORY_FORM_LBL_PRODUCT_NECK" type="sql"  query="SELECT id, title FROM #__tags WHERE parent_id = 53 and published=1" key_field="id" value_field="title"  default="0">
+  <option value="">COM_INVENTORY_PRODUCTS_NECK_FILTER</option>
+
+</field>
+<field name="sleeve" label="COM_INVENTORY_FORM_LBL_PRODUCT_SLEEVE" type="sql" query="SELECT id, title FROM #__tags WHERE parent_id = 14 and published=1" key_field="id" value_field="title"  default="0">
+  <option value="">COM_INVENTORY_PRODUCTS_SLEEVE_FILTER</option>
+
+</field>
+<field name="type" label="COM_INVENTORY_FORM_LBL_PRODUCT_TYPE" type="sql" query="SELECT id, title FROM #__tags WHERE parent_id = 31 and published=1" key_field="id" value_field="title"  default="0">
+  <option value="">COM_INVENTORY_PRODUCTS_TYPE_FILTER</option>
+ 
+</field>
+
+<field name="shape" label="COM_INVENTORY_FORM_LBL_PRODUCT_SHAPE" type="sql" query="SELECT id, title FROM #__tags WHERE parent_id = 62 and published=1" key_field="id" value_field="title"  default="0">
+  <option value="">COM_INVENTORY_PRODUCTS_SHAPE_FILTER</option>
+ 
+</field>
+<field name="price_range" label="COM_INVENTORY_FORM_LBL_PRODUCT_PRICE_RANGE" type="sql" query="SELECT id, title FROM #__tags WHERE parent_id = 16 and published=1" key_field="id" value_field="title"  default="0">
+  <option value="">COM_INVENTORY_PRODUCTS_PRICE_RANGE_FILTER</option>
+  </field>
+		</fieldset>
+	</fields>
 </metadata>

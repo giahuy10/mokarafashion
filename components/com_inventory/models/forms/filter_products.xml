@@ -5,64 +5,62 @@
                label="COM_USERS_FILTER_SEARCH_DESC"
                class="js-stools-search-string" />
 
-        <field name="color" label="COM_INVENTORY_FORM_LBL_PRODUCT_COLOR" type="list" onchange="this.form.submit();" default="COM_INVENTORY_PRODUCTS_COLOR_FILTER">
-  <option value="">COM_INVENTORY_PRODUCTS_COLOR_FILTER</option>
-  <option value="1">COM_INVENTORY_PRODUCTS_COLOR_OPTION_1</option>
-  <option value="2">COM_INVENTORY_PRODUCTS_COLOR_OPTION_2</option>
-  <option value="3">COM_INVENTORY_PRODUCTS_COLOR_OPTION_3</option>
-  <option value="4">COM_INVENTORY_PRODUCTS_COLOR_OPTION_4</option>
-  <option value="5">COM_INVENTORY_PRODUCTS_COLOR_OPTION_5</option>
-  <option value="6">COM_INVENTORY_PRODUCTS_COLOR_OPTION_6</option>
-  <option value="7">COM_INVENTORY_PRODUCTS_COLOR_OPTION_7</option>
-  <option value="8">COM_INVENTORY_PRODUCTS_COLOR_OPTION_8</option>
-  <option value="9">COM_INVENTORY_PRODUCTS_COLOR_OPTION_9</option>
-  <option value="10">COM_INVENTORY_PRODUCTS_COLOR_OPTION_10</option>
-  <option value="11">COM_INVENTORY_PRODUCTS_COLOR_OPTION_11</option>
-  <option value="12">COM_INVENTORY_PRODUCTS_COLOR_OPTION_12</option>
-  <option value="13">COM_INVENTORY_PRODUCTS_COLOR_OPTION_13</option>
-  <option value="14">COM_INVENTORY_PRODUCTS_COLOR_OPTION_14</option>
-  <option value="15">COM_INVENTORY_PRODUCTS_COLOR_OPTION_15</option>
-</field>
-<field name="material" label="COM_INVENTORY_FORM_LBL_PRODUCT_MATERIAL" type="list" onchange="this.form.submit();" default="COM_INVENTORY_PRODUCTS_MATERIAL_FILTER">
-  <option value="">COM_INVENTORY_PRODUCTS_MATERIAL_FILTER</option>
-  <option value="1">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_1</option>
-  <option value="2">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_2</option>
-  <option value="3">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_3</option>
-  <option value="4">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_4</option>
-  <option value="5">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_5</option>
-  <option value="6">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_6</option>
-  <option value="7">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_7</option>
-  <option value="8">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_8</option>
-  <option value="9">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_9</option>
-  <option value="10">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_10</option>
-  <option value="11">COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_11</option>
-</field>
-<field name="neck" label="COM_INVENTORY_FORM_LBL_PRODUCT_NECK" type="list" onchange="this.form.submit();" default="COM_INVENTORY_PRODUCTS_NECK_FILTER">
+       
+		 <field name="color" type="sql"  query="SELECT id, title FROM #__tags WHERE parent_id = 15 and published=1"  key_field="id" value_field="title" label="COM_INVENTORY_FORM_LBL_PRODUCT_COLOR" description="COM_INVENTORY_FORM_DESC_PRODUCT_COLOR" hint="COM_INVENTORY_FORM_LBL_PRODUCT_COLOR"  onchange="this.form.submit();" >
+			<option value="">COM_INVENTORY_PRODUCTS_COLOR_FILTER</option>
+		 </field>
+       
+		<field name="material" label="COM_INVENTORY_FORM_LBL_PRODUCT_MATERIAL" type="sql" query="SELECT id, title FROM #__tags WHERE parent_id = 40 and published=1" key_field="id" value_field="title" onchange="this.form.submit();" default="COM_INVENTORY_PRODUCTS_MATERIAL_FILTER">
+		  <option value="">COM_INVENTORY_PRODUCTS_MATERIAL_FILTER</option>
+		 
+		</field>
+<field name="neck" label="COM_INVENTORY_FORM_LBL_PRODUCT_NECK" type="sql"  query="SELECT id, title FROM #__tags WHERE parent_id = 53 and published=1" key_field="id" value_field="title" onchange="this.form.submit();" default="COM_INVENTORY_PRODUCTS_NECK_FILTER">
   <option value="">COM_INVENTORY_PRODUCTS_NECK_FILTER</option>
-  <option value="1">COM_INVENTORY_PRODUCTS_NECK_OPTION_1</option>
-  <option value="2">COM_INVENTORY_PRODUCTS_NECK_OPTION_2</option>
-  <option value="3">COM_INVENTORY_PRODUCTS_NECK_OPTION_3</option>
-  <option value="4">COM_INVENTORY_PRODUCTS_NECK_OPTION_4</option>
-  <option value="5">COM_INVENTORY_PRODUCTS_NECK_OPTION_5</option>
-  <option value="6">COM_INVENTORY_PRODUCTS_NECK_OPTION_6</option>
-  <option value="7">COM_INVENTORY_PRODUCTS_NECK_OPTION_7</option>
-  <option value="8">COM_INVENTORY_PRODUCTS_NECK_OPTION_8</option>
-  <option value="9">COM_INVENTORY_PRODUCTS_NECK_OPTION_9</option>
+
 </field>
-<field name="sleeve" label="COM_INVENTORY_FORM_LBL_PRODUCT_SLEEVE" type="list" onchange="this.form.submit();" default="COM_INVENTORY_PRODUCTS_SLEEVE_FILTER">
+<field name="sleeve" label="COM_INVENTORY_FORM_LBL_PRODUCT_SLEEVE" type="sql" query="SELECT id, title FROM #__tags WHERE parent_id = 14 and published=1" key_field="id" value_field="title" onchange="this.form.submit();" default="COM_INVENTORY_PRODUCTS_SLEEVE_FILTER">
   <option value="">COM_INVENTORY_PRODUCTS_SLEEVE_FILTER</option>
-  <option value="1">COM_INVENTORY_PRODUCTS_SLEEVE_OPTION_1</option>
-  <option value="2">COM_INVENTORY_PRODUCTS_SLEEVE_OPTION_2</option>
-  <option value="3">COM_INVENTORY_PRODUCTS_SLEEVE_OPTION_3</option>
-  <option value="4">COM_INVENTORY_PRODUCTS_SLEEVE_OPTION_4</option>
+
 </field>
-<field name="type" label="COM_INVENTORY_FORM_LBL_PRODUCT_TYPE" type="list" onchange="this.form.submit();" default="COM_INVENTORY_PRODUCTS_TYPE_FILTER">
+<field name="type" label="COM_INVENTORY_FORM_LBL_PRODUCT_TYPE" type="sql" query="SELECT id, title FROM #__tags WHERE parent_id = 31 and published=1" key_field="id" value_field="title" onchange="this.form.submit();" default="COM_INVENTORY_PRODUCTS_TYPE_FILTER">
   <option value="">COM_INVENTORY_PRODUCTS_TYPE_FILTER</option>
-  <option value="1">COM_INVENTORY_PRODUCTS_TYPE_OPTION_1</option>
-  <option value="2">COM_INVENTORY_PRODUCTS_TYPE_OPTION_2</option>
-  <option value="3">COM_INVENTORY_PRODUCTS_TYPE_OPTION_3</option>
+ 
 </field>
+
+<field name="shape" label="COM_INVENTORY_FORM_LBL_PRODUCT_SHAPE" type="sql" query="SELECT id, title FROM #__tags WHERE parent_id = 62 and published=1" key_field="id" value_field="title" onchange="this.form.submit();" default="COM_INVENTORY_PRODUCTS_SHAPE_FILTER">
+  <option value="">COM_INVENTORY_PRODUCTS_SHAPE_FILTER</option>
+ 
+</field>
+<field name="price_range" label="COM_INVENTORY_FORM_LBL_PRODUCT_PRICE_RANGE" type="sql" query="SELECT id, title FROM #__tags WHERE parent_id = 16 and published=1" key_field="id" value_field="title" onchange="this.form.submit();" default="COM_INVENTORY_PRODUCTS_PRICE_RANGE_FILTER">
+  <option value="">COM_INVENTORY_PRODUCTS_PRICE_RANGE_FILTER</option>
+ 
+</field>
+
 
 
     </fields>
+
+    <fields name="list">
+
+        <field name="fullordering"
+               type="list"
+               label="COM_CONTENT_LIST_FULL_ORDERING"
+               description="COM_CONTENT_LIST_FULL_ORDERING_DESC"
+               onchange="this.form.submit();"
+               default="a.id DESC"
+        >
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="a.`id` asc">ID Ascending</option><option value="a.`id` desc">ID Descending</option><option value="a.`ordering` asc">Order Ascending</option><option value="a.`ordering` desc">Order Descending</option><option value="a.`state` asc">State Ascending</option><option value="a.`state` desc">State Descending</option><option value="a.`category` asc">Category Ascending</option><option value="a.`category` desc">Category Descending</option><option value="a.`name` asc">Name Ascending</option><option value="a.`name` desc">Name Descending</option><option value="a.`code` asc">Code Ascending</option><option value="a.`code` desc">Code Descending</option><option value="a.`price` asc">Price Ascending</option><option value="a.`price` desc">Price Descending</option><option value="a.`color` asc">Color Ascending</option><option value="a.`color` desc">Color Descending</option><option value="a.`material` asc">Material Ascending</option><option value="a.`material` desc">Material Descending</option><option value="a.`neck` asc">Neck Ascending</option><option value="a.`neck` desc">Neck Descending</option><option value="a.`sleeve` asc">Hand Ascending</option><option value="a.`sleeve` desc">Hand Descending</option><option value="a.`type` asc">Type Ascending</option><option value="a.`type` desc">Type Descending</option>
+
+        </field>
+
+        <field name="limit"
+               type="limitbox"
+               class="input-mini"
+               default="25"
+               onchange="this.form.submit();"
+        />
+
+    </fields>
+
 </form>

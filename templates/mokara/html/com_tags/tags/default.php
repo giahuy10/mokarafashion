@@ -10,10 +10,10 @@
 defined('_JEXEC') or die;
 
 // Note that there are certain parts of this layout used only when there is exactly one tag.
+JLoader::register('FieldsHelper', JPATH_ADMINISTRATOR . '/components/com_fields/helpers/fields.php');
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
-$description = $this->params->get('all_tags_description');
-$descriptionImage = $this->params->get('all_tags_description_image');
+
 		$db = JFactory::getDbo();
 		 
 		// Create a new query object.
@@ -21,84 +21,112 @@ $descriptionImage = $this->params->get('all_tags_description_image');
 		 
 		// Select all records from the user profile table where key begins with "custom.".
 		// Order it by the ordering field.
-		$query->select('b.*');
+		$query->select('*');
 
-		$query->from($db->quoteName('#__fields_values','a'));
-		$query->join('INNER', $db->quoteName('#__content','b') . ' ON (' . $db->quoteName('a.item_id') . ' = ' . $db->quoteName('b.id') . ')');
-		$query->join('INNER', $db->quoteName('#__ucm_content','u') . ' ON (' . $db->quoteName('a.item_id') . ' != ' . $db->quoteName('u.core_content_item_id') . ')');
+		$query->from($db->quoteName('#__content'));
+		
 		//$query->where($db->quoteName('field_id') . ' = '. $field_id);
-		$query->group($db->quoteName('item_id'));
+		$query->where($db->quoteName('state').'= 1');
+		$query->where($db->quoteName('catid').' IN (21,22,23,24,25)');
 		 
 		// Reset the query using our newly populated query object.
 		$db->setQuery($query);
 		$items = $db->loadObjectlist();
-		$list_item = "0";
-		 foreach ($items as $key=> $item) {
-			 $list_item.=",".$item->id;
-			$profile[$key] = new stdClass();
-			$profile[$key]->core_type_alias = "com_content.article";
-			$profile[$key]->core_title = $item->title;
-			$profile[$key]->core_alias = $item->alias;
-			$profile[$key]->core_state =  $item->state;
-			$profile[$key]->core_access =$item->access;
-			$profile[$key]->core_params =  $item->attribs;
-			$profile[$key]->core_featured =$item->featured;
-			$profile[$key]->core_metadata =  $item->metadata;
-			$profile[$key]->core_created_user_id =  $item->created_by;
-			$profile[$key]->core_created_time =  $item->created;
-			$profile[$key]->core_language =  $item->language;
-			$profile[$key]->core_publish_up =  $item->publish_up;
-			$profile[$key]->core_content_item_id =  $item->id;
-			$profile[$key]->asset_id =  $item->asset_id;
-			$profile[$key]->core_urls =  $item->urls;
-			$profile[$key]->core_hits =  $item->hits;
-			$profile[$key]->core_version =  $item->version;
-			$profile[$key]->core_ordering =  $item->ordering;
-			$profile[$key]->core_metakey =  $item->metakey;
-			$profile[$key]->core_metadesc =  $item->metadesc;
-			$profile[$key]->core_catid =  $item->catid;
-			$profile[$key]->core_xreference =  $item->xreference;
-			$profile[$key]->core_type_id =  1;
-			$result = JFactory::getDbo()->insertObject('#__ucm_content', $profile[$key]);
-	
-			//echo "<pre>";
-			//var_dump($profile[$key]);
-			//echo "</pre>";
 		
+	foreach ($items as $key=> $item) {
+		// Create and populate an object.
+		$profile[$key] = new stdClass();
+		$profile[$key]->title = $item->title;
+		$profile[$key]->alias = $item->alias;
+		$item->jcfields    = FieldsHelper::getFields('com_content.article', $item, true);
+		foreach ($item->jcfields as $field) {
+			$field_with_id[$field->name] = $field;
+		}
+		$profile[$key]->price = $field_with_id['price']->rawvalue;
+		if(isset($field_with_id['code']->rawvalue)) {
+			$profile[$key]->code = $field_with_id['code']->rawvalue;
+			
+		$profile[$key]->code = strtolower($profile[$key]->code);
+		$profile[$key]->code = str_replace(" ", "", $profile[$key]->code);
+		}
+		if (isset($field_with_id['old-price']->rawvalue))
+			$profile[$key]->old_price = $field_with_id['old-price']->rawvalue;
+		else 
+			$profile[$key]->old_price = NULL;	
+		
+		
+		
+		if (is_array($field_with_id['mausac']->rawvalue)) {
+			$profile[$key]->color = "[";
+			$i=0; foreach ($field_with_id['mausac']->rawvalue as $value) {
+				$i++;
+				$profile[$key]->color .= '"'.$value.'"';
+				if ($i < count($field_with_id['mausac']->rawvalue)) {
+					$profile[$key]->color .= ",";
+				}
+			}
+			$profile[$key]->color .= "]";
+			
+		}else {
+			$profile[$key]->color = $field_with_id['mausac']->rawvalue;
 		}
 		
-?>
-<?php 
-
-$db = JFactory::getDbo();
-		 
-		// Create a new query object.
-		$query = $db->getQuery(true);
-		 
-		// Select all records from the user profile table where key begins with "custom.".
-		// Order it by the ordering field.
-		$query->select(array('a.*', 'u.core_content_id'));
-
-		$query->from($db->quoteName('#__fields_values','a'));
-		$query->join('INNER', $db->quoteName('#__ucm_content','u') . ' ON (' . $db->quoteName('a.item_id') . ' = ' . $db->quoteName('u.core_content_item_id') . ')');
-		$query->where($db->quoteName('field_id') . ' != 7');
-		$query->where($db->quoteName('field_id') . ' > 4');
-		$query->where($db->quoteName('a.item_id') . ' in ('.$list_item.')');
-		 
-		// Reset the query using our newly populated query object.
-		$db->setQuery($query);
-		$items = $db->loadObjectlist();
-		foreach ($items as $key=> $item) {
-			$profile[$key] = new stdClass();
-			$profile[$key]->type_alias =  "com_content.article";
-			$profile[$key]->core_content_id =  $item->core_content_id;
-			$profile[$key]->content_item_id =  $item->item_id;
-			$profile[$key]->tag_id =  $item->value;
-			$profile[$key]->type_id =  1;
-			$result = JFactory::getDbo()->insertObject('#__contentitem_tag_map', $profile[$key]);
-			echo "<pre>";
-			var_dump($profile[$key]);
-			echo "</pre>";
+		
+		if (is_array($field_with_id['chat-lieu']->rawvalue)) {
+			$profile[$key]->material = "[";
+			$i=0; foreach ($field_with_id['chat-lieu']->rawvalue as $value) {
+				$i++;
+				$profile[$key]->material .= '"'.$value.'"';
+				if ($i < count($field_with_id['chat-lieu']->rawvalue)) {
+					$profile[$key]->material .= ",";
+				}
+			}
+			$profile[$key]->material .= "]";
+			
+		}else {
+			$profile[$key]->material = $field_with_id['chat-lieu']->rawvalue;
 		}
-?>
+		
+		
+		if (is_array($field_with_id['kieu']->rawvalue)) {
+			$profile[$key]->type = "[";
+			$i=0; foreach ($field_with_id['kieu']->rawvalue as $value) {
+				$i++;
+				$profile[$key]->type .= '"'.$value.'"';
+				if ($i < count($field_with_id['kieu']->rawvalue)) {
+					$profile[$key]->type .= ",";
+				}
+			}
+			$profile[$key]->type .= "]";
+			
+		}else {
+			$profile[$key]->type = $field_with_id['kieu']->rawvalue;
+		}
+		
+		
+		
+		if(isset($field_with_id['loai-co']->rawvalue)) 
+			$profile[$key]->neck = $field_with_id['loai-co']->rawvalue;
+		if(isset($field_with_id['loai-tay']->rawvalue)) 
+			$profile[$key]->sleeve = $field_with_id['loai-tay']->rawvalue;
+		
+		
+		if(isset($field_with_id['main-image']->rawvalue)) 
+			$profile[$key]->image_1 = $field_with_id['main-image']->rawvalue;	
+		if(isset($field_with_id['image-2']->rawvalue)) 
+			$profile[$key]->image_2 = $field_with_id['image-2']->rawvalue;	
+		
+		if(isset($field_with_id['image-3']->rawvalue)) 
+			$profile[$key]->image_3 = $field_with_id['image-3']->rawvalue;	
+		
+		if(isset($field_with_id['image-4']->rawvalue)) 
+			$profile[$key]->image_4 = $field_with_id['image-4']->rawvalue;	
+		
+		
+			
+		
+		
+		$result = JFactory::getDbo()->insertObject('#__inventory_products', $profile[$key]);
+		echo "ok".$key."<br/>";
+	}
 

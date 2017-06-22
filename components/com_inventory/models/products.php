@@ -37,7 +37,7 @@ class InventoryModelProducts extends JModelList
 				'created_by', 'a.created_by',
 				'modified_by', 'a.modified_by',
 				'category', 'a.category',
-				'name', 'a.name',
+				'title', 'a.title',
 				'code', 'a.code',
 				'price', 'a.price',
 				'old_price', 'a.old_price',
@@ -46,6 +46,8 @@ class InventoryModelProducts extends JModelList
 				'neck', 'a.neck',
 				'sleeve', 'a.sleeve',
 				'type', 'a.type',
+				'shape', 'a.shape',
+				'price_range', 'a.price_range',
 				'skirt', 'a.skirt',
 				'input_price', 'a.input_price',
 				'size_s', 'a.size_s',
@@ -136,7 +138,10 @@ class InventoryModelProducts extends JModelList
 		
 		// Join over the users for the checked out user.
 		$query->select('uc.name AS uEditor');
+		$query->select('CASE WHEN CHAR_LENGTH(a.alias) THEN CONCAT_WS(":", a.id, a.alias) ELSE a.id END as slug');
+		$query->select('CASE WHEN CHAR_LENGTH(c.alias) THEN CONCAT_WS(":", c.id, c.alias) ELSE c.id END as catslug');
 		$query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+		$query->join('LEFT', '#__categories AS c ON c.id=a.category');
 
 		// Join over the created by field 'created_by'
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
@@ -161,10 +166,13 @@ class InventoryModelProducts extends JModelList
 			else
 			{
 				$search = $db->Quote('%' . $db->escape($search, true) . '%');
-				$query->where('( a.name LIKE ' . $search . '  OR  a.code LIKE ' . $search . ' )');
+				$query->where('( a.title LIKE ' . $search . '  OR  a.code LIKE ' . $search . ' )');
 			}
 		}
-		
+		$app = JFactory::getApplication();
+		$category_id = $app->input->get('id');
+		if ($category_id !=0)
+			$query->where('( a.category = ' . $category_id.')');
 
 		// Filtering color
 		$filter_color = $this->state->get("filter.color");
@@ -195,10 +203,25 @@ class InventoryModelProducts extends JModelList
 		if ($filter_type != '') {
 			$query->where("a.type = '".$db->escape($filter_type)."'");
 		}
+		//Filtering shape
+		$filter_shape = $this->state->get("filter.shape");
+		if ($filter_shape !== null && !empty($filter_shape))
+		{
+			$query->where("a.`shape` = '".$db->escape($filter_shape)."'");
+		}
+		//Filtering price range
+		$filter_price_range = $this->state->get("filter.price_range");
+		if ($filter_price_range !== null && !empty($filter_price_range))
+		{
+			$alias = $this->getTag($filter_price_range);
+			$price = explode("-",$alias->alias);
 
+			$query->where("a.`price` > ".$price[0]);
+			$query->where("a.`price` < ".$price[1]);
+		}
 		// Add the list ordering clause.
-		$orderCol  = $this->state->get('list.ordering', 'ordering');
-		$orderDirn = $this->state->get('list.direction', 'asc');
+		$orderCol  = $this->state->get('list.ordering', 'id');
+		$orderDirn = $this->state->get('list.direction', 'desc');
 
 		if ($orderCol && $orderDirn)
 		{
@@ -213,17 +236,55 @@ class InventoryModelProducts extends JModelList
 	 *
 	 * @return  mixed An array of data on success, false on failure.
 	 */
+	
+	public function getCat ($id) {
+		$db = JFactory::getDbo();
+ 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName(array('id', 'title', 'alias')));
+		$query->from($db->quoteName('#__categories'));
+		$query->where($db->quoteName('id') . ' = '. $db->quote($id));
+		$query->where($db->quoteName('extension') . ' = '. $db->quote('com_inventory'));
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		$result = $db->loadObject();
+		return ($result);
+	}  
+	public function getTag ($id) {
+		$db = JFactory::getDbo();
+ 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName(array('id', 'title', 'alias')));
+		$query->from($db->quoteName('#__tags'));
+		$query->where($db->quoteName('id') . ' = '. $db->quote($id));
+
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		$result = $db->loadObject();
+		return ($result);
+	}  
 	public function getItems()
 	{
 		$items = parent::getItems();
 		
-		foreach ($items as $item)
-		{
+	foreach ($items as $oneItem) {
 
-
-			if (isset($item->category))
-			{
-				$values = explode(',', $item->category);
+			if (isset($oneItem->category)) {
+				$values = explode(',', $oneItem->category);
 
 				$textValue = array();
 				foreach ($values as $value)
@@ -231,52 +292,62 @@ class InventoryModelProducts extends JModelList
 					if (!empty($value))
 					{
 						$db = JFactory::getDbo();
-						$query = "SELECT id, title FROM #__categories WHERE parent_id=20 and published=1 HAVING id LIKE '" . $value . "'";
+						$query = "SELECT id, title FROM #__categories WHERE extension='com_inventory' and published=1 and id = '" . $value . "'";
 						$db->setQuery($query);
 						$results = $db->loadObject();
-						if ($results)
-						{
+						if ($results) {
 							$textValue[] = $results->title;
 						}
 					}
 				}
 
-			$item->category = !empty($textValue) ? implode(', ', $textValue) : $item->category;
+			$oneItem->category = !empty($textValue) ? implode(', ', $textValue) : $oneItem->category;
 
 			}
+
 				// Get the title of every option selected.
-				$options      = json_decode($item->color);
+
+				$options = json_decode($oneItem->color);
+
 				$options_text = array();
 
 				foreach ((array) $options as $option)
 				{
-					$options_text[] = JText::_('COM_INVENTORY_PRODUCTS_COLOR_OPTION_' . strtoupper($option));
+					$options_text[] = $this->getTag($option)->title;
 				}
 
-				$item->color = !empty($options_text) ? implode(',', $options_text) : $item->color;
+				$oneItem->color = !empty($options_text) ? implode(',', $options_text) : $oneItem->color;
+
 				// Get the title of every option selected.
-				$options      = json_decode($item->material);
+
+				$options = json_decode($oneItem->material);
+
 				$options_text = array();
 
 				foreach ((array) $options as $option)
 				{
-					$options_text[] = JText::_('COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_' . strtoupper($option));
+					$options_text[] = $this->getTag($option)->title;
 				}
 
-				$item->material = !empty($options_text) ? implode(',', $options_text) : $item->material;
-					$item->neck = JText::_('COM_INVENTORY_PRODUCTS_NECK_OPTION_' . strtoupper($item->neck));
-					$item->sleeve = JText::_('COM_INVENTORY_PRODUCTS_SLEEVE_OPTION_' . strtoupper($item->sleeve));
-					$item->type = JText::_('COM_INVENTORY_PRODUCTS_TYPE_OPTION_' . strtoupper($item->type));
+				$oneItem->material = !empty($options_text) ? implode(',', $options_text) : $oneItem->material;
+				
+					$oneItem->neck = $this->getTag($oneItem->neck)->title;
+					$oneItem->sleeve = $this->getTag($oneItem->sleeve)->title;
+					$oneItem->type = $this->getTag($oneItem->type)->title;
+					$oneItem->shape = $this->getTag($oneItem->shape)->title;
+
 				// Get the title of every option selected.
-				$options      = json_decode($item->skirt);
+
+				$options = json_decode($oneItem->skirt);
+
 				$options_text = array();
 
 				foreach ((array) $options as $option)
 				{
-					$options_text[] = JText::_('COM_INVENTORY_PRODUCTS_SKIRT_OPTION_' . strtoupper($option));
+					$options_text[] = $this->getTag($option)->title;
 				}
 
-				$item->skirt = !empty($options_text) ? implode(',', $options_text) : $item->skirt;
+				$oneItem->skirt = !empty($options_text) ? implode(',', $options_text) : $oneItem->skirt;
 		}
 
 		return $items;

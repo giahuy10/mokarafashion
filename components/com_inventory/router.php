@@ -10,98 +10,98 @@
 // No direct access
 defined('_JEXEC') or die;
 
-JLoader::registerPrefix('Inventory', JPATH_SITE . '/components/com_inventory/');
 
 /**
  * Class InventoryRouter
  *
  * @since  3.3
  */
-class InventoryRouter extends JComponentRouterBase
-{
-	/**
-	 * Build method for URLs
-	 * This method is meant to transform the query parameters into a more human
-	 * readable form. It is only executed when SEF mode is switched on.
-	 *
-	 * @param   array  &$query  An array of URL arguments
-	 *
-	 * @return  array  The URL arguments to use to assemble the subsequent URL.
-	 *
-	 * @since   3.3
-	 */
-	public function build(&$query)
+
+
+	 function inventoryBuildRoute(&$query)
 	{
 		$segments = array();
-		$view     = null;
+		$view     = null;		
 
-		if (isset($query['task']))
-		{
-			$taskParts  = explode('.', $query['task']);
-			$segments[] = implode('/', $taskParts);
-			$view       = $taskParts[0];
-			unset($query['task']);
-		}
-
-		if (isset($query['view']))
-		{
-			$segments[] = $query['view'];
-			$view = $query['view'];
-			
-			unset($query['view']);
-		}
-
-		if (isset($query['id']))
-		{
-			if ($view !== null)
-			{
-				$segments[] = $query['id'];
-			}
-			else
-			{
-				$segments[] = $query['id'];
-			}
-
-			unset($query['id']);
-		}
-
+		 if (isset($query['category']))
+       {
+                $segments[] = $query['category'];
+                unset($query['category']);
+       }
+	  
+       if (isset($query['id']))
+       {
+                $segments[] = $query['id'];
+                unset($query['id']);
+       };
+	    if (isset($query['color']))
+       {
+                $segments[] = $query['color'];
+                unset($query['color']);
+       };
+	     if (isset($query['neck']))
+       {
+                $segments[] = $query['neck'];
+                unset($query['neck']);
+       };
+	     if (isset($query['sleeve']))
+       {
+                $segments[] = $query['sleeve'];
+                unset($query['sleeve']);
+       };
+	     if (isset($query['type']))
+       {
+                $segments[] = $query['type'];
+                unset($query['type']);
+       };
+	     if (isset($query['price_range']))
+       {
+                $segments[] = $query['price_range'];
+                unset($query['price_range']);
+       };
+	     if (isset($query['shape']))
+       {
+                $segments[] = $query['shape'];
+                unset($query['shape']);
+       };
+		 unset($query['view']);
+		// unset( $query['Itemid']);
+		// unset( $query['option']);
 		return $segments;
 	}
 
-	/**
-	 * Parse method for URLs
-	 * This method is meant to transform the human readable URL back into
-	 * query parameters. It is only executed when SEF mode is switched on.
-	 *
-	 * @param   array  &$segments  The segments of the URL to parse.
-	 *
-	 * @return  array  The URL attributes to be used by the application.
-	 *
-	 * @since   3.3
-	 */
-	public function parse(&$segments)
+	 function inventoryParseRoute(&$segments)
 	{
-		$vars = array();
-
-		// View is always the first element of the array
-		$vars['view'] = array_shift($segments);
-		$model        = InventoryHelpersInventory::getModel($vars['view']);
-
-		while (!empty($segments))
-		{
-			$segment = array_pop($segments);
-
-			// If it's the ID, let's put on the request
-			if (is_numeric($segment))
-			{
-				$vars['id'] = $segment;
-			}
-			else
-			{
-				$vars['task'] = $vars['view'] . '.' . $segment;
-			}
-		}
-
-		return $vars;
+		 $vars = array();
+       $app = JFactory::getApplication();
+       $menu = $app->getMenu();
+       $item = $menu->getActive();
+       // Count segments
+       $count = count($segments);
+       // Handle View and Identifier
+       switch ($item->query['view'])
+       {
+               case 'products':
+                       
+					    $vars['view'] = 'products';
+                       $id = explode(':', $segments[$count-1]);
+                       $vars['id'] = (int) $id[0];
+                       break;
+               case 'product':
+						$id = explode(':', $segments[$count-1]);
+						$db = JFactory::getDbo();
+						$query = $db->getQuery(true)
+							->select($db->quoteName('id'))
+							->from('#__content')
+							->where($db->quoteName('catid') . ' = ' . (int) $vars['category'])
+							->where($db->quoteName('alias') . ' = ' . $db->quote($id[1]));
+						$db->setQuery($query);
+						$cid = $db->loadResult();
+                       
+                       $vars['id'] = $cid;
+                       $vars['view'] = 'product';
+                       break;
+       }
+       return $vars;
 	}
-}
+

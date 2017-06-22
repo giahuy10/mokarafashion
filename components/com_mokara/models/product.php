@@ -12,7 +12,7 @@ jimport('joomla.oauth2.client');
 jimport('joomla.application.component.modellist');
 JLoader::register('ContentHelperRoute', JPATH_SITE . '/components/com_content/helpers/route.php');
 JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_content/models', 'ContentModel');
-
+JLoader::register('FieldsHelper', JPATH_ADMINISTRATOR . '/components/com_fields/helpers/fields.php');
 $articleMod = JModelLegacy::getInstance('Article', 'ContentModel', array('ignore_request' => true));
 $appParams = JFactory::getApplication()->getParams();
 $articleMod->setState('params', $appParams);
@@ -240,7 +240,202 @@ class MokaraModelProduct extends JModelList
 			$result = JFactory::getDbo()->insertObject('#__user_logs', $profile);
 		
 	} 
+	public function save_user_phone ($user_id = "", $ip, $item, $phone, $name) {
+		
+		// Create and populate an object.
+			$profile = new stdClass();
+			$profile->user_id = $user_id;
+			$profile->ip = $ip;
+			
+			$profile->item_id = $item;
+			$profile->name = $name;
+			$profile->phone_number = $phone;
+
+		
+			 
+			// Insert the object into the user profile table.
+			$result = JFactory::getDbo()->insertObject('#__user_phones', $profile);
+		
+	} 
+	public function get_coupon_detail ($code, $user, $total) {
+		$user_groups = $user->groups;
+		$user_groups[1] = "1";
+		
+		// Get a db connection.
+		$db = JFactory::getDbo();
+		 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select('*');
+		$query->from($db->quoteName('#__inventory_coupon'));
+		$query->where($db->quoteName('coupon_code') . ' = '.$db->quote($code));
+		$query->where($db->quoteName('state') . ' = 1');
+		
+		$query->where('('.$db->quoteName('coupon_limit') . ' = 0 or '.$db->quoteName('coupon_limit').'>'.$this->check_coupon_limit($code).')');
+		
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		$coupon_detail = $db->loadObject();
+		if (!$coupon_detail) {
+			$coupon_detail->error = 6;
+			$coupon_detail->error_message="Mã Coupon ".$code." không tồn tại. Quý khách vui lòng kiểm tra lại.";
+		}else {
+		$coupon_detail->error = 0;
+		$coupon_detail->error_message="";
+		$current_date = date("Y-m-d h:i:s");
+		if ($coupon_detail->coupon_from) {
+			if ($current_date < $coupon_detail->coupon_from) {
+				$coupon_detail->error = 1;
+				$coupon_detail->error_message = "Mã Coupon chỉ có hiệu lực sau ".$coupon_detail->coupon_from;
+			}
+		}
+		
+		if (!in_array($coupon_detail->coupon_for_group_user,$user_groups)) {
+			$coupon_detail->error = 2;
+			$coupon_detail->error_message = "Mã Coupon chỉ dành cho nhóm khách hàng ".$this->get_group_name($coupon_detail->coupon_for_group_user);
+		}
+		if ($coupon_detail->coupon_to) {
+			if ($current_date > $coupon_detail->coupon_to && $coupon_detail->coupon_to!="0000-00-00 00:00:00") {
+				$coupon_detail->error = 3;
+				$coupon_detail->error_message = "Mã Coupon đã hết hạn sử dụng.";
+			}
+		}
+		if ($coupon_detail->coupon_one_time == 0) {
+			if ($this->check_coupon_for_user($coupon_detail->coupon_code, $user->id)) {
+				$coupon_detail->error = 4;
+				$coupon_detail->error_message = "Mã Coupon chỉ được sử dụng 1 lần cho mỗi khách hàng.";	
+			}
+		}
+		if ($coupon_detail->coupon_limit <= $this->check_coupon_limit($code) && $coupon_detail->coupon_limit != 0) {
+			$coupon_detail->error = 5;
+			$coupon_detail->error_message = "Mã Coupon chỉ được sử dụng ".$coupon_detail->coupon_limit." lần.";	
+			
+		}
+		if ($coupon_detail->coupon_for_order && $coupon_detail->coupon_for_order > $total) {
+			$coupon_detail->error = 7;
+			$coupon_detail->error_message = "Mã Coupon chỉ được áp dụng cho đơn hàng có giá trị trên ".$this->ed_number_format($coupon_detail->coupon_for_order);	
+			
+		}
+	}
+	return($coupon_detail);
+		
+		
+	}
+	public function get_group_name ($group_id) {
+		// Get a db connection.
+		$db = JFactory::getDbo();
+		 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName('title'));
+		$query->from($db->quoteName('#__usergroups'));
+		$query->where($db->quoteName('id') . ' = '. $group_id);
+		
 	
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		$results = $db->loadResult();
+		return($results);
+	}
+	public function get_coupon_value ($product_id, $product_category_id, $product_price, $coupon_detail, $user) {
+		if ($coupon_detail->coupon_for_categories) {
+			if (!in_array($product_category_id,explode(",",$coupon_detail->coupon_for_categories)))
+				return 1;		
+		}
+		if ($coupon_detail->coupon_for_products) {
+			if (!in_array($product_id,explode(",",$coupon_detail->coupon_for_products)))
+				return 2;		
+		}
+		
+		
+		
+		if ($coupon_detail->coupon_type) {
+			$coupon['amount'] = $coupon_detail->coupon_value;
+			$coupon['type'] = "";
+		}else {
+			$coupon['amount'] = $coupon_detail->coupon_value/100*$product_price;
+			$coupon['type'] = "%";
+		}
+		return ($coupon);
+		
+		
+	}
+	public function check_coupon_for_user ($coupon_code, $user_id) {
+		// Get a db connection.
+		$db = JFactory::getDbo();
+		 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName('id'));
+		$query->from($db->quoteName('#__inventory_sales'));
+		$query->where($db->quoteName('coupon_code') . ' = '. $db->quote($coupon_code));
+		$query->where($db->quoteName('user_id') . ' = '. $db->quote($user_id));
+	
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		$db->execute();
+		$num_rows = $db->getNumRows();
+		return ($num_rows);
+	}
+	public function check_coupon_limit ($coupon_code) {
+		// Get a db connection.
+		$db = JFactory::getDbo();
+		 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName('coupon_code'));
+		$query->from($db->quoteName('#__inventory_sales'));
+		$query->where($db->quoteName('coupon_code') . ' = '. $db->quote($coupon_code));
+	
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		$db->execute();
+		$num_rows = $db->getNumRows();
+		return ($num_rows);
+	}
+	
+	public function get_saving_money ($user_id) {
+		// Get a db connection.
+		$db = JFactory::getDbo();
+		 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName('points'));
+		$query->from($db->quoteName('#__user_points'));
+		$query->where($db->quoteName('user_id') . ' = '. $user_id);
+		
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		$results = $db->loadResult();
+		return($results);
+	}
 	public function get_related_products ($field_id, $item_id, $cat_id, $price, $template = NULL) {
 		$db = JFactory::getDbo();
 		$query2 = $db->getQuery(true);
@@ -250,7 +445,8 @@ class MokaraModelProduct extends JModelList
 		$query2->from($db->quoteName('#__fields_values','a'));
 		$query2->join('INNER', $db->quoteName('#__content', 'b') . ' ON (' . $db->quoteName('a.item_id') . ' = ' . $db->quoteName('b.id') . ')');
 		$query2->where($db->quoteName('state') . ' = '. $db->quote('1'));
-		$query2->where($db->quoteName('catid') . ' = '. $db->quote($cat_id));
+		if ($cat_id)
+			$query2->where($db->quoteName('catid') . ' = '. $db->quote($cat_id));
 		$query2->where($db->quoteName('field_id') . ' = '. $db->quote($field_id));
 		$query2->where($db->quoteName('item_id') . ' != '. $db->quote($item_id));
 		if ($field_id == 15)
@@ -392,8 +588,8 @@ class MokaraModelProduct extends JModelList
 			$item->save_money = $savemoney_on_order;
 		}
 		
-		
-		
+		if (!$item->jcfields)
+			$item->jcfields    = FieldsHelper::getFields('com_content.article', $item, true);
 		foreach ($item->jcfields as $field) {
 			$field_with_id[$field->name] = $field;
 		}
@@ -404,15 +600,71 @@ class MokaraModelProduct extends JModelList
 		$item->sku = strtolower($item->sku);
 		$item->sku = str_replace(" ", "", $item->sku);
 		}
+		if(isset($field_with_id['combo-products'])) 
+			$item->combo_product =  $field_with_id['combo-products']->rawvalue; 
 		if(isset($field_with_id['main-image']->rawvalue)) 
 			$item->product_thumb = $field_with_id['main-image']->rawvalue;	
+		
+		if(isset($field_with_id['hot-deal']) && $field_with_id['hot-deal']) {
+			$item->hot_deal_type = $field_with_id['hot-deal']->rawvalue;
+			if ($item->hot_deal_type != 0) {
+				date_default_timezone_set("UTC");
+				$item->deal_day = $field_with_id['hot-deal-day']->rawvalue;
+				$item->deal_day_value = $field_with_id['hot-deal-day']->value;
+				$item->deal_time_start = $field_with_id['time-start']->rawvalue;
+				$item->deal_time_end = $field_with_id['time-end']->rawvalue;
+				
+				$item->deal_date_start = $field_with_id['date-start']->rawvalue;
+				$item->deal_date_start = strtotime($item->deal_date_start);
+				$item->deal_date_start = date("Y-m-d", strtotime('+7 hours', $item->deal_date_start));
+			
+				$item->deal_date_end = $field_with_id['date-end']->rawvalue;
+				$item->deal_date_end = strtotime($item->deal_date_end);
+				$item->deal_date_end = date("Y-m-d", strtotime('+7 hours', $item->deal_date_end));
+		
+		
+				$item->deal_price = $field_with_id['hot-deal-price']->rawvalue;
+				$item->deal_info = $field_with_id['deal-intro']->value;
+				$item->deal_start = strtotime($item->deal_date_start." ".$item->deal_time_start);
+				$item->deal_end = strtotime($item->deal_date_end." ".$item->deal_time_end);
+				$current_date = date("Y-m-d h:i:s");
+				$current_day = date("w");
+				$item->hot_deal= 0;
+				$item->deal_active = 0;
+				if (strtotime($current_date) <= $item->deal_end) {
+					$item->hot_deal= 1;
+				}
+				if ($item->hot_deal_type == 1) {
+					if (strtotime($current_date) >= $item->deal_start && strtotime($current_date) <= $item->deal_end) {
+						$item->deal_active = 1;
+					}
+				}else { 
+					
+					
+					$time_current = explode(" ",$current_date);
+					$item->time_current = $time_current[1];
+					if (strtotime($current_date) >= $item->deal_start && strtotime($current_date) <= $item->deal_end) {
+						if(strtotime($item->time_current) <= strtotime($item->deal_time_end) && strtotime($item->time_current) >= strtotime($item->deal_time_start) && ($current_day == $item->deal_day || $item->deal_day == 0 )){
+							$item->deal_active = 1;
+						}
+						
+					}
+				}
+			}
+		}
 		if ($savemoney) {
 			if(isset($field_with_id['savemoney']->rawvalue) && $field_with_id['savemoney']->rawvalue > 0) 
 			$item->save_money = $field_with_id['savemoney']->rawvalue;	
 			if ($item->save_money) {
-				$item->save_money_value = round($item->product_price*$item->save_money/100,-3);
+				if ($item->deal_active == 1) {
+					$item->save_money_value = round($item->deal_price*$item->save_money/100,-3);
+				}else {
+					$item->save_money_value = round($item->product_price*$item->save_money/100,-3);
+				}
+				
 			}
 		}
+			
 		
 			
 	
@@ -469,6 +721,33 @@ class MokaraModelProduct extends JModelList
 	public function ed_number_format ($money){
 		$money = '<span  itemprop="price" content='.$money.'>'.number_format($money).'</span><sup>đ</sup>';
 		return $money;
+	}
+	public function get_combo_offer ($id) {
+			// Get a db connection.
+		$db = JFactory::getDbo();
+		 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select('b.*');
+		$query->from($db->quoteName('#__fields_values','a'));
+		$query->join('INNER', $db->quoteName('#__content','b') . ' ON (' . $db->quoteName('a.item_id') . ' = ' . $db->quoteName('b.id') . ')');
+		$query->where($db->quoteName('value') . ' = '. $db->quote($id));
+		$query->where($db->quoteName('state') . ' = 1');
+		$query->group($db->quoteName('item_id'));
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		$results = $db->loadObjectList();
+		foreach ($results as $key=>$item) {
+			$items[$key] =$item;
+			$items[$key]->jcfields = FieldsHelper::getFields('com_content.article', $item, true);
+		}
+		return ($items);
 	}
 
 

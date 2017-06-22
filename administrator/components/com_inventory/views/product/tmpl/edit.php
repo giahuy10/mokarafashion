@@ -68,29 +68,42 @@ $document->addStyleSheet(JUri::root() . 'media/com_inventory/css/form.css');
 				<input type="hidden" name="jform[checked_out_time]" value="<?php echo $this->item->checked_out_time; ?>" />
 
 				<?php echo $this->form->renderField('created_by'); ?>
-				<?php echo $this->form->renderField('modified_by'); ?>				<?php echo $this->form->renderField('category'); ?>
+				<?php echo $this->form->renderField('modified_by'); ?>				
+				<?php echo JLayoutHelper::render('joomla.edit.title_alias', $this); ?>
+				<div class="row-fluid">
+					<div class="span6">
+						<?php echo $this->form->renderField('category'); ?>
 
-			<?php
-				foreach((array)$this->item->category as $value): 
-					if(!is_array($value)):
-						echo '<input type="hidden" class="category" name="jform[categoryhidden]['.$value.']" value="'.$value.'" />';
-					endif;
-				endforeach;
-			?>				<?php echo $this->form->renderField('name'); ?>
-				<?php echo $this->form->renderField('code'); ?>
-				<?php echo $this->form->renderField('price'); ?>
-				<?php echo $this->form->renderField('old_price'); ?>
-				<?php echo $this->form->renderField('color'); ?>
-				<?php echo $this->form->renderField('material'); ?>
-				<?php echo $this->form->renderField('neck'); ?>
-				<?php echo $this->form->renderField('sleeve'); ?>
-				<?php echo $this->form->renderField('type'); ?>
-				<?php echo $this->form->renderField('skirt'); ?>
-				<?php echo $this->form->renderField('input_price'); ?>
-				<?php echo $this->form->renderField('size_s'); ?>
-				<?php echo $this->form->renderField('size_m'); ?>
-				<?php echo $this->form->renderField('size_l'); ?>
-				<?php echo $this->form->renderField('size_xl'); ?>
+						<?php
+							foreach((array)$this->item->category as $value): 
+								if(!is_array($value)):
+									echo '<input type="hidden" class="category" name="jform[categoryhidden]['.$value.']" value="'.$value.'" />';
+								endif;
+							endforeach;
+						?>				
+						
+						<?php echo $this->form->renderField('code'); ?>
+						<?php echo $this->form->renderField('price'); ?>
+						<?php echo $this->form->renderField('old_price'); ?>
+						<?php echo $this->form->renderField('input_price'); ?>
+							<?php echo $this->form->renderField('size_s'); ?>
+							<?php echo $this->form->renderField('size_m'); ?>
+							<?php echo $this->form->renderField('size_l'); ?>
+							<?php echo $this->form->renderField('size_xl'); ?>
+						
+					</div>
+					<div class="span6">
+						<?php echo $this->form->renderField('color'); ?>
+						<?php echo $this->form->renderField('material'); ?>
+						<?php echo $this->form->renderField('neck'); ?>
+						<?php echo $this->form->renderField('sleeve'); ?>
+						<?php echo $this->form->renderField('type'); ?>
+						<?php echo $this->form->renderField('shape'); ?>	
+						<?php echo $this->form->renderField('images'); ?>
+					</div>
+				</div>
+				
+			
 
 
 					<?php if ($this->state->params->get('save_history', 1)) : ?>
@@ -104,12 +117,9 @@ $document->addStyleSheet(JUri::root() . 'media/com_inventory/css/form.css');
 		</div>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
 
-		<?php if (JFactory::getUser()->authorise('core.admin','inventory')) : ?>
-	<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'permissions', JText::_('JGLOBAL_ACTION_PERMISSIONS_LABEL', true)); ?>
-		<?php echo $this->form->getInput('rules'); ?>
-	<?php echo JHtml::_('bootstrap.endTab'); ?>
-<?php endif; ?>
-
+		
+<?php $this->ignore_fieldsets = array('general', 'info', 'detail', 'jmetadata', 'item_associations'); ?>
+  
 		<?php echo JHtml::_('bootstrap.endTabSet'); ?>
 
 		<input type="hidden" name="task" value=""/>

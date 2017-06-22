@@ -75,7 +75,7 @@ $sortFields = $this->getSortFields();
 				<?php echo JHtml::_('searchtools.sort',  'COM_INVENTORY_PRODUCTS_CATEGORY', 'a.`category`', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
-				<?php echo JHtml::_('searchtools.sort',  'COM_INVENTORY_PRODUCTS_NAME', 'a.`name`', $listDirn, $listOrder); ?>
+				<?php echo JHtml::_('searchtools.sort',  'COM_INVENTORY_PRODUCTS_NAME', 'a.`title`', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
 				<?php echo JHtml::_('searchtools.sort',  'COM_INVENTORY_PRODUCTS_CODE', 'a.`code`', $listDirn, $listOrder); ?>
@@ -163,9 +163,9 @@ $sortFields = $this->getSortFields();
 				<?php endif; ?>
 				<?php if ($canEdit) : ?>
 					<a href="<?php echo JRoute::_('index.php?option=com_inventory&task=product.edit&id='.(int) $item->id); ?>">
-					<?php echo $this->escape($item->name); ?></a>
+					<?php echo $this->escape($item->title); ?></a>
 				<?php else : ?>
-					<?php echo $this->escape($item->name); ?>
+					<?php echo $this->escape($item->title); ?>
 				<?php endif; ?>
 
 				</td>				<td>

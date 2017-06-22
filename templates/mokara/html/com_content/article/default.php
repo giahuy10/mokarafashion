@@ -14,28 +14,30 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
 // Create shortcuts to some parameters.
 $params  = $this->item->params;
 $images  = json_decode($this->item->images);
-$urls    = json_decode($this->item->urls);
-$canEdit = $params->get('access-edit');
+
+
 $user    = JFactory::getUser();
-$info    = $params->get('info_block_position', 0);
+
+$userId     = $user->get('id');
+$userProfile = JUserHelper::getProfile( $userId );
 
 // Check if associations are implemented. If they are, define the parameter.
 $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associations'));
 
 JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
 $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
-
+$this->item = $productMod->get_custom_field($this->item);
 ?>
 
 
 
-	<?php if ($params->get('access-view')) : ?>	
-	<?php if ($this->item->jcfields) { // Product layout?>
+
+	<?php if ($this->item->product_price) { // Product layout?>
 	<?php
 	//echo $this->item->jcfields[24]->rawvalue;
 	//$this->item->product_price = FieldsHelper::render('com_content.article','field.render',array('field'  => $this->item->jcfields[1]));
 	
-	$this->item = $productMod->get_custom_field($this->item);
+	
 	$category = $productMod->get_categories($this->item->catid)[0];
 	$description = $category->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | Giá: '.$productMod->ed_number_format($this->item->product_price);
 	$title = $category->title.': '.$this->escape($this->item->title).' ('.$this->item->sku.') | '.$productMod->ed_number_format($this->item->product_price);
@@ -49,202 +51,111 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <p>Some text in the modal.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
+										<!-- Modal content-->
+										<div class="modal-content">
+										 
+										  <div class="modal-body text-center">
+											<h3 >Vui lòng để lại số điện thoại, chúng tôi sẽ liên lạc lại với quý khách trong thời gian sớm nhất.</h3>
+											<form action="#" method="post" name="leave_phone">
+											<input type="hidden" name="product_id" value="<?php echo $this->item->id?>"/>
+											<input type="hidden" name="option" value="com_content"/>
+											<input type="hidden" name="view" value="article"/>
+											<input type="text" class="form-control" name="phone_leave" placeholder="Ví dụ: 0912-345-678" value="<?php echo $userProfile->profile['phone']?>"/><br/>
+											<input type="text" class="form-control" name="name_leave" placeholder="Ví dụ: Nguyễn Thị A" value="<?php echo $user->name?>"/><br/>
+											<button type="submit" name="submit" class="btn btn-black"><?php echo JText::_('COM_CONTENT_LEAVE_PHONE')?></button>
+											</form>
+										  </div>
+										  <div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										  </div>
+										</div>
 
-  </div>
+									  </div>
 </div>
 		<div itemscope itemtype="http://schema.org/Product">
 		 <span itemprop="brand" class="hidden">Mokara</span>
-		<div class="row">
-			<div class="col-xs-12 col-sm-6 col-md-6 ed-media-block">
+		<div class="row product-info-block">
 			
-					
-				<div class="row">
-					<div class="col-xs-12 col-sm-2 thumb-list">
-						<?php foreach ($this->item->jcfields as $field) { ?>
-							<?php if ($field->id > 23 &&  $field->id < 28) {?>
-								<div class="thumb_img">
-									
-									<img class="" src="<?php echo $field->rawvalue?>" alt="<?php echo $this->item->title?>"/>
-								</div>
-							<?php }}?>
-					</div>
-					<div class="col-xs-12 col-sm-10" id="main_image">
-						<img itemprop="image" class="main-img" src="<?php echo $this->item->product_thumb;?>" alt="<?php echo $this->item->title?>"/>
-						
-					
-					</div>
-					
-				</div>
-				
-				<script>
-					jQuery(function($) {
-						$('.thumb_img').click(function(){
-							var imgelem = $(this).find('img').attr('src');
-						
-							$('#main_image').html('<img src="'+imgelem+'"/>' );
-
-						});
-
-						});
-				</script>
-				
-			</div>
-			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ed-shopping-block">
-				
-				
-				
-				<h1 class="product-title-detail">
-					Sản phẩm: <span itemprop="name"><?php echo $this->escape($this->item->title); ?></span> (<span itemprop="mpn"><?php echo $this->item->sku?></span>)
-				</h1>
-					<?php echo $this->item->event->afterDisplayTitle; ?>
-			
-				
-				<strong>Danh mục: </strong><a class="more-product" data-toggle="tooltip" title="Xem thêm các sản phẩm trong danh mục <?php echo $category->title?>" href="<?php echo JRoute::_('index.php?option=com_content&view=category&layout=blog&id='.$this->item->catid)?>"><?php echo $category->title?></a>
-				
-				<?php foreach ($this->item->jcfields as $field) : ?>
-					<?php if ($field->id > 7 && $field->id != 14 && $field->value && $field->id < 24) {?>
-					<?php $description .= ' | '.$field->label.': '.$field->value;?>
-					
-					
-				
-					
-					<?php 
-					
-					if (is_array($field->rawvalue)) {
-						$field_value = explode(", ",$field->value);
-						$c=array_combine($field->rawvalue,$field_value);
-						echo '<div class="product-custom-field"><strong>'.$field->label . ': </strong>' ;
-						foreach ($c as $key=>$value) {
-							$link = 'index.php?option=com_content&filter_tag='.$key.'&id='.$this->item->catid.'&lang=en&layout=blog&view=category';
-							
-							$link = $productMod->get_alias_url($link);
-							echo ' <a class="more-product" data-toggle="tooltip" title="Xem thêm các sản phẩm '.$category->title.' cùng '.$field->label . ': '.$value.'" href="'.$link.'">'.$value.'</a> ';
-						}
-						echo '</div>';
-					}else {
-						echo '<div class="product-custom-field"><strong>'.$field->label . ': </strong>' ;
-						$link = 'index.php?option=com_content&filter_tag='.$field->rawvalue.'&id='.$this->item->catid.'&lang=en&layout=blog&view=category';
-							$link = $productMod->get_alias_url($link);
-						echo ' <a class="more-product" data-toggle="tooltip" title="Xem thêm các sản phẩm '.$category->title.' cùng '.$field->label . ': '.$field->value.'" href="'.$link.'">'.$field->value.'</a> ';
-						echo '</div>';
-					}
-					
-					?>
-					<?php }?>
-				<?php endforeach ?>
-			
-				<?php 
-				
-					 
-						
+			<?php 
+				if ($this->item->combo_product) {
+					include_once ('combo-product-info-block.php');
+				}
+				else {
+					include_once ('product-info-block.php');
+				}
 				?>
-				
-			
-				<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-				<meta itemprop="priceCurrency" content="VND" />
-					<?php if ($this->item->product_old_price) {?>
-						<div class="old_price"><strong><?php echo JText::_('COM_CONTENT_OLD_PRICE'); ?>: </strong><s><?php echo $productMod->ed_number_format($this->item->product_old_price)?></s></div>
-					<?php }?>
-					<div class="price">
-						<strong><?php if ($this->item->product_old_price) {
-							echo JText::_('COM_CONTENT_SALE_PRICE');
-						}
-							else {
-							echo JText::_('COM_CONTENT_PRICE');
-							}
-						?>: </strong> 
-						<span class="detail_price"><?php echo $productMod->ed_number_format($this->item->product_price)?></span>
-					</div>
-					<span itemprop="seller" itemscope itemtype="http://schema.org/Organization" class="hidden">
-                      <span itemprop="name">Mokara</span>
-					 </span> 
-					  <link itemprop="itemCondition" href="http://schema.org/New"/>
-					  <div class="stock">
-						<strong>Trạng thái:</strong> <?php if ($this->item->product_status == 1) echo "Còn hàng"; else echo "Hết hàng"?>
-						<link itemprop="availability" href="http://schema.org/<?php if ($this->item->product_status == 1) echo "InStock"; else echo "OutOfStock"?>"/>
-					</div>
-				</div>	
-					<form action="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502')?>" method="post" class="buy-section">
-				<div class="cta">
-					<div class="container">
-						<!--<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="fa fa-phone-square" aria-hidden="true"></i> Cần tư vấn?</button>-->
-						<div class="support inline-block">
-							<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=647&Itemid=530')?>" class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i> Xem bảng size</a> 
-							<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=646&Itemid=529')?>" class="btn btn-success"><i class="fa fa-info-circle" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 	
-							<div class="call-to-action hidden">
-							
-								<a href="tel:0906147557">
-									<i class="fa fa-phone" aria-hidden="true"></i>
-								</a>	
-							</div>	
+		</div>
+		<?php
+		/*date_default_timezone_set("UTC");
+		$date = "2017-06-27 17:00:00";
+		$nextsat = strtotime($date);
+		$saturday = date("Y-m-d H:i:s", strtotime('+7 hours', $nextsat));
+		echo $this->item->deal_date_start."<br/>";
+		echo $this->item->deal_date_end;
+		
+		echo "deal type: ".$this->item->hot_deal_type."<br/>";
+		echo "hotdeal =".$this->item->hot_deal."<br/>";
+			echo "deal active = ".$this->item->deal_active;
+			if(strtotime($this->item->time_current)<=strtotime($this->item->deal_time_end) && strtotime($this->item->time_current)>=strtotime($this->item->deal_time_start) ){
+						echo "hello";
+					}*/
+		?>
+		<form action="<?php echo JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502')?>" method="post" class="buy-section">
+						<div class="cta">
+							<div class="container">
+								<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="fa fa-phone-square" aria-hidden="true"></i> Cần tư vấn?</button>
+								<div class="support inline-block">
+									<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=647&Itemid=530')?>" class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i> Xem bảng size</a> 
+									<a target="_blank" href="<?php echo JRoute::_('index.php?option=com_content&view=article&id=646&Itemid=529')?>" class="btn btn-success"><i class="fa fa-info-circle" aria-hidden="true"></i> Hướng dẫn mua hàng</a> 	
+									<div class="call-to-action hidden">
+									
+										<a href="tel:0906147557">
+											<i class="fa fa-phone" aria-hidden="true"></i>
+										</a>	
+									</div>	
+								</div>
+								<button type="submit" name="submit" class="btn btn-buy pull-right"><i class="fa fa-shopping-cart"></i> <?php echo JText::_('COM_CONTENT_ADD_TO_CART')?></button>
+								<div class="size inline-block pull-right">
+								
+								
+								
+								<select name="size" required class="form-control select-size">
+									<option value="">Vui lòng chọn Size</option>
+									<option value="S">S</option>
+									<option value="M">M</option>
+									<option value="L">L</option>
+									<option value="XL">XL</option>
+								</select>
+								
+								</div>
+								<div class="pull-right product-info-cart">
+									<strong><?php echo $this->item->title?> - <?php 
+									 if ($this->item->deal_active) 
+										 echo $productMod->ed_number_format($this->item->deal_price);
+									 else 
+										echo $productMod->ed_number_format($this->item->product_price)?></strong>
+								</div>
+								 <input type="hidden"  name="quantity" value="1" />
+								
+							</div>		
 						</div>
-						<button type="submit" name="submit" class="btn btn-buy pull-right"><i class="fa fa-shopping-cart"></i> <?php echo JText::_('COM_CONTENT_ADD_TO_CART')?></button>
-						<div class="size inline-block pull-right">
-						
-						
-						
-						<select name="size" required class="form-control select-size">
-							<option value="">Vui lòng chọn Size</option>
-							<option value="S">S</option>
-							<option value="M">M</option>
-							<option value="L">L</option>
-							<option value="XL">XL</option>
-						</select>
-						
-						</div>
-						 <input type="hidden"  name="quantity" value="1" />
-						
-					</div>		
-				</div>
 					
 					
 						<input type="hidden" name="product_id" value="<?php echo $this->item->id?>"/>
 						<input type="hidden" name="option" value="com_mokara"/>
 						<input type="hidden" name="view" value="orders"/>
 						<input type="hidden" name="task" value="add2cart"/>
+						<input type="hidden" name="hot_deal" value="<?php if ($this->item->deal_active) echo "1"; else echo "0"; ?>"/>
 						<input type="hidden" name="Itemid" value="502"/>
 						<input type="hidden" name="product_name" value="<?php echo $this->item->title?>"/>
 						<?php if ($this->item->save_money) {?>
 						<input type="hidden" name="save_money_value" value="<?php echo $this->item->save_money_value?>"/>
 						<?php }?>
 						<input type="hidden" name="product_img" value="<?php echo $this->item->product_thumb?>"/>
-						<input type="hidden" name="product_price" value="<?php echo $this->item->product_price?>"/>
-						<input type="hidden" name="product_old_price" value="<?php echo $this->item->product_old_price?>"/>
+						<input type="hidden" name="product_price" value="<?php if ($this->item->deal_active) echo $this->item->deal_price; else echo $this->item->product_price?>"/>
+						<input type="hidden" name="product_old_price" value="<?php if ($this->item->deal_active) echo $this->item->product_price; else echo $this->item->product_old_price?>"/>
 						<input type="hidden" name="product_category_id" value="<?php echo $this->item->catid?>"/>
 					</form>
-				
-					<br/>
-						<div class="fb-like" data-href="<?php echo JUri::getInstance();?>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
-						<div class="fb-save" data-uri="<?php echo JUri::getInstance();?>"></div>
-						<div class="fb-send" data-href="<?php echo JUri::getInstance();?>"></div>
-						
-			</div><!--END ART TO CART SECTION-->
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 ed-loyalty-block hidden">
-				<div class="ed-loyalty-inner">
-				<img src="images/Special-Offer-Banner.png" alt="Ưu đãi đặc biệt" class="special-banner hidden-xs">
-				<h3 class="text-center">Ưu đãi đặc biệt</h3>
-					<ul class="special-list">
-					<li>Tặng ngay <span>50.000<sup>đ</sup></span> vào tài khoản. <a href="">Xem chi tiết!</a></li>
-					<li>Nhận ngay <span>2</span> mã số dự thưởng may mắn. <a href="">Xem chi tiết!</a> </li>
-					<li class="margin-top-10">Giao hàng tận nơi miễn phí trên toàn quốc. <a href="">Xem chi tiết!</a> </li>
-					<li class="margin-top-10">1 đổi 1 trong 1 tháng với sản phẩm lỗi. <a href="">Xem chi tiết!</a></li>
-					</ul>
-					</div>
-			</div>
-		</div>
 		<div class="row">
 			<div class="col-xs-12 ed-description-block"  itemprop="description">
 				
@@ -270,7 +181,43 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				');
 				?>
 		<div class="related-product" id="related-product">
+		<?php $combo_offer = $productMod->get_combo_offer($this->item->id);?>
+			
+			<?php if ($this->item->combo_product) {?>
+				<?php // RELATED COMBO PRODUCT?>
+				
+				
+				
+			<?php } else {?>
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+			<?php
+			$combo_offer = $productMod->get_combo_offer($this->item->id);
+			if ($combo_offer) { ?>
+				<?php // RELATED OFFER PRODUCT?>
+				 <div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="heading_offer">
+						  <h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_offer" aria-expanded="true" aria-controls="collapse_offer">
+							Ưu đãi đặc biệt
+							</a>
+						  </h4>
+						</div>
+						<div id="collapse_offer" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_offer">
+						  <div class="panel-body">
+						  
+							<?php 
+								foreach ($combo_offer as $id) {
+								echo '<div  class="col-xs-6 col-sm-4 col-md-3 col-lg-3 items-on-row">';	
+									$productMod->show_product_item ($id);
+									echo '</div>';
+								}
+							?>
+							<div class="clearfix"></div>
+						  </div>
+						</div>
+					  </div>
+				
+			<?php }// RELATED OFFER PRODUCT?>
 			<?php foreach ($this->item->jcfields as $field) : ?>
 					<?php if ((($field->id > 7 && $field->id != 14 && $field->id < 24) || $field->id == 1) && $field->value) {?>
 					
@@ -278,13 +225,17 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 						<div class="panel-heading" role="tab" id="heading<?php echo $field->id?>">
 						  <h4 class="panel-title">
 							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $field->id?>" aria-expanded="true" aria-controls="collapse<?php echo $field->id?>">
-							 Sản phẩm cùng <?php echo $field->title?> (<?php if ($field->id == 1) echo $productMod->ed_number_format($field->value); else echo $field->value?>)
+							Sản phẩm cùng
+							  <?php echo $field->title?> (<?php if ($field->id == 1) echo $productMod->ed_number_format($field->value); else echo $field->value?>)
 							</a>
 						  </h4>
 						</div>
-						<div id="collapse<?php echo $field->id?>" class="panel-collapse collapse <?php if ($field->id == 1) echo "in"?>" role="tabpanel" aria-labelledby="heading<?php echo $field->id?>">
+						<div id="collapse<?php echo $field->id?>" class="panel-collapse collapse <?php if ($field->id == 1 && !$combo_offer) echo "in"?>" role="tabpanel" aria-labelledby="heading<?php echo $field->id?>">
 						  <div class="panel-body">
-							<?php $productMod->get_related_products($field->id,$this->item->id, $this->item->catid, $this->item->product_price);?>
+						  
+							<?php
+						
+							$productMod->get_related_products($field->id,$this->item->id, $this->item->catid, $this->item->product_price);?>
 						  </div>
 						</div>
 					  </div>
@@ -297,6 +248,7 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 
 
 		</div>
+			<?php }?>
 		</div>
 				
 				
@@ -345,9 +297,18 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 	<?php }?>
 	
 
+					<?php 
+							if (JRequest::getVar('phone_leave')) {
+								$productMod->save_user_phone($user->id,$_SERVER['REMOTE_ADDR'],JRequest::getVar('product_id'),JRequest::getVar('phone_leave'),JRequest::getVar('name_leave'));
+								echo '
+								<script>
+									alert("Chúng tôi đã nhận được yêu cầu của quý khách. Xin cảm ơn!");
+								</script>
+								';	
+							}
+						?>		
 		
-		
-	<?php endif; ?>
+
 
 	
 <script>

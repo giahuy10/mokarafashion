@@ -2,7 +2,34 @@
     width: 40px;
     text-align: right;
 }
-
+#countdown {
+	display:inline-block;
+}
+.deal-block {
+    display: inline-block;
+    border: 1px solid;
+    padding: 15px 35px;
+    border-radius: 5px;
+    margin: 10px 0;
+    text-align: center;
+    background: url(../images/hot_deal_bg_2.jpg);
+    background-size: 100% 100%;
+    color: #fff;
+    box-shadow: 0px 0px 8px 1px #FFEB3B;
+}
+button.btn.btn-black {
+    background: #000;
+	color: #fff;
+}
+button.btn.btn-black:hover, button.btn.btn-black:active, button.btn.btn-black:focus {
+	color: #fff;
+}
+.deal-block > h3 {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 1px 1px black;
+}
 /* The Close Button */
 .close {
   color: white;
@@ -94,6 +121,22 @@ span.detail_price {
     color: #a20000;
     font-weight: bold;
 }
+.deal_price span.detail_price {
+   animation: blink 1s infinite;
+    color: yellow;
+    text-shadow: 1px 1px #b11c17;
+  
+}
+.active_deal span.detail_price {
+    font-size: 20px;
+    text-decoration: line-through;
+}
+@keyframes blink {
+0% {color: yellow; }
+50% {color: #fff;}
+100% {color: yellow;} 
+} 
+ 
 h2.product-title-detail {
     border-bottom: 1px dotted #ccc;
     margin-bottom: 15px;
@@ -156,4 +199,11 @@ a.more-product {
     width: 100%;
     left: 0;
     padding: 10px;
+}
+.pull-right.product-info-cart {
+    color: #fff;
+    padding: 6px 10px 3px;
+}
+div#related-product {
+    margin-top: 20px;
 }

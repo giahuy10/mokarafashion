@@ -32,6 +32,37 @@ class InventoryModelProduct extends JModelItem
 	 * @since    1.6
 	 *
 	 */
+	 public function ed_number_format ($money){
+		$money = '<span  itemprop="price" content='.$money.'>'.number_format($money).'</span><sup>đ</sup>';
+		return $money;
+	}
+	public function get_categories($cat_id = NULL) {
+	// Get a db connection.
+	$db = JFactory::getDbo();
+	 
+	// Create a new query object.
+	$query = $db->getQuery(true);
+	 
+	// Select all records from the user profile table where key begins with "custom.".
+	// Order it by the ordering field.
+	$query->select($db->quoteName(array('id', 'title', 'alias')));
+	$query->from($db->quoteName('#__categories'));
+	$query->where($db->quoteName('extension') . ' = '. $db->quote('com_content'));
+	if ($cat_id) {
+		$query->where($db->quoteName('id') . ' = '. $db->quote($cat_id));
+	}else {
+		$query->where($db->quoteName('parent_id') . ' = '. $db->quote('20'));
+	}
+	
+	$query->order('lft ASC');
+	 
+	// Reset the query using our newly populated query object.
+	$db->setQuery($query);
+	 
+	// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+	$results = $db->loadObjectList();
+	return($results);
+}
 	protected function populateState()
 	{
 		$app  = JFactory::getApplication('com_inventory');
@@ -76,6 +107,26 @@ class InventoryModelProduct extends JModelItem
 	 *
 	 * @return  mixed    Object on success, false on failure.
 	 */
+	 public function getTag ($id) {
+		$db = JFactory::getDbo();
+ 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName(array('id', 'title', 'alias')));
+		$query->from($db->quoteName('#__tags'));
+		$query->where($db->quoteName('id') . ' = '. $db->quote($id));
+
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		$result = $db->loadObject();
+		return ($result);
+	}  
 	public function &getData($id = null)
 	{
 		if ($this->_item === null)
@@ -128,7 +179,7 @@ class InventoryModelProduct extends JModelItem
 				foreach ($values as $value)
 				{
 					$db = JFactory::getDbo();
-					$query = "SELECT id, title FROM #__categories WHERE parent_id=20 and published=1 HAVING id LIKE '" . $value . "'";
+					$query = "SELECT id, title FROM #__categories WHERE extension='com_inventory' and published=1 and id = '" . $value . "'";
 					$db->setQuery($query);
 					$results = $db->loadObject();
 					if ($results) {
@@ -139,42 +190,86 @@ class InventoryModelProduct extends JModelItem
 			$this->_item->category = !empty($textValue) ? implode(', ', $textValue) : $this->_item->category;
 
 			}
+			$this->_item->fields = array();
 
-				// Get the title of every option selected.
-				$options      = json_decode($this->_item->color);
+				// GET OPTION FOR COLORS.
+
+				$options = json_decode($this->_item->color);
+				if (is_array($options)){
+					$options_text = array();
+					foreach ((array) $options as $option)
+					{
+						$options_text[] = $this->getTag($option)->title;
+					}
+					$this->_item->fields['color'] = array_combine($options, $options_text);
+				
+				}else {
+					
+					
+					$this->_item->fields['color'] = array($this->_item->color => $this->getTag($this->_item->color)->title);
+				}
+				
+				
+
+				// GET OPTION FOR MATERIAL.
+				$options = json_decode($this->_item->material);
+				if (is_array($options)){
 				$options_text = array();
 
 				foreach ((array) $options as $option)
 				{
-						$options_text[] = JText::_('COM_INVENTORY_PRODUCTS_COLOR_OPTION_' . $option);
+					$options_text[] = $this->getTag($option)->title;
 				}
 
-				$this->_item->color = !empty($options_text) ? implode(',', $options_text) : $this->_item->color;
-
-				// Get the title of every option selected.
-				$options      = json_decode($this->_item->material);
+					$this->_item->fields['material'] = array_combine($options, $options_text);
+				}else {
+					$this->_item->fields['material'] = array($this->_item->material => $this->getTag($this->_item->material)->title);
+				}
+			
+				
+				// GET OPTION FOR NECK.
+				$this->_item->fields['neck'] = array($this->_item->neck => $this->getTag($this->_item->neck)->title);
+				
+				// GET OPTION FOR SLEEVE.
+				$this->_item->fields['sleeve'] = array($this->_item->sleeve => $this->getTag($this->_item->sleeve)->title);
+				
+	
+				// GET OPTION FOR STYLE.	
+					$options = json_decode($this->_item->type);	
+					if (is_array($options)){
+					$options_text = array();
+					foreach ((array) $options as $option)
+					{
+						$options_text[] = $this->getTag($option)->title;
+						
+					}
+					$this->_item->fields['type'] = array_combine($options, $options_text);
+					}else {
+						$this->_item->fields['type'] = array($this->_item->type => $this->getTag($this->_item->type)->title);
+					}
+				
+				// GET OPTION FOR SHAPE.					
+					if ($this->_item->shape) {
+					$this->_item->fields['shape'] = array($this->_item->shape => $this->getTag($this->_item->shape)->title);
+					}
+				// GET OPTION FOR SKIRT.
+				if ($this->_item->skirt) {
+				$options = json_decode($this->_item->skirt);
+				
+				if (is_array($options)){
 				$options_text = array();
 
 				foreach ((array) $options as $option)
 				{
-						$options_text[] = JText::_('COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_' . $option);
+					$options_text[] = $this->getTag($option)->title;
 				}
-
-				$this->_item->material = !empty($options_text) ? implode(',', $options_text) : $this->_item->material;
-					$this->_item->neck = JText::_('COM_INVENTORY_PRODUCTS_NECK_OPTION_' . $this->_item->neck);
-					$this->_item->sleeve = JText::_('COM_INVENTORY_PRODUCTS_SLEEVE_OPTION_' . $this->_item->sleeve);
-					$this->_item->type = JText::_('COM_INVENTORY_PRODUCTS_TYPE_OPTION_' . $this->_item->type);
-
-				// Get the title of every option selected.
-				$options      = json_decode($this->_item->skirt);
-				$options_text = array();
-
-				foreach ((array) $options as $option)
-				{
-						$options_text[] = JText::_('COM_INVENTORY_PRODUCTS_SKIRT_OPTION_' . $option);
+				$this->_item->fields['skirt'] = array_combine($options, $options_text);
+				} else {
+					
+					$this->_item->fields['skirt'] = array($this->_item->skirt => $this->getTag($this->_item->skirt)->title);
 				}
-
-				$this->_item->skirt = !empty($options_text) ? implode(',', $options_text) : $this->_item->skirt;
+				}
+				
 
 		return $this->_item;
 	}

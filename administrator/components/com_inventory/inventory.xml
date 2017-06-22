@@ -53,6 +53,10 @@
 			<menu link="option=com_inventory&amp;view=products" view="products" img="media/com_inventory/images/s_products.png" alt="Inventory/Products">COM_INVENTORY_TITLE_PRODUCTS</menu>
 
 			<menu link="option=com_inventory&amp;view=filters" view="filters" img="media/com_inventory/images/s_filters.png" alt="Inventory/Filters">COM_INVENTORY_TITLE_FILTERS</menu>
+			
+			<menu link="option=com_inventory&amp;view=coupons" view="coupons" img="media/com_inventory/images/s_coupons.png" alt="Inventory/Coupons">COM_INVENTORY_TITLE_COUPONS</menu>
+			
+			<menu link="option=com_inventory&amp;view=sales" view="coupons" img="media/com_inventory/images/s_coupons.png" alt="Inventory/Coupons">COM_INVENTORY_TITLE_COUPONS</menu>
 
         </submenu>
         <files folder="administrator">

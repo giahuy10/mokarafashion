@@ -201,7 +201,17 @@ class InventoryTableproduct extends JTable
 		{
 			throw new Exception('Your <b>code</b> item "<b>' . $this->code . '</b>" already exists');
 		}
-		
+		jimport('joomla.filter.output');
+		if (empty($this->alias))
+		{
+			$this->alias = $this->title;
+		}
+		$this->alias = JFilterOutput::stringURLSafe($this->alias);
+		if (!$this->isUnique('alias'))
+		{
+			throw new Exception('Your <b>alias</b> item "<b>' . $this->alias . '</b>" already exists');
+		}
+ 
 
 		return parent::check();
 	}

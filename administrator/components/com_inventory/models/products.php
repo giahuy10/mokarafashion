@@ -16,6 +16,8 @@ jimport('joomla.application.component.modellist');
  *
  * @since  1.6
  */
+JLoader::register('ContentHelperRoute', JPATH_SITE . '/components/com_content/helpers/route.php');
+
 class InventoryModelProducts extends JModelList
 {
 /**
@@ -37,16 +39,18 @@ class InventoryModelProducts extends JModelList
 				'created_by', 'a.`created_by`',
 				'modified_by', 'a.`modified_by`',
 				'category', 'a.`category`',
-				'name', 'a.`name`',
+				'title', 'a.`title`',
 				'code', 'a.`code`',
 				'price', 'a.`price`',
 				'old_price', 'a.`old_price`',
 				'color', 'a.`color`',
+				'price_range', 'a.`price_range`',
 				'material', 'a.`material`',
 				'neck', 'a.`neck`',
 				'sleeve', 'a.`sleeve`',
 				'type', 'a.`type`',
 				'skirt', 'a.`skirt`',
+				'shape', 'a.`shape`',
 				'input_price', 'a.`input_price`',
 				'size_s', 'a.`size_s`',
 				'size_m', 'a.`size_m`',
@@ -96,7 +100,12 @@ class InventoryModelProducts extends JModelList
 		// Filtering type
 		$this->setState('filter.type', $app->getUserStateFromRequest($this->context.'.filter.type', 'filter_type', '', 'string'));
 
-
+		// Filtering shape
+		$this->setState('filter.shape', $app->getUserStateFromRequest($this->context.'.filter.shape', 'filter_shape', '', 'string'));
+		
+		// Filtering price range
+		$this->setState('filter.price_range', $app->getUserStateFromRequest($this->context.'.filter.price_range', 'filter_price_range', '', 'string'));
+		
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_inventory');
 		$this->setState('params', $params);
@@ -184,7 +193,7 @@ class InventoryModelProducts extends JModelList
 			else
 			{
 				$search = $db->Quote('%' . $db->escape($search, true) . '%');
-				$query->where('( a.category LIKE ' . $search . '  OR  a.name LIKE ' . $search . '  OR  a.code LIKE ' . $search . '  OR  a.price LIKE ' . $search . '  OR  a.color LIKE ' . $search . '  OR  a.material LIKE ' . $search . '  OR  a.neck LIKE ' . $search . '  OR  a.sleeve LIKE ' . $search . '  OR  a.type LIKE ' . $search . ' )');
+				$query->where('( a.category LIKE ' . $search . '  OR  a.title LIKE ' . $search . '  OR  a.code LIKE ' . $search . '  OR  a.price LIKE ' . $search . '  OR  a.color LIKE ' . $search . '  OR  a.material LIKE ' . $search . '  OR  a.neck LIKE ' . $search . '  OR  a.sleeve LIKE ' . $search . '  OR  a.type LIKE ' . $search . ' )');
 			}
 		}
 
@@ -223,9 +232,25 @@ class InventoryModelProducts extends JModelList
 		{
 			$query->where("a.`type` = '".$db->escape($filter_type)."'");
 		}
+		//Filtering shape
+		$filter_shape = $this->state->get("filter.shape");
+		if ($filter_shape !== null && !empty($filter_shape))
+		{
+			$query->where("a.`shape` = '".$db->escape($filter_shape)."'");
+		}
+		//Filtering price range
+		$filter_price_range = $this->state->get("filter.price_range");
+		if ($filter_price_range !== null && !empty($filter_price_range))
+		{
+			$alias = $this->getTag($filter_price_range);
+			$price = explode("-",$alias->alias);
+
+			$query->where("a.`price` > ".$price[0]);
+			$query->where("a.`price` < ".$price[1]);
+		}
 		// Add the list ordering clause.
-		$orderCol  = $this->state->get('list.ordering');
-		$orderDirn = $this->state->get('list.direction');
+		$orderCol  = $this->state->get('list.id');
+		$orderDirn = $this->state->get('list.desc');
 
 		if ($orderCol && $orderDirn)
 		{
@@ -240,6 +265,46 @@ class InventoryModelProducts extends JModelList
 	 *
 	 * @return mixed Array of data items on success, false on failure.
 	 */
+	public function getCat ($id) {
+		$db = JFactory::getDbo();
+ 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName(array('id', 'title', 'alias')));
+		$query->from($db->quoteName('#__categories'));
+		$query->where($db->quoteName('id') . ' = '. $db->quote($id));
+		$query->where($db->quoteName('extension') . ' = '. $db->quote('com_inventory'));
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		$result = $db->loadObject();
+		return ($result);
+	} 
+	public function getTag ($id) {
+		$db = JFactory::getDbo();
+ 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName(array('id', 'title', 'alias')));
+		$query->from($db->quoteName('#__tags'));
+		$query->where($db->quoteName('id') . ' = '. $db->quote($id));
+
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		$result = $db->loadObject();
+		return ($result);
+	}  
 	public function getItems()
 	{
 		$items = parent::getItems();
@@ -255,7 +320,7 @@ class InventoryModelProducts extends JModelList
 					if (!empty($value))
 					{
 						$db = JFactory::getDbo();
-						$query = "SELECT id, title FROM #__categories WHERE parent_id=20 and published=1";
+						$query = "SELECT id, title FROM #__categories WHERE extension='com_inventory' and published=1 and id = '" . $value . "'";
 						$db->setQuery($query);
 						$results = $db->loadObject();
 						if ($results) {
@@ -276,7 +341,7 @@ class InventoryModelProducts extends JModelList
 
 				foreach ((array) $options as $option)
 				{
-					$options_text[] = JText::_('COM_INVENTORY_PRODUCTS_COLOR_OPTION_' . strtoupper($option));
+					$options_text[] = $this->getTag($option)->title;
 				}
 
 				$oneItem->color = !empty($options_text) ? implode(',', $options_text) : $oneItem->color;
@@ -289,13 +354,15 @@ class InventoryModelProducts extends JModelList
 
 				foreach ((array) $options as $option)
 				{
-					$options_text[] = JText::_('COM_INVENTORY_PRODUCTS_MATERIAL_OPTION_' . strtoupper($option));
+					$options_text[] = $this->getTag($option)->title;
 				}
 
 				$oneItem->material = !empty($options_text) ? implode(',', $options_text) : $oneItem->material;
-					$oneItem->neck = JText::_('COM_INVENTORY_PRODUCTS_NECK_OPTION_' . strtoupper($oneItem->neck));
-					$oneItem->sleeve = JText::_('COM_INVENTORY_PRODUCTS_SLEEVE_OPTION_' . strtoupper($oneItem->sleeve));
-					$oneItem->type = JText::_('COM_INVENTORY_PRODUCTS_TYPE_OPTION_' . strtoupper($oneItem->type));
+				
+					$oneItem->neck = $this->getTag($oneItem->neck)->title;
+					$oneItem->sleeve = $this->getTag($oneItem->sleeve)->title;
+					$oneItem->type = $this->getTag($oneItem->type)->title;
+					$oneItem->shape = $this->getTag($oneItem->shape)->title;
 
 				// Get the title of every option selected.
 
@@ -305,7 +372,7 @@ class InventoryModelProducts extends JModelList
 
 				foreach ((array) $options as $option)
 				{
-					$options_text[] = JText::_('COM_INVENTORY_PRODUCTS_SKIRT_OPTION_' . strtoupper($option));
+					$options_text[] = $this->getTag($option)->title;
 				}
 
 				$oneItem->skirt = !empty($options_text) ? implode(',', $options_text) : $oneItem->skirt;

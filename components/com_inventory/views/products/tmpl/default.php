@@ -10,9 +10,9 @@
 defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('bootstrap.tooltip');
-JHtml::_('behavior.multiselect');
-JHtml::_('formbehavior.chosen', 'select');
+
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_inventory/models', 'InventoryModel');
+$productMod = JModelLegacy::getInstance('Product', 'InventoryModel', array('ignore_request' => true));
 
 $user       = JFactory::getUser();
 $userId     = $user->get('id');
@@ -23,158 +23,70 @@ $canEdit    = $user->authorise('core.edit', 'com_inventory') && file_exists(JPAT
 $canCheckin = $user->authorise('core.manage', 'com_inventory');
 $canChange  = $user->authorise('core.edit.state', 'com_inventory');
 $canDelete  = $user->authorise('core.delete', 'com_inventory');
-?>
 
+				
+?>
+<?php echo'index.php?option=com_inventory&view=products&id=29:vay-dam&color=25:mau-den&neck=54:tron&sleeve=12:sat-nach&type=6:dam-dao-pho&price_range=20:1500000-2000000'?>
+<br/>
+<?php echo JRoute::_('index.php?option=com_inventory&view=products&id=29:vay-dam&color=25&neck=54&sleeve=12&type=6&price_range=20'); ?>
+<?php //echo $item->code; ?>
+<?php //echo $item->price; ?>
+<?php //echo $item->color; ?>
+<?php //echo $item->material; ?>
+<?php //echo $item->neck; ?>
+<?php //echo $item->sleeve; ?>
+<?php //echo $item->type; ?>
 <form action="<?php echo JRoute::_('index.php?option=com_inventory&view=products'); ?>" method="post"
       name="adminForm" id="adminForm">
 
 	<?php echo JLayoutHelper::render('default_filter', array('view' => $this), dirname(__FILE__)); ?>
-	<table class="table table-striped" id="productList">
-		<thead>
-		<tr>
-			<?php if (isset($this->items[0]->state)): ?>
-				<th width="5%">
-	<?php echo JHtml::_('grid.sort', 'JPUBLISHED', 'a.state', $listDirn, $listOrder); ?>
-</th>
-			<?php endif; ?>
+	<?php foreach ($this->items as $i => $item) { ?>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+		<?php 
+			$html ='<div class="ed-inner-product " itemscope itemtype="http://schema.org/Product">';
+			$html .= '<span itemprop="brand" class="hidden">Mokara</span>';
+			
+					
+					
+					$link = JRoute::_('index.php?option=com_inventory&view=product&id='.$item->slug.'&category='.$item->catslug.'&Itemid=528');
+					$html .='<div class="ed-item-img">';
+					$html .='	<a href="'.$link.'"><img itemprop="image" class="product-thumb-desk" src="'.$item->image_1.'" alt="'.$item->title.'"/></a>';
+					$html .='</div>';
+					$html .='<div class="ed-product-content">';
+					$html .='<div class="page-header">';
+					$html .='<h2 itemprop="name">';
+					$html .='<a href="'.$link.'" itemprop="url">'.$item->title.'</a>';
+					$html .='</h2>';
+					$html .='</div>';
+					$html .='<span itemprop="aggregateRating" class="hidden" itemscope itemtype="http://schema.org/AggregateRating">
+							Average rating: <span itemprop="ratingValue">4.4</span>, based on
+							<span itemprop="ratingCount">89</span> reviews
+						  </span>';
+					$html .= $item->introtext; 
+					$html .='<div class="ed-price-block" itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer">';
+					$html .= ' <meta itemprop="priceCurrency" content="VND" />';
+					$html .= '<span itemprop="lowPrice" class="hidden">'.$item->price.'</span>';
+					$html .='<div class="price pull-left">';
+					$html .=$productMod->ed_number_format($item->price);
+					$html .='</div>';
+					if ($item->old_price) {
+							$html .= '<span itemprop="highPrice" class="hidden">'.$item->old_price.'</span>';
+							$html .='<div class="old_price pull-right"><strike>'.$productMod->ed_number_format($item->old_price).'</strike></div>';
+						 }
+					$html .='<div class="clearfix"></div>';
+					$html .='</div>';	
+					
+						
+						$html .='<div class="clearfix"></div>';
+				$html .='</div>';
+			$html .='</div>	';
+			echo $html;
+		?>
+		</div>
+	<?php }?>
+	
 
-							<th class=''>
-				<?php echo JHtml::_('grid.sort',  'COM_INVENTORY_PRODUCTS_ID', 'a.id', $listDirn, $listOrder); ?>
-				</th>
-				<th class=''>
-				<?php echo JHtml::_('grid.sort',  'COM_INVENTORY_PRODUCTS_CATEGORY', 'a.category', $listDirn, $listOrder); ?>
-				</th>
-				<th class=''>
-				<?php echo JHtml::_('grid.sort',  'COM_INVENTORY_PRODUCTS_NAME', 'a.name', $listDirn, $listOrder); ?>
-				</th>
-				<th class=''>
-				<?php echo JHtml::_('grid.sort',  'COM_INVENTORY_PRODUCTS_CODE', 'a.code', $listDirn, $listOrder); ?>
-				</th>
-				<th class=''>
-				<?php echo JHtml::_('grid.sort',  'COM_INVENTORY_PRODUCTS_PRICE', 'a.price', $listDirn, $listOrder); ?>
-				</th>
-				<th class=''>
-				<?php echo JHtml::_('grid.sort',  'COM_INVENTORY_PRODUCTS_COLOR', 'a.color', $listDirn, $listOrder); ?>
-				</th>
-				<th class=''>
-				<?php echo JHtml::_('grid.sort',  'COM_INVENTORY_PRODUCTS_MATERIAL', 'a.material', $listDirn, $listOrder); ?>
-				</th>
-				<th class=''>
-				<?php echo JHtml::_('grid.sort',  'COM_INVENTORY_PRODUCTS_NECK', 'a.neck', $listDirn, $listOrder); ?>
-				</th>
-				<th class=''>
-				<?php echo JHtml::_('grid.sort',  'COM_INVENTORY_PRODUCTS_SLEEVE', 'a.sleeve', $listDirn, $listOrder); ?>
-				</th>
-				<th class=''>
-				<?php echo JHtml::_('grid.sort',  'COM_INVENTORY_PRODUCTS_TYPE', 'a.type', $listDirn, $listOrder); ?>
-				</th>
-
-
-							<?php if ($canEdit || $canDelete): ?>
-					<th class="center">
-				<?php echo JText::_('COM_INVENTORY_PRODUCTS_ACTIONS'); ?>
-				</th>
-				<?php endif; ?>
-
-		</tr>
-		</thead>
-		<tfoot>
-		<tr>
-			<td colspan="<?php echo isset($this->items[0]) ? count(get_object_vars($this->items[0])) : 10; ?>">
-				<?php echo $this->pagination->getListFooter(); ?>
-			</td>
-		</tr>
-		</tfoot>
-		<tbody>
-		<?php foreach ($this->items as $i => $item) : ?>
-			<?php $canEdit = $user->authorise('core.edit', 'com_inventory'); ?>
-
-							<?php if (!$canEdit && $user->authorise('core.edit.own', 'com_inventory')): ?>
-					<?php $canEdit = JFactory::getUser()->id == $item->created_by; ?>
-				<?php endif; ?>
-
-			<tr class="row<?php echo $i % 2; ?>">
-
-				<?php if (isset($this->items[0]->state)) : ?>
-					<?php $class = ($canChange) ? 'active' : 'disabled'; ?>
-					<td class="center">
-	<a class="btn btn-micro <?php echo $class; ?>" href="<?php echo ($canChange) ? JRoute::_('index.php?option=com_inventory&task=product.publish&id=' . $item->id . '&state=' . (($item->state + 1) % 2), false, 2) : '#'; ?>">
-	<?php if ($item->state == 1): ?>
-		<i class="icon-publish"></i>
-	<?php else: ?>
-		<i class="icon-unpublish"></i>
-	<?php endif; ?>
-	</a>
-</td>
-				<?php endif; ?>
-
-								<td>
-
-					<?php echo $item->id; ?>
-				</td>
-				<td>
-
-					<?php echo $item->category; ?>
-				</td>
-				<td>
-				<?php if (isset($item->checked_out) && $item->checked_out) : ?>
-					<?php echo JHtml::_('jgrid.checkedout', $i, $item->uEditor, $item->checked_out_time, 'products.', $canCheckin); ?>
-				<?php endif; ?>
-				<a href="<?php echo JRoute::_('index.php?option=com_inventory&view=product&id='.(int) $item->id); ?>">
-				<?php echo $this->escape($item->name); ?></a>
-				</td>
-				<td>
-
-					<?php echo $item->code; ?>
-				</td>
-				<td>
-
-					<?php echo $item->price; ?>
-				</td>
-				<td>
-
-					<?php echo $item->color; ?>
-				</td>
-				<td>
-
-					<?php echo $item->material; ?>
-				</td>
-				<td>
-
-					<?php echo $item->neck; ?>
-				</td>
-				<td>
-
-					<?php echo $item->sleeve; ?>
-				</td>
-				<td>
-
-					<?php echo $item->type; ?>
-				</td>
-
-
-								<?php if ($canEdit || $canDelete): ?>
-					<td class="center">
-						<?php if ($canEdit): ?>
-							<a href="<?php echo JRoute::_('index.php?option=com_inventory&task=productform.edit&id=' . $item->id, false, 2); ?>" class="btn btn-mini" type="button"><i class="icon-edit" ></i></a>
-						<?php endif; ?>
-						<?php if ($canDelete): ?>
-							<a href="<?php echo JRoute::_('index.php?option=com_inventory&task=productform.remove&id=' . $item->id, false, 2); ?>" class="btn btn-mini delete-button" type="button"><i class="icon-trash" ></i></a>
-						<?php endif; ?>
-					</td>
-				<?php endif; ?>
-
-			</tr>
-		<?php endforeach; ?>
-		</tbody>
-	</table>
-
-	<?php if ($canCreate) : ?>
-		<a href="<?php echo JRoute::_('index.php?option=com_inventory&task=productform.edit&id=0', false, 0); ?>"
-		   class="btn btn-success btn-small"><i
-				class="icon-plus"></i>
-			<?php echo JText::_('COM_INVENTORY_ADD_ITEM'); ?></a>
-	<?php endif; ?>
+	<?php echo $this->pagination->getListFooter(); ?>
 
 	<input type="hidden" name="task" value=""/>
 	<input type="hidden" name="boxchecked" value="0"/>
@@ -183,18 +95,4 @@ $canDelete  = $user->authorise('core.delete', 'com_inventory');
 	<?php echo JHtml::_('form.token'); ?>
 </form>
 
-<?php if($canDelete) : ?>
-<script type="text/javascript">
 
-	jQuery(document).ready(function () {
-		jQuery('.delete-button').click(deleteItem);
-	});
-
-	function deleteItem() {
-
-		if (!confirm("<?php echo JText::_('COM_INVENTORY_DELETE_MESSAGE'); ?>")) {
-			return false;
-		}
-	}
-</script>
-<?php endif; ?>

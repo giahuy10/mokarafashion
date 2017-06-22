@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="filter">
+        <field name="search" type="text" hint="COM_INVENTORY_SEARCH_FILTER_SUBMIT"
+               label="COM_USERS_FILTER_SEARCH_DESC"
+               class="js-stools-search-string" />
+
+        <field name="state"
+               type="status"
+               label="COM_INVENTORY_FILTER_STATE"
+               description="COM_INVENTORY_FILTER_STATE_DESC"
+               onchange="this.form.submit();"
+        >
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+        </field>
+
+        <field name="coupon_type" label="COM_INVENTORY_FORM_LBL_COUPON_COUPON_TYPE" type="list" onchange="this.form.submit();" default="COM_INVENTORY_COUPONS_COUPON_TYPE_FILTER">
+  <option value="">COM_INVENTORY_COUPONS_COUPON_TYPE_FILTER</option>
+  <option value="0">COM_INVENTORY_COUPONS_COUPON_TYPE_OPTION_0</option>
+  <option value="1">COM_INVENTORY_COUPONS_COUPON_TYPE_OPTION_1</option>
+</field>
+
+
+    </fields>
+
+    <fields name="list">
+
+        <field name="fullordering"
+               type="list"
+               label="COM_CONTENT_LIST_FULL_ORDERING"
+               description="COM_CONTENT_LIST_FULL_ORDERING_DESC"
+               onchange="this.form.submit();"
+               default="a.id DESC"
+        >
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="a.`id` asc">ID Ascending</option><option value="a.`id` desc">ID Descending</option><option value="a.`ordering` asc">Order Ascending</option><option value="a.`ordering` desc">Order Descending</option><option value="a.`state` asc">State Ascending</option><option value="a.`state` desc">State Descending</option><option value="a.`coupon_code` asc">Coupon Code Ascending</option><option value="a.`coupon_code` desc">Coupon Code Descending</option><option value="a.`coupon_type` asc">Coupon Type Ascending</option><option value="a.`coupon_type` desc">Coupon Type Descending</option><option value="a.`coupon_value` asc">Coupon Value Ascending</option><option value="a.`coupon_value` desc">Coupon Value Descending</option>
+
+        </field>
+
+        <field name="limit"
+               type="limitbox"
+               class="input-mini"
+               default="25"
+               onchange="this.form.submit();"
+        />
+
+    </fields>
+
+</form>

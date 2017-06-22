@@ -31,12 +31,24 @@ class InventoryHelper
 			'index.php?option=com_inventory&view=products',
 			$vName == 'products'
 		);
-
+		JHtmlSidebar::addEntry(
+			JText::_('COM_INVENTORY_TITLE_CATEGORIES'),
+			'index.php?option=com_categories&extension=com_inventory',
+			$vName == 'categories'
+		);
+	
 		JHtmlSidebar::addEntry(
 			JText::_('COM_INVENTORY_TITLE_SALES'),
 			'index.php?option=com_inventory&view=sales',
 			$vName == 'sales'
 		);
+	
+		JHtmlSidebar::addEntry(
+			JText::_('COM_INVENTORY_TITLE_COUPONS'),
+			'index.php?option=com_inventory&view=coupons',
+			$vName == 'coupons'
+		);
+
 		
 	}
 
@@ -90,6 +102,18 @@ class InventoryHelper
 		}
 
 		return $result;
+	}
+		public static function getGroupNameByGroupId($group_id) {
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query
+			->select('title')
+			->from('#__usergroups')
+			->where('id = ' . intval($group_id));
+
+		$db->setQuery($query);
+		return $db->loadResult();
 	}
 }
 

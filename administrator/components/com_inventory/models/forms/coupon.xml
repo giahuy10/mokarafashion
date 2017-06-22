@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+  <fieldset>
+    <field name="id" type="text" readonly="true" class="readonly" default="0" description="JGLOBAL_FIELD_ID_DESC"/>
+    <field name="ordering"/>
+    <field name="state" default="1" type="list" label="JSTATUS" description="JFIELD_PUBLISHED_DESC" class="inputbox" size="1">
+      <option value="1">JPUBLISHED</option>
+      <option value="0">JUNPUBLISHED</option>
+      <option value="2">JARCHIVED</option>
+      <option value="-2">JTRASHED</option>
+    </field>
+    <field name="checked_out" type="hidden" filter="unset"/>
+    <field name="checked_out_time" default="0000-00-00 00:00:00" type="hidden" filter="unset"/>
+    <field name="created_by" type="createdby" default="0" label="COM_INVENTORY_FORM_LBL_COUPON_CREATED_BY" description="COM_INVENTORY_FORM_DESC_COUPON_CREATED_BY" hidden="true" hint="COM_INVENTORY_FORM_LBL_COUPON_CREATED_BY"/>
+    <field name="modified_by" type="modifiedby" default="0" label="COM_INVENTORY_FORM_LBL_COUPON_MODIFIED_BY" description="COM_INVENTORY_FORM_DESC_COUPON_MODIFIED_BY" hidden="true" hint="COM_INVENTORY_FORM_LBL_COUPON_MODIFIED_BY"/>
+    <field name="coupon_code" type="text" required="true" label="COM_INVENTORY_FORM_LBL_COUPON_COUPON_CODE" description="COM_INVENTORY_FORM_DESC_COUPON_COUPON_CODE" hint="COM_INVENTORY_FORM_LBL_COUPON_COUPON_CODE"/>
+    <field name="coupon_type" type="radio" required="true" default="0" label="COM_INVENTORY_FORM_LBL_COUPON_COUPON_TYPE" description="COM_INVENTORY_FORM_DESC_COUPON_COUPON_TYPE" hint="COM_INVENTORY_FORM_LBL_COUPON_COUPON_TYPE">
+      <option value="0">COM_INVENTORY_COUPONS_COUPON_TYPE_OPTION_0</option>
+      <option value="1">COM_INVENTORY_COUPONS_COUPON_TYPE_OPTION_1</option>
+    </field>
+	
+	<field name="coupon_from" type="calendar" default="2017-05-15" label="Select a date" description="" 
+	class="input-medium"  filter="user_utc" format="%d-%m-%Y"
+	singleheader="true" showtime="true" timeformat="12" todaybutton="true" weeknumbers="true"
+	filltable="true" minyear="-3" maxyear="5" />
+	
+	<field name="coupon_to" type="calendar" default="2017-05-15" label="Select a date" description="" 
+	class="input-medium"  filter="user_utc" format="%d-%m-%Y"
+	singleheader="true" showtime="true" timeformat="12" todaybutton="true" weeknumbers="true"
+	filltable="true" minyear="-3" maxyear="5" />
+	
+    <field name="coupon_value" type="text" required="true" label="COM_INVENTORY_FORM_LBL_COUPON_COUPON_VALUE" description="COM_INVENTORY_FORM_DESC_COUPON_COUPON_VALUE" hint="COM_INVENTORY_FORM_LBL_COUPON_COUPON_VALUE"/>
+    <field name="coupon_for_categories" type="sql" query="SELECT id, title FROM #__categories WHERE published = 1 and parent_id = 20" key_field="id" value_field="title" multiple="true" label="COM_INVENTORY_FORM_LBL_COUPON_COUPON_FOR_CATEGORIES" description="COM_INVENTORY_FORM_DESC_COUPON_COUPON_FOR_CATEGORIES" hint="COM_INVENTORY_FORM_LBL_COUPON_COUPON_FOR_CATEGORIES"/>
+    <field name="coupon_for_products" type="sql" query="SELECT id, title FROM #__content WHERE state =1 and catid in (20,21,22,23,24,25)" key_field="id" value_field="title" multiple="true" label="COM_INVENTORY_FORM_LBL_COUPON_COUPON_FOR_PRODUCTS" description="COM_INVENTORY_FORM_DESC_COUPON_COUPON_FOR_PRODUCTS" hint="COM_INVENTORY_FORM_LBL_COUPON_COUPON_FOR_PRODUCTS"/>
+    <field name="coupon_for_order" type="text" label="COM_INVENTORY_FORM_LBL_COUPON_COUPON_FOR_ORDER" description="COM_INVENTORY_FORM_DESC_COUPON_COUPON_FOR_ORDER" hint="COM_INVENTORY_FORM_LBL_COUPON_COUPON_FOR_ORDER"/>
+    <field name="coupon_limit" type="text" label="COM_INVENTORY_FORM_LBL_COUPON_COUPON_LIMIT" description="COM_INVENTORY_FORM_DESC_COUPON_COUPON_LIMIT" hint="COM_INVENTORY_FORM_LBL_COUPON_COUPON_LIMIT"/>
+    <field name="coupon_for_group_user" type="usergroup" label="COM_INVENTORY_FORM_LBL_COUPON_COUPON_FOR_GROUP_USER" description="COM_INVENTORY_FORM_DESC_COUPON_COUPON_FOR_GROUP_USER" hint="COM_INVENTORY_FORM_LBL_COUPON_COUPON_FOR_GROUP_USER"/>
+    <field name="coupon_one_time" type="radio" default="0" label="COM_INVENTORY_FORM_LBL_COUPON_COUPON_ONE_TIME" description="COM_INVENTORY_FORM_DESC_COUPON_COUPON_ONE_TIME" hint="COM_INVENTORY_FORM_LBL_COUPON_COUPON_ONE_TIME">
+      <option value="0">COM_INVENTORY_COUPONS_COUPON_ONE_TIME_OPTION_0</option>
+      <option value="1">COM_INVENTORY_COUPONS_COUPON_ONE_TIME_OPTION_1</option>
+    </field>
+    <field name="version_note" type="text" label="JGLOBAL_FIELD_VERSION_NOTE_LABEL" description="JGLOBAL_FIELD_VERSION_NOTE_DESC" class="inputbox" size="45" labelclass="control-label"/>
+  </fieldset>
+</form>
