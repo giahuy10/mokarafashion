@@ -1012,13 +1012,13 @@ class MokaraModelProduct extends JModelList
 	$html ='<div class="ed-inner-product amp" itemscope itemtype="http://schema.org/Product">';
 	$html .= '<span itemprop="brand" class="hidden">Mokara</span>';
 	$item = $this->get_custom_field($item);
-	
+		$resizer = new ImgResizeCache();
 		
 		
 			$item->slug    = $item->id . ':' . $item->alias;
 			$link = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language));
 			$html .='<div class="ed-item-img">';
-			$html .='	<a href="'.$link.'"><amp-img src="'.$item->product_thumb.'"
+			$html .='	<a href="'.$link.'"><amp-img src="'.htmlspecialchars($resizer->resize($item->product_thumb, array('w' => 300, 'h' => 433, 'crop' => TRUE))).'"
 					  width="300"
 					  height="433"
 					  layout="responsive"

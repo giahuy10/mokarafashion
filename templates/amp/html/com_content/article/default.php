@@ -24,7 +24,8 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 
 JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'MokaraModel');
 $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
-
+require_once JPATH_SITE . '/plugins/content/imgresizecache/resize.php';
+$resizer = new ImgResizeCache();
 ?>
 
 
@@ -54,13 +55,13 @@ $productMod = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_
 				<div class="row ">
 					<div class="col-xs-12 col-sm-2 thumb-list">
 						<?php foreach ($this->item->jcfields as $field) { ?>
-							<?php if ($field->id > 23 &&  $field->id < 28) {?>
+							<?php if ($field->id > 23 &&  $field->id < 28 && $field->rawvalue) {?>
 								<div class="thumb_img">
 								<amp-img 
 								on="tap:lightbox<?php echo $field->id?>"
 								  role="button"
 								  tabindex="0"
-									src="<?php echo $field->rawvalue?>" alt="<?php echo $this->item->title?>"
+									src="<?php echo htmlspecialchars($resizer->resize($field->rawvalue, array('w' => 330, 'h' => 433, 'crop' => TRUE)))?>" alt="<?php echo $this->item->title?>"
 								  width="330"
 								  height="433"
 								  layout="responsive"
