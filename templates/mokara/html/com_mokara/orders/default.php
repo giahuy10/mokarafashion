@@ -41,6 +41,9 @@ $user_groups[1] = "1";
 
 $coupon_detail = $productMod->get_coupon_detail($session->get('coupon_code'), $user, $session->get('total'));
 
+
+
+
 ?>
 
 <?php

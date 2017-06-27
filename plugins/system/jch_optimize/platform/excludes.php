@@ -75,7 +75,7 @@ class JchPlatformExcludes implements JchInterfaceExcludes
                         }
                         else
                         {
-                                return array('plugin_googlemap3', '/jw_allvideos/');
+                                return array('plugin_googlemap3', '/jw_allvideos/', '/tinymce/');
                         }
                         
                 }

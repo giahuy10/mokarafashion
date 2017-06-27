@@ -385,12 +385,22 @@ class JchOptimizeCssParser extends JchOptimizeCssParserBase
                                 {
                                         $sImageUrl = JchOptimizeUrl::toAbsolute($sImageUrl, $sCssFileUrl);
                                 }
+				else
+				{
+					return $aMatches[0];
+				}
                         }
+
+			$sImageUrl = preg_match('#(?<!\\\\)[\s\'"(),]#', $sImageUrl) ? '"' . $sImageUrl . '"' : $sImageUrl;
+
+			return $sImageUrl;
+
                 }
+		else
+		{
+			return $aMatches[0];
+		}
 
-                $sImageUrl = preg_match('#(?<!\\\\)[\s\'"(),]#', $sImageUrl) ? '"' . $sImageUrl . '"' : $sImageUrl;
-
-                return $sImageUrl;
         }
 
         /**
@@ -578,6 +588,7 @@ $r = "#(?>[^{}'\"/(]*+(?:{$this->u})?)+?(?:(?<b>{(?>[^{}'\"/(]++|{$this->u}|(?&b
         {
                 $matches0 = ltrim($aMatches[0]);
 
+		//add all font at-rules to the crtitical css
                 if (preg_match('#^(?>@(?:-[^-]+-)?(?:font-face|import))#i', $matches0))
                 {
                         $sCriticalCss .= $aMatches[0];
@@ -585,6 +596,7 @@ $r = "#(?>[^{}'\"/(]*+(?:{$this->u})?)+?(?:(?<b>{(?>[^{}'\"/(]++|{$this->u}|(?&b
                         return $aMatches[0];
                 }
 
+		//recurse into each @media rule
                 if (preg_match('#^@media#', $matches0))
                 {
                         $sCriticalCss .= $aMatches[2] . '{';
@@ -605,11 +617,14 @@ $r = "#(?>[^{}'\"/(]*+(?:{$this->u})?)+?(?:(?<b>{(?>[^{}'\"/(]++|{$this->u}|(?&b
                         return $sMatch;
                 }
 
+		//remove all other at-rules from critical css
                 if (preg_match('#^\s*+@(?:-[^-]+-)?(?:page|keyframes|charset|namespace)#i', $matches0))
                 {
                         return '';
                 }
 
+		//we're inside a @media rule or global css
+		//remove pseudo-selectos
                 $sSelectors = preg_replace('#:not\([^)]+\)|::?[a-zA-Z0-9(\[\])-]+#', '', $aMatches[1]);
                 $aSelectors = explode(',', $sSelectors);
                 $aFoundSels = array();

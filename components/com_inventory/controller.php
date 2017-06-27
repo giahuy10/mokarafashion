@@ -39,4 +39,15 @@ class InventoryController extends JControllerLegacy
 
 		return $this;
 	}
+	public function ajax() 
+{
+    // Set view
+
+   
+
+    // (use JInput in 3.x)
+    $this->input->set('view', 'Ajax');
+
+    parent::display();
+}
 }

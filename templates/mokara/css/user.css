@@ -58,6 +58,7 @@ a:hover {
     background: #252525 ;
     border-color: #676565;
 	color:#fff;
+	margin-left: 20px;
 }
 .add2cart-btn:hover {
 	background: #000;

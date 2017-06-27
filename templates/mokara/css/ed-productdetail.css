@@ -116,25 +116,25 @@ img.hover-shadow {
 .thumb_img {
     margin-bottom: 16px;
 }
-span.detail_price {
+.detail_price {
     font-size: 40px;
     color: #a20000;
     font-weight: bold;
 }
-.deal_price span.detail_price {
+.deal_price .detail_price {
    animation: blink 1s infinite;
     color: yellow;
     text-shadow: 1px 1px #b11c17;
   
 }
-.active_deal span.detail_price {
+.active_deal .detail_price {
     font-size: 20px;
     text-decoration: line-through;
 }
 @keyframes blink {
-0% {color: yellow; }
-50% {color: #fff;}
-100% {color: yellow;} 
+0% {color: #de7400; }
+50% {color: #ed2e00;}
+100% {color: #de7400;} 
 } 
  
 h2.product-title-detail {

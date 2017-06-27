@@ -51,7 +51,7 @@ class ContentModelArticles extends JModelList
 				'publish_down', 'a.publish_down',
 				'images', 'a.images',
 				'urls', 'a.urls',
-				'filter_tag','field_14'
+				'filter_tag'
 			);
 		}
 
@@ -76,7 +76,6 @@ class ContentModelArticles extends JModelList
 	 */
 	protected function populateState($ordering = 'ordering', $direction = 'ASC')
 	{
-	
 		$app = JFactory::getApplication();
 
 		// List state information
@@ -88,10 +87,6 @@ class ContentModelArticles extends JModelList
 
 		$value = $app->input->get('filter_tag', 0, 'uint');
 		$this->setState('filter.tag', $value);
-		
-
-		
-		
 
 		$orderCol = $app->input->get('filter_order', 'a.ordering');
 
@@ -520,134 +515,12 @@ class ContentModelArticles extends JModelList
 					. ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote('com_content.article')
 				);
 		}
-		// Filter by price.
-		$app = JFactory::getApplication();
-		$price = $app->input->get('field_14', 0, 'uint');
-		$color = $app->input->get('field_15', 0, 'uint');
-		$status = $app->input->get('field_5', 0, 'uint');
-		$dress_type = $app->input->get('field_10', 0, 'uint');
-		$sheve = $app->input->get('field_11', 0, 'uint');
-		$material = $app->input->get('field_12', 0, 'uint');
-		$neck = $app->input->get('field_17', 0, 'uint');
-		
-		$check = 0;
-		$filter_where = "";
-		if (!empty($price))
-		{
-			
-			switch ($price) {
-				case 17:
-					$price_range = "0 AND 499000";
-					break;
-				case 18:
-					$price_range = "500000 AND 999000";
-					break;
-				case 19:
-					$price_range = "1000000 AND 1499000";
-					break;
-				case 20:
-					$price_range = "1500000 AND 1999000";
-					break;
-				case 21:
-					$price_range = "2000000 AND 4990000";
-					break;
-				default:
-					$price_range = "0 AND 10000000";
-					break;		
-			}	
-			
-			if ($check > 0) {
-				$filter_where .= " OR ";
-			}
-			$filter_where.= "(`field_id` = 1 and `value` BETWEEN ".$price_range.")"; 
-			$check ++;
-		}
-		if (!empty($color))
-		{
-			
-			
-			if ($check > 0) {
-				$filter_where .= " OR ";
-			}
-			$filter_where.= "(`field_id` = 15 and `value` = ".$color.")"; 
-			$check ++;
-		}
-		if (!empty($status))
-		{
-			
-			
-			if ($check > 0) {
-				$filter_where .= " OR ";
-			}
-			$filter_where.= "(`field_id` = 5 and `value` = ".$status.")"; 
-			$check ++;
-		}
-		if (!empty($neck))
-		{
-			
-			
-			if ($check > 0) {
-				$filter_where .= " OR ";
-			}
-			$filter_where.= "(`field_id` = 17 and `value` = ".$neck.")"; 
-			$check ++;
-		}
-		if (!empty($dress_type))
-		{
-			
-			
-			if ($check > 0) {
-				$filter_where .= " OR ";
-			}
-			$filter_where.= "(`field_id` = 10 and `value` = ".$dress_type.")"; 
-			$check ++;
-		}
-		if (!empty($sheve))
-		{
-			
-			
-			if ($check > 0) {
-				$filter_where .= " OR ";
-			}
-			$filter_where.= "(`field_id` = 11 and `value` = ".$sheve.")"; 
-			$check ++;
-		}
-		if (!empty($material))
-		{
-			
-			
-			if ($check > 0) {
-				$filter_where .= " OR "; 
-			}
-			$filter_where.= "(`field_id` = 12 and `value` = ".$material.")"; 
-			$check ++;
-		}
-		
-		
-		
-		
-		if (!empty($color) || !empty($price) || !empty($status) || !empty($dress_type) || !empty($sheve) || !empty($material))
-		{
-			$query->where($db->quoteName('a.id').' IN 
-				(
-					SELECT item_id
-					FROM #__fields_values 
-					WHERE ('.$filter_where.')
-					GROUP BY item_id
-					 HAVING COUNT(*) >= '.$check.'
-					
-				)
-			
-			' );	
-			
-		}
 
 		// Add the list ordering clause.
 		$query->order($this->getState('list.ordering', 'a.ordering') . ' ' . $this->getState('list.direction', 'ASC'));
 
 		return $query;
 	}
-	
 
 	/**
 	 * Method to get a list of articles.

@@ -466,10 +466,10 @@ class JchOptimizeHelper extends JchOptimizeHelperBase
          * 
          */
 
-        public static function cookieLessDomain($params, $path, $orig_path, $reset=false)
+        public static function cookieLessDomain($params, $path, $orig_path, $domains_only=false, $reset=false)
         {
 		//If feature disabled just return the path if present
-                if (!$params->get('pro_cookielessdomain_enable', '0'))
+                if (!$params->get('pro_cookielessdomain_enable', '0') && !$domains_only)
                 {
                         return parent::cookieLessDomain($params, $path, $orig_path);
                 }
@@ -537,6 +537,12 @@ class JchOptimizeHelper extends JchOptimizeHelperBase
                                 $aDomain[$scheme . self::prepareDomain($domain3)] = $staticfiles3;
                         }
                 }
+
+		//Sprite Generator needs this to remove CDN domains from images to create sprite
+		if ($domains_only)
+		{
+			return $aDomain;
+		}
 
 		//if no domain is configured abort
                 if (empty($aDomain))

@@ -32,7 +32,7 @@ class Plgsystemjch_optimizeInstallerScript
 
                 if ($type == 'install')
                 {
-                        if (version_compare(PHP_VERSION, '5.3.0', '<'))
+                        if (version_compare(PHP_VERSION, '5.4.0', '<'))
                         {
                                 $app->enqueueMessage(
                                         JText::sprintf('JCH_REQUIRES_PHP_UPDATE' . PHP_VERSION), 'error'

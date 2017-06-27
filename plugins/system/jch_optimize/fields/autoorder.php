@@ -130,11 +130,12 @@ else
                 public static function cleanCache($install=false)
                 {
                         $oJchCache = JchPlatformCache::getCacheObject();
+			$oJCache = JCache::getInstance();
 
                         $oController = new JControllerLegacy();
                         
                         $plugin_cache = $oJchCache->clean('plg_jch_optimize');
-                        $page_cache = $oJchCache->clean('page');
+                        $page_cache = $oJCache->clean('page');
                         
                         if($install)
                         {

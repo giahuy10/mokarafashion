@@ -7,7 +7,7 @@
 							<?php if ($field->id > 23 &&  $field->id < 28) {?>
 								<div class="thumb_img">
 									
-									<img class="" src="<?php echo $field->rawvalue?>" alt="<?php echo $this->item->title?>"/>
+									<img class="img-article" src="<?php echo $field->rawvalue?>" alt="<?php echo $this->item->title?>"/>
 								</div>
 							<?php }}?>
 					</div>
@@ -130,7 +130,7 @@
 										</select>
 										</div>
 					<?php }?>					
-					<?php date_default_timezone_set('Asia/Ho_Chi_Minh');?>
+					
 					<div class="clear"></div>
 					<div class="deal-block">
 						<h3>Hot Deal</h3>
@@ -138,67 +138,11 @@
 							<?php echo $this->item->deal_info?>
 						</div>
 						<div class="deal_price">
-							<?php if ($this->item->deal_active) {?>
-								<?php echo JText::_('COM_CONTENT_DEAL_WILL_BE_END');?>:<br/>
-								<?php if ($this->item->hot_deal_type == 2) {?>
-									<?php  										
-										$deal_stop_temporary = date("Y-m-d");
-										$deal_stop_temporary.=" ".$this->item->deal_time_end; 
-									?>
-								<?php } else {?>
-									<?php  	
-										
-										
-										$deal_stop_temporary = $this->item->deal_date_end." ".$this->item->deal_time_end;
-										
-									?>
-								<?php }?>
-								
-								
-							<?php } else {?>
-								<?php echo JText::_('COM_CONTENT_DEAL_WILL_BE_START');?>:<br/>
-								<?php if ($this->item->hot_deal_type == 2) {?>
-									<?php 
-										if ($this->item->deal_day) {
-											switch ($this->item->deal_day) {
-												case 1:
-													$next_day = "next Monday";
-													break;
-												case 2:
-													$next_day = "next Tuesday";
-													break;
-												case 3:
-													$next_day = "next Wednesday";
-													break;
-												case 4:
-													$next_day = "next Thursday";
-													break;
-												case 5:
-													$next_day = "next Friday";
-													break;
-												case 6:
-													$next_day = "next Saturday";
-													break;
-												case 7:
-													$next_day = "next Sunday";
-													break;	
-											}
-											$deal_stop_temporary = date("Y-m-d", strtotime($next_day));
-											
-										}else {
-											$datetime = new DateTime('tomorrow');
-											$deal_stop_temporary = $datetime->format('Y-m-d');
-											
-										}
-										$deal_stop_temporary.=" ".$this->item->deal_time_start; 
-										
-									?>
-								<?php } else {?>
-									<?php 
-										$deal_stop_temporary = $this->item->deal_date_start." ".$this->item->deal_time_start;
-									?>
-								<?php }?>	
-							<?php }?>
+							<?php if ($this->item->deal_active) {
+								echo $this->item->count_down_text."<br/>";
+								} else {
+									echo $this->item->count_down_text."<br/>";
+								}?>
 							<i class="fa fa-clock-o" aria-hidden="true"></i> <p id="countdown"></p>
 							<br/>
 							
@@ -243,40 +187,9 @@
 						
 					</div>
 					</form>
-				
-					<?php }?>
-					<span itemprop="seller" itemscope itemtype="http://schema.org/Organization" class="hidden">
-                      <span itemprop="name">Mokara</span>
-					 </span> 
-					  <link itemprop="itemCondition" href="http://schema.org/New"/>
-					  <div class="stock">
-						<strong>Trạng thái:</strong> <?php if ($this->item->product_status == 1) echo "Còn hàng"; else echo "Hết hàng"?>
-						<link itemprop="availability" href="http://schema.org/<?php if ($this->item->product_status == 1) echo "InStock"; else echo "OutOfStock"?>"/>
-					</div>
-				</div>	
-					
-				
-					<br/>
-						<div class="fb-like" data-href="<?php echo JUri::getInstance();?>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
-						<div class="fb-save" data-uri="<?php echo JUri::getInstance();?>"></div>
-						<div class="fb-send" data-href="<?php echo JUri::getInstance();?>"></div>
-						
-			</div><!--END ART TO CART SECTION-->
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 ed-loyalty-block hidden">
-				<div class="ed-loyalty-inner">
-				<img src="images/Special-Offer-Banner.png" alt="Ưu đãi đặc biệt" class="special-banner hidden-xs">
-				<h3 class="text-center">Ưu đãi đặc biệt</h3>
-					<ul class="special-list">
-					<li>Tặng ngay <span>50.000<sup>đ</sup></span> vào tài khoản. <a href="">Xem chi tiết!</a></li>
-					<li>Nhận ngay <span>2</span> mã số dự thưởng may mắn. <a href="">Xem chi tiết!</a> </li>
-					<li class="margin-top-10">Giao hàng tận nơi miễn phí trên toàn quốc. <a href="">Xem chi tiết!</a> </li>
-					<li class="margin-top-10">1 đổi 1 trong 1 tháng với sản phẩm lỗi. <a href="">Xem chi tiết!</a></li>
-					</ul>
-					</div>
-			</div>
-				<script>
+					<script>
 								// Set the date we're counting down to
-								var countDownDate = new Date("<?php echo $deal_stop_temporary?>").getTime();
+								var countDownDate = new Date("<?php echo $this->item->deal_stop_temporary?>").getTime();
 
 								// Update the count down every 1 second
 								var x = setInterval(function() {
@@ -312,5 +225,36 @@
 									document.getElementById("countdown").innerHTML = "EXPIRED";
 								  }
 								}, 1000);
-								</script>		
+								</script>	
+					<?php }?>
+					<span itemprop="seller" itemscope itemtype="http://schema.org/Organization" class="hidden">
+                      <span itemprop="name">Mokara</span>
+					 </span> 
+					  <link itemprop="itemCondition" href="http://schema.org/New"/>
+					  <div class="stock">
+						<strong>Trạng thái:</strong> <?php if ($this->item->product_status == 1) echo "Còn hàng"; else echo "Hết hàng"?>
+						<link itemprop="availability" href="http://schema.org/<?php if ($this->item->product_status == 1) echo "InStock"; else echo "OutOfStock"?>"/>
+					</div>
+				</div>	
+					
+				
+					<br/>
+						<div class="fb-like" data-href="<?php echo JUri::getInstance();?>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+						<div class="fb-save" data-uri="<?php echo JUri::getInstance();?>"></div>
+						<div class="fb-send" data-href="<?php echo JUri::getInstance();?>"></div>
+						
+			</div><!--END ART TO CART SECTION-->
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 ed-loyalty-block hidden">
+				<div class="ed-loyalty-inner">
+				<img src="images/Special-Offer-Banner.png" alt="Ưu đãi đặc biệt" class="special-banner hidden-xs">
+				<h3 class="text-center">Ưu đãi đặc biệt</h3>
+					<ul class="special-list">
+					<li>Tặng ngay <span>50.000<sup>đ</sup></span> vào tài khoản. <a href="">Xem chi tiết!</a></li>
+					<li>Nhận ngay <span>2</span> mã số dự thưởng may mắn. <a href="">Xem chi tiết!</a> </li>
+					<li class="margin-top-10">Giao hàng tận nơi miễn phí trên toàn quốc. <a href="">Xem chi tiết!</a> </li>
+					<li class="margin-top-10">1 đổi 1 trong 1 tháng với sản phẩm lỗi. <a href="">Xem chi tiết!</a></li>
+					</ul>
+					</div>
+			</div>
+				
 			

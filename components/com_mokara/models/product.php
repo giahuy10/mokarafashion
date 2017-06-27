@@ -17,6 +17,9 @@ $articleMod = JModelLegacy::getInstance('Article', 'ContentModel', array('ignore
 $appParams = JFactory::getApplication()->getParams();
 $articleMod->setState('params', $appParams);
 use Joomla\Utilities\ArrayHelper;
+require_once JPATH_SITE . '/plugins/content/imgresizecache/resize.php';
+
+
 /**
  * Methods supporting a list of Mokara records.
  *
@@ -468,7 +471,7 @@ class MokaraModelProduct extends JModelList
 		$clear = 0;
 		foreach ($items as $item) {
 			$item->jcfields    = FieldsHelper::getFields('com_content.article', $item, true);
-			echo '<div  class="col-xs-6 col-sm-4 col-md-3 col-lg-3 items-on-row">';	
+			echo '<div  class="col-xs-12 col-sm-6 items-on-row">';	
 			if (isset($template) && $template = "amp") {
 				$this->show_product_item_amp($item);
 			}else {
@@ -577,110 +580,10 @@ class MokaraModelProduct extends JModelList
 	return($results);
 }
 
-
-	public function get_custom_field ($item) {
-		$app      = JFactory::getApplication();
-		$cparams = $app->getParams('com_inventory');
-		$savemoney=$cparams->get('savemoney');
-		if ($savemoney) {
-			$savemoney_on_order=$cparams->get('savemoney_on_order');
-			if ($savemoney_on_order > 0)
-			$item->save_money = $savemoney_on_order;
-		}
+	public function generate_json_file ($category, $file_name) {
 		
-		if (!$item->jcfields)
-			$item->jcfields    = FieldsHelper::getFields('com_content.article', $item, true);
-		foreach ($item->jcfields as $field) {
-			$field_with_id[$field->name] = $field;
-		}
-		$item->product_price = $field_with_id['price']->rawvalue;
-		if(isset($field_with_id['code']->rawvalue)) {
-			$item->sku = $field_with_id['code']->rawvalue;
-			
-		$item->sku = strtolower($item->sku);
-		$item->sku = str_replace(" ", "", $item->sku);
-		}
-		if(isset($field_with_id['combo-products'])) 
-			$item->combo_product =  $field_with_id['combo-products']->rawvalue; 
-		if(isset($field_with_id['main-image']->rawvalue)) 
-			$item->product_thumb = $field_with_id['main-image']->rawvalue;	
-		
-		if(isset($field_with_id['hot-deal']) && $field_with_id['hot-deal']) {
-			$item->hot_deal_type = $field_with_id['hot-deal']->rawvalue;
-			if ($item->hot_deal_type != 0) {
-				date_default_timezone_set("UTC");
-				$item->deal_day = $field_with_id['hot-deal-day']->rawvalue;
-				$item->deal_day_value = $field_with_id['hot-deal-day']->value;
-				$item->deal_time_start = $field_with_id['time-start']->rawvalue;
-				$item->deal_time_end = $field_with_id['time-end']->rawvalue;
-				
-				$item->deal_date_start = $field_with_id['date-start']->rawvalue;
-				$item->deal_date_start = strtotime($item->deal_date_start);
-				$item->deal_date_start = date("Y-m-d", strtotime('+7 hours', $item->deal_date_start));
-			
-				$item->deal_date_end = $field_with_id['date-end']->rawvalue;
-				$item->deal_date_end = strtotime($item->deal_date_end);
-				$item->deal_date_end = date("Y-m-d", strtotime('+7 hours', $item->deal_date_end));
-		
-		
-				$item->deal_price = $field_with_id['hot-deal-price']->rawvalue;
-				$item->deal_info = $field_with_id['deal-intro']->value;
-				$item->deal_start = strtotime($item->deal_date_start." ".$item->deal_time_start);
-				$item->deal_end = strtotime($item->deal_date_end." ".$item->deal_time_end);
-				$current_date = date("Y-m-d h:i:s");
-				$current_day = date("w");
-				$item->hot_deal= 0;
-				$item->deal_active = 0;
-				if (strtotime($current_date) <= $item->deal_end) {
-					$item->hot_deal= 1;
-				}
-				if ($item->hot_deal_type == 1) {
-					if (strtotime($current_date) >= $item->deal_start && strtotime($current_date) <= $item->deal_end) {
-						$item->deal_active = 1;
-					}
-				}else { 
-					
-					
-					$time_current = explode(" ",$current_date);
-					$item->time_current = $time_current[1];
-					if (strtotime($current_date) >= $item->deal_start && strtotime($current_date) <= $item->deal_end) {
-						if(strtotime($item->time_current) <= strtotime($item->deal_time_end) && strtotime($item->time_current) >= strtotime($item->deal_time_start) && ($current_day == $item->deal_day || $item->deal_day == 0 )){
-							$item->deal_active = 1;
-						}
-						
-					}
-				}
-			}
-		}
-		if ($savemoney) {
-			if(isset($field_with_id['savemoney']->rawvalue) && $field_with_id['savemoney']->rawvalue > 0) 
-			$item->save_money = $field_with_id['savemoney']->rawvalue;	
-			if ($item->save_money) {
-				if ($item->deal_active == 1) {
-					$item->save_money_value = round($item->deal_price*$item->save_money/100,-3);
-				}else {
-					$item->save_money_value = round($item->product_price*$item->save_money/100,-3);
-				}
-				
-			}
-		}
-			
-		
-			
-	
-		if (isset($field_with_id['old-price']->rawvalue))
-			$item->product_old_price = $field_with_id['old-price']->rawvalue;
-		else 
-			$item->product_old_price = NULL;	
-		if (isset($field_with_id['label']->rawvalue))
-			$item->product_label =$field_with_id['label']->rawvalue;
-		if (isset($field_with_id['status-of-stock']->rawvalue))
-			$item->product_status = $field_with_id['status-of-stock']->rawvalue;
-		else 
-			$item->product_status = 1;
-		return $item;
 	}
-	
+
 
 
 	public function get_product_image ($sku) {
@@ -749,48 +652,361 @@ class MokaraModelProduct extends JModelList
 		}
 		return ($items);
 	}
-
-
+	public function get_extra_review($id) {
+		// Get a db connection.
+		$db = JFactory::getDbo();
+		 
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		 
+		// Select all records from the user profile table where key begins with "custom.".
+		// Order it by the ordering field.
+		$query->select($db->quoteName(array('rating_sum', 'rating_count')));
+		$query->from($db->quoteName('#__content_extravote'));
+		$query->where($db->quoteName('content_id') . ' = '. $db->quote($id));
+		
+		 
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+		 
+		// Load the results as a list of stdClass objects (see later for more options on retrieving data).
+		$results = $db->loadObject();
+		$result=array();
+		$result['count'] = $results->rating_count;
+		$result['value'] = $results->rating_sum/$results->rating_count;
+		$result['percent'] = $result['value']/5*100;
+		return ($result);
+	}
+		public function get_custom_field ($item) {
+		$app      = JFactory::getApplication();
+		$cparams = $app->getParams('com_inventory');
+		$savemoney=$cparams->get('savemoney');
+		$item->label = array();
+		if ($savemoney) {
+			$savemoney_on_order=$cparams->get('savemoney_on_order');
+			if ($savemoney_on_order > 0)
+			$item->save_money = $savemoney_on_order;
+			
+		}
+		
+		
+			$itemjcfields    = FieldsHelper::getFields('com_content.article', $item, true);
+		foreach ($itemjcfields as $field) {
+			$field_with_id[$field->name] = $field;
+		}
+		$item->product_price = $field_with_id['price']->rawvalue;
+		if(isset($field_with_id['code']->rawvalue)) {
+			$item->sku = $field_with_id['code']->rawvalue;
+			
+		$item->sku = strtolower($item->sku);
+		$item->sku = str_replace(" ", "", $item->sku);
+		}
+		if(isset($field_with_id['combo-products']) && $field_with_id['combo-products']->rawvalue) {
+			$item->combo_product =  $field_with_id['combo-products']->rawvalue; 
+			$item->label['combo'] = "COMBO";
+		}
+			
+		if(isset($field_with_id['main-image']->rawvalue)) 
+			$item->product_thumb = $field_with_id['main-image']->rawvalue;	
+		
+		if(isset($field_with_id['hot-deal']) && $field_with_id['hot-deal']) {
+			$item->hot_deal_type = $field_with_id['hot-deal']->rawvalue;
+			if ($item->hot_deal_type != 0) {
+				date_default_timezone_set("UTC");
+				$item->deal_day = $field_with_id['hot-deal-day']->rawvalue;
+				$item->deal_day_value = $field_with_id['hot-deal-day']->value;
+				$item->deal_time_start = $field_with_id['time-start']->rawvalue;
+				$item->deal_time_end = $field_with_id['time-end']->rawvalue;
+				
+				$item->deal_date_start = $field_with_id['date-start']->rawvalue;
+				$item->deal_date_start = strtotime($item->deal_date_start);
+				$item->deal_date_start = date("Y-m-d", strtotime('+7 hours', $item->deal_date_start));
+			
+				$item->deal_date_end = $field_with_id['date-end']->rawvalue;
+				$item->deal_date_end = strtotime($item->deal_date_end);
+				$item->deal_date_end = date("Y-m-d", strtotime('+7 hours', $item->deal_date_end));
+		
+		
+				$item->deal_price = $field_with_id['hot-deal-price']->rawvalue;
+				$item->deal_info = $field_with_id['deal-intro']->value;
+				$item->deal_start = strtotime($item->deal_date_start." ".$item->deal_time_start);
+				$item->deal_end = strtotime($item->deal_date_end." ".$item->deal_time_end);
+				$current_date = date("Y-m-d h:i:s");
+				$current_day = date("w");
+				$item->hot_deal= 0;
+				$item->deal_active = 0;
+				if (strtotime($current_date) <= $item->deal_end) {
+					$item->hot_deal= 1;
+					$item->label['hot_deal'] = "DEAL";
+				}
+				if ($item->hot_deal_type == 1) {
+					if (strtotime($current_date) >= $item->deal_start && strtotime($current_date) <= $item->deal_end) {
+						$item->deal_active = 1;
+					}
+				}else { 
+					
+					
+					$time_current = explode(" ",$current_date);
+					$item->time_current = $time_current[1];
+					if (strtotime($current_date) >= $item->deal_start && strtotime($current_date) <= $item->deal_end) {
+						if(strtotime($item->time_current) <= strtotime($item->deal_time_end) && strtotime($item->time_current) >= strtotime($item->deal_time_start) && ($current_day == $item->deal_day || $item->deal_day == 0 )){
+							$item->deal_active = 1;
+						}
+						
+					}
+				}
+			}
+		}
+			if ($item->deal_active) {
+				$item->count_down_text= JText::_('COM_CONTENT_DEAL_WILL_BE_END');
+					if ($item->hot_deal_type == 2) {
+												
+							$item->deal_stop_temporary = date("Y-m-d");
+							$item->deal_stop_temporary.=" ".$item->deal_time_end; 
+						} else {
+							$item->deal_stop_temporary = $item->deal_date_end." ".$item->deal_time_end;
+						}
+			} else { 
+					$item->count_down_text= JText::_('COM_CONTENT_DEAL_WILL_BE_START');
+					if ($item->hot_deal_type == 2) 
+						{
+						if ($item->deal_day) 
+							{
+							switch ($item->deal_day) {
+												case 1:
+													$next_day = "next Monday";
+													break;
+												case 2:
+													$next_day = "next Tuesday";
+													break;
+												case 3:
+													$next_day = "next Wednesday";
+													break;
+												case 4:
+													$next_day = "next Thursday";
+													break;
+												case 5:
+													$next_day = "next Friday";
+													break;
+												case 6:
+													$next_day = "next Saturday";
+													break;
+												case 7:
+													$next_day = "next Sunday";
+													break;	
+											}
+											$item->deal_stop_temporary = date("Y-m-d", strtotime($next_day));
+											
+							} else {
+										$datetime = new DateTime('tomorrow');
+										$item->deal_stop_temporary = $datetime->format('Y-m-d');
+											
+									}
+										$item->deal_stop_temporary.=" ".$item->deal_time_start; 
+										
+						} else { 
+									$item->deal_stop_temporary = $item->deal_date_start." ".$item->deal_time_start;
+						}
+				}
+		if ($savemoney) {
+			if(isset($field_with_id['savemoney']->rawvalue) && $field_with_id['savemoney']->rawvalue > 0) {
+				$item->save_money = $field_with_id['savemoney']->rawvalue;	
+			}
+			if ($item->save_money) {
+				if ($item->deal_active == 1) {
+					$item->save_money_value = round($item->deal_price*$item->save_money/100,-3);
+				}else {
+					$item->save_money_value = round($item->product_price*$item->save_money/100,-3);
+				}
+				
+			}
+				if ($item->save_money_value > 0)
+					$item->label['save_money'] = "WALLET";
+			
+		}
+			
+		
+			
+	
+		if (isset($field_with_id['old-price']->rawvalue) && $field_with_id['old-price']->rawvalue > 0) {
+			$item->label['sale_off'] = "SALE";
+			$item->product_old_price = $field_with_id['old-price']->rawvalue;
+			$item->discount = ($item->product_old_price - $item->product_price)/$item->product_old_price*100;
+		}
+			
+		else 
+			$item->product_old_price = NULL;	
+		
+		if (isset($field_with_id['status-of-stock']->rawvalue))
+			$item->product_status = $field_with_id['status-of-stock']->rawvalue;
+		else 
+			$item->product_status = 1;
+		return $item;
+	}
+	
 	public function show_product_item ($item) { 
-	$html ='<div class="ed-inner-product desk" itemscope itemtype="http://schema.org/Product">';
+
+	$html ='<div class="ed-inner-product" itemscope itemtype="http://schema.org/Product">';
 	$html .= '<span itemprop="brand" class="hidden">Mokara</span>';
 	$item = $this->get_custom_field($item);
-	
-			
+	$extraview = $this->get_extra_review($item->id);
+			$resizer = new ImgResizeCache();
 			$item->slug    = $item->id . ':' . $item->alias;
 			$link = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language));
-			$html .='<div class="ed-item-img">';
-			$html .='	<a href="'.$link.'"><img itemprop="image" class="product-thumb-desk" src="'.$item->product_thumb.'" alt="'.$item->title.'"/></a>';
+			if ($item->label) {
+				$html .='<div class="label-product">';
+				foreach ($item->label as $key => $value) {
+					$html.='<span class="label-product label-product-'.$key.'">'.$value.'</span>';
+				}
+				$html .='</div>';
+			}
+			$html .='<div class="ed-item-img col-xs-12 col-sm-6">';
+			
+			$html .='	<a href="'.$link.'"><img itemprop="image" class="product-thumb-desk" src="'.htmlspecialchars($resizer->resize($item->product_thumb, array('w' => 250, 'h' => 390, 'crop' => TRUE))).'" alt="'.$item->title.'"/></a>';
+			
 			$html .='</div>';
-			$html .='<div class="ed-product-content">';
+			$html .='<div class="ed-product-content  col-xs-12 col-sm-6">';
 			$html .='<div class="page-header">';
 			$html .='<h2 itemprop="name">';
 			$html .='<a href="'.$link.'" itemprop="url">'.$item->title.'</a>';
+			//$html .='<a href="" class="category-icon pull-right">'.$item->category_title.'</a>';
 			$html .='</h2>';
 			$html .='</div>';
-			$html .='<span itemprop="aggregateRating" class="hidden" itemscope itemtype="http://schema.org/AggregateRating">
+			$html .='<div class="size-3 extravote">
+				  <span class="extravote-stars" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
+					<meta itemprop="ratingCount" content="1">
+					<span id="rating_'.$item->id.'_0" class="current-rating" style="width:'.$extraview['percent'].'%;" itemprop="ratingValue">'.$extraview['value'].'</span>
+					 
+				  </span>
+				  <span class="extravote-info" id="extravote_'.$item->id.'_0">('.$extraview['count'].' Đánh giá)</span>
+				</div>';
+			/*$html .='<span itemprop="aggregateRating" class="hidden" itemscope itemtype="http://schema.org/AggregateRating">
 					Average rating: <span itemprop="ratingValue">4.4</span>, based on
 					<span itemprop="ratingCount">89</span> reviews
-				  </span>';
-			$html .= $item->introtext; 
+				  </span>';*/
+			//$html .= $item->introtext; 
 			$html .='<div class="ed-price-block" itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer">';
 			$html .= ' <meta itemprop="priceCurrency" content="VND" />';
 			$html .= '<span itemprop="lowPrice" class="hidden">'.$item->product_price.'</span>';
-			$html .='<div class="price pull-left">';
-			$html .=$this->ed_number_format($item->product_price);
-			$html .='</div>';
 			if ($item->product_old_price) {
 					$html .= '<span itemprop="highPrice" class="hidden">'.$item->product_old_price.'</span>';
-					$html .='<div class="old_price pull-right"><strike>'.$this->ed_number_format($item->product_old_price).'</strike></div>';
+					$html .='<div class="old_price"><strike>'.$this->ed_number_format($item->product_old_price).'</strike></div>';
 				 }
-			$html .='<div class="clearfix"></div>';
+			$html .='<div class="price">';
+			$html .=$this->ed_number_format($item->product_price);
+			if (isset($item->discount)) {
+				$html .='<span class="discount-label">';
+				$html .= '-'.round($item->discount)."%";
+				$html .='</span>';
+			}
+			$html .='</div>';
+			$html .='<div class="promotion">';
+			if ($item->hot_deal) {
+			$html .='<div class="deal-block-main text-center">
+						<h4>Hot Deal</h4>
+						<div class="deal-info">
+							'.$item->deal_info.'
+						</div>
+						<div class="deal_price">'.
+							$item->count_down_text.'<br/>
+							
+							<i class="fa fa-clock-o" aria-hidden="true"></i> 
+							<p id="countdown_item_'.$item->id.'" class="count_down_clock"></p>
+						
+							
+							<div class="detail_price text-center">'.$this->ed_number_format($item->deal_price).'</div>
+						</div>
+						
+					</div>';
+			}		
+			if (isset($item->save_money_value) && $item->save_money_value > 0 ) {
+				$html .='<div class="saving_money">';	
+				$html .=JText::_('COM_CONTENT_SAVING_MONEY');
+				$html.=$this->ed_number_format($item->save_money_value);
+				$html.=' <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="Số tiền tích lũy dùng để thanh toán cho đơn hàng tiếp theo."></i>';
+				$html .='</div>';
+			}
+			$html .='</div>';
+	
+		
+				$html .='<div class="clearfix"></div>';
 			$html .='</div>';	
 			
 				
 				$html .='<div class="clearfix"></div>';
 		$html .='</div>';
+			/*$html .='<form action="'.JURI::root(true).JRoute::_('index.php?option=com_mokara&view=orders&Itemid=502').'" method="post" class="add2cart-box">';
+			$html .='<input type="hidden" min="1" name="quantity" value="1" />';
+			$html .='<button type="submit" name="submit" class="btn btn-buy"><i class="fa fa-shopping-cart"></i> '.JText::_('COM_CONTENT_ADD_TO_CART').'</button>';
+				$html .='	<input type="hidden" name="product_id" value="'.$item->id.'"/>';
+				$html .='	<input type="hidden" name="option" value="com_mokara"/>';
+				$html .='	<input type="hidden" name="view" value="orders"/>';
+				$html .='	<input type="hidden" name="task" value="add2cart"/>';
+				$html .='	<input type="hidden" name="Itemid" value="502"/>';
+				$html .='	<input type="hidden" name="product_name" value="'.$item->title.'"/>';
+				if ($item->deal_active) {
+					$item->product_old_price = $item->product_price;
+					$item->product_price = $item->deal_price;
+					
+				}
+				$html .='	<input type="hidden" name="product_price" value="'.$item->product_price.'"/>';
+				 if ($item->save_money) {
+					$html .='<input type="hidden" name="save_money_value" value="'.$item->save_money_value.'"/>';
+						}
+				$html .='	<input type="hidden" name="product_img" value="'.$item->product_thumb.'"/>';
+				$html .='	<input type="hidden" name="product_old_price" value="'.$item->product_old_price.'"/>';
+				$html .='	<input type="hidden" name="product_category_id" value="'.$item->catid.'>"/>';
+				$html .='<a class="btn pull-right add2cart-btn" href="'.$link.'">';
+				$html .= JText::_('COM_CONTENT_VIEW');
+				$html .='</a>';
+				$html .='</form>';*/
+		$html .='<div class="clearfix"></div>';
 	$html .='</div>	';
 	echo $html;
+	if ($item->hot_deal) {
+	?>
+				<script>
+							
+								var countDownDate_<?php echo $item->id?> = new Date("<?php echo $item->deal_stop_temporary?>").getTime();
+
+								// Update the count down every 1 second
+								var x = setInterval(function() {
+
+								  // Get todays date and time
+								  var now = new Date().getTime();
+								 
+								  // Find the distance between now an the count down date
+								  var distance = countDownDate_<?php echo $item->id?> - now;
+
+								  // Time calculations for days, hours, minutes and seconds
+								  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+								  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+								  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+								  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+									var count_time_<?php echo $item->id?> = "";
+								  // Display the result in the element with id="demo"
+								  if (days > 0) {
+									   count_time_<?php echo $item->id?> = count_time_<?php echo $item->id?> + days + " ngày ";
+								  }
+								  if (hours > 0) {
+									  count_time_<?php echo $item->id?> = count_time_<?php echo $item->id?> + hours + " giờ ";
+								  }
+								  if (minutes > 0) {
+									  count_time_<?php echo $item->id?> = count_time_<?php echo $item->id?> + minutes + " ' ";
+								  }
+								  count_time_<?php echo $item->id?> = count_time_<?php echo $item->id?> + seconds + " '' ";
+								  document.getElementById("countdown_item_<?php echo $item->id?>").innerHTML = count_time_<?php echo $item->id?>;
+
+								  // If the count down is finished, write some text 
+								  if (distance < 0) {
+									clearInterval(x);
+									document.getElementById("countdown_item_<?php echo $item->id?>").innerHTML = "EXPIRED";
+								  }
+								}, 1000);
+								</script>	
+	
+<?php 		
+	}
  }
  public function show_product_item_amp ($item) { 
 	$html ='<div class="ed-inner-product amp" itemscope itemtype="http://schema.org/Product">';

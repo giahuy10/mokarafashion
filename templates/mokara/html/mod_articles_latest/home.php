@@ -12,13 +12,19 @@ JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_mokara/models', 'Moka
 $model = JModelLegacy::getInstance('Product', 'MokaraModel', array('ignore_request' => true));
 
 ?>
-
+<div class="headline text-center">
+	<a href="#"><span class="label-product label-product-new" data-toggle="tooltip" title="Xem thêm những sản phẩm mới nhất!">NEW</span></a>
+	<a href="#"><span class="label-product label-product-sale_off" data-toggle="tooltip" title="Xem thêm những sản phẩm đang khuyến mại - sale off!">SALE OFF</span></a>
+	<a href="#"><span class="label-product label-product-combo" data-toggle="tooltip" title="Xem thêm những gói combo sản phẩm!">COMBO</span></a>
+	<a href="#"><span class="label-product label-product-hot_deal" data-toggle="tooltip" title="Xem thêm những sản phẩm hot deal - giờ vàng!">HOT DEAL</span></a>
+	<a href="#"><span class="label-product label-product-save_money" data-toggle="tooltip" title="Xem thêm những sản phẩm được tích lũy khi mua!">WALLET</span></a>
+</div>
 <div class="ed-mostread <?php echo $moduleclass_sfx; ?> row">
 <?php 
-	$clear=0;
+$clear =0;
 foreach ($list as $item) : ?>
 	
-	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 items-on-row">
+	<div class="col-xs-12 col-sm-6 items-on-row">
 	
 	<?php 
 
@@ -27,19 +33,17 @@ foreach ($list as $item) : ?>
 		<?php $model->show_product_item($item)?>
 		
 	</div>
-	<?php 
-					$clear++;
-					if ($clear%4==0) {
-						echo '<div class="clearfix visible-lg"></div>';
-					}
-					if ($clear%3==0) {
-						echo '<div class="clearfix visible-md"></div>';
-						
-					}
-					if ($clear%2==0) {
-					echo '<div class="clearfix visible-sm"></div>';
-					}
-				?>
+	<?php $clear ++;
+		if ($clear%2==0)
+			echo '<div class="clearfix"></div>';
+	?>
 
 <?php endforeach; ?>
 </div>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+
+</script>

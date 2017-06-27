@@ -2,12 +2,12 @@
 <extension version="2.5" type="plugin" group="system" method="upgrade">
         <name>PLG_SYSTEM_JCH_OPTIMIZE</name>
         <author>Samuel Marshall</author>
-        <creationDate>Dec 2015</creationDate>
+        <creationDate>June 2017</creationDate>
         <copyright>Copyright (C) 2016 Samuel Marshall. All rights reserved.</copyright>
         <license>GNU/GPLv3 http://www.gnu.org/copyleft/gpl.html</license>
         <authorEmail>sdmarshall73@gmail.com</authorEmail>
         <authorUrl>http://www.jch-optimize.net</authorUrl>
-        <version>5.1.0</version>
+        <version>5.1.2</version>
         <variant>PRO</variant>
         <description>JCH_OPTIMIZE_DESCRIPTION</description>
         <files>

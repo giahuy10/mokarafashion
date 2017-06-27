@@ -75,6 +75,7 @@ if (JRequest::getVar('use_saving') && JRequest::getVar('use_saving') == 1 ) {
 		$order->wallet = JRequest::getVar('wallet');
 		$order->coupon_code = $session->get('coupon_code');
 		$order->ordering = $order->id;
+		$order->affiliate_id = $_COOKIE['affiliate_id'];
 		$order->state = 1;
 		$order->checked_out = 0;
 		$order->created_by = 481;

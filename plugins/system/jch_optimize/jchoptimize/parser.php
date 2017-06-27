@@ -95,7 +95,7 @@ class JchOptimizeParser extends JchOptimizeBase
         public function cleanHtml()
         {
                 $hash = preg_replace(array(
-                        $this->getHeadRegex(),
+                        $this->getHeadRegex(true),
                         '#' . $this->ifRegex() . '#',
                         '#' . implode('', $this->getJsRegex()) . '#ix',
                         '#' . implode('', $this->getCssRegex()) . '#six'
@@ -583,7 +583,7 @@ URLREGEX;
 		$u = $this->sAttributeValueRegex;
 
 		$aRegex[0] = "(?:<script\b(?!(?>\s*+$a)*?\s*+type\s*+=\s*+(?![\"']?(?:text|application)/javascript[\"' ]))";
-		$aRegex[1] = "(?>\s*+(?!src)$a)*\s*+(?:src\s*+=\s*+[\"']?($u))?[^<>]*+>((?><?[^<]*+)*?)</script\s*+>)";
+		$aRegex[1] = "(?>\s*+(?!src)$a)*\s*+(?:src\s*+=\s*+[\"']?($u))?[^<>]*+>((?><?[^<]*+)*?)</\s*+script\s*+>)";
 
                 return $aRegex;
         }
@@ -601,7 +601,7 @@ URLREGEX;
 
 		$aRegex[0] = "(?:<link\b(?!(?>\s*+$a)*?\s*+(?:itemprop|disabled|type\s*+=\s*+(?![\"']?text/css[\"' ])|rel\s*+=\s*+(?![\"']?stylesheet[\"' ])))";
 		$aRegex[1] = "(?>\s*+$a)*?\s*+href\s*+=\s*+[\"']?($u)[^<>]*+>)";
-                $aRegex[3] = "|(?:<style\b(?:(?!(?:type\s*+=\s*+(?![\"']?text/css[\"' ]))|(?:scoped|amp))[^>])*>((?><?[^<]+)*?)</style\s*+>)";
+                $aRegex[3] = "|(?:<style\b(?:(?!(?:type\s*+=\s*+(?![\"']?text/css[\"' ]))|(?:scoped|amp))[^>])*>((?><?[^<]+)*?)</\s*+style\s*+>)";
 
                 return $aRegex;
         }

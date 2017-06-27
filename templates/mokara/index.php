@@ -41,6 +41,14 @@ if (!$session->get($option.'-'.$view.'-'.$item.'-'.$_SERVER['REMOTE_ADDR'])) {
 	//$productMod->save_user_log ($user->id , $_SERVER['REMOTE_ADDR'], $option, $view, $layout, $task, $item, $session->get('ref'));
 }
 
+function siteURL()
+{
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    $domainName = $_SERVER['HTTP_HOST'].'/';
+    return $protocol.$domainName;
+}
+
+
 $dontInclude = array(
 
 '/media/system/js/caption.js',
@@ -279,10 +287,23 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po
             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");        //Open a different type of ajax call.
         }
 		//$productMod->save_user_log ($user->id , $_SERVER['REMOTE_ADDR'], $option, $view, $layout, $task, $item, $session->get('ref'));
-        var url = "https://<?php echo $_SERVER['SERVER_NAME']?>/cartfunction.php?time="+timeSpent+"&option=<?php echo $option?>&view=<?php echo $view?>&layout=<?php echo $layout?>&task=<?php echo $task?>&item=<?php echo $item?>&ref=<?php echo $session->get('ref')?>&user_id=<?php echo $user->id?>";        //Send the time on the page to a php script of your choosing.
+        var url = "<?php echo siteURL()?>/cartfunction.php?time="+timeSpent+"&option=<?php echo $option?>&view=<?php echo $view?>&layout=<?php echo $layout?>&task=<?php echo $task?>&item=<?php echo $item?>&ref=<?php echo $session->get('ref')?>&user_id=<?php echo $user->id?>";        //Send the time on the page to a php script of your choosing.
         xmlhttp.open("GET",url,false);        //The false at the end tells ajax to use a synchronous call which wont be severed by the user leaving.
         xmlhttp.send(null);        //Send the request and don't wait for a response.
     }
+</script>
+<script>
+if(window.location.hash) {
+   var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+     var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                
+            }
+        };
+        xmlhttp.open("GET", "<?php echo siteURL()?>/save_affiliate.php?q=" + hash, true);
+        xmlhttp.send();
+}
 </script>
 </body>
 </html>

@@ -54,6 +54,7 @@ if ($tag_id > 0) {
 				<meta property="og:description" content="'.strip_tags($description).'"/>
 				');		
 ?>
+
 <form action="<?php echo htmlspecialchars(JUri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm" class="form-inline">
 <div class="row">
 <div class="product<?php echo $this->pageclass_sfx; ?> col-xs-12 col-sm-9">
@@ -90,7 +91,7 @@ if ($tag_id > 0) {
 				<?php $row = $counter / $this->columns; ?>
 				<div class="items-row cols-<?php echo (int) $this->columns; ?> <?php echo 'row-' . $row; ?> row-fluid clearfix">
 			<?php endif; ?>
-			<div class="col-xs-12 col-sm-<?php echo round(12 / $this->columns); ?>">
+			<div class="col-xs-12 col-sm-6 col-md-<?php echo round(12 / $this->columns); ?>">
 				<div class="items-on-row item column-<?php echo $rowcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?>"
 					>
 					<?php

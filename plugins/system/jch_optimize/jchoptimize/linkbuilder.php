@@ -150,7 +150,7 @@ class JchOptimizeLinkBuilder extends JchOptimizelinkBuilderBase
 	 */
 	protected function getCriticalCss($sCssId)
 	{
-		$sId = md5($this->oParser->getHtmlHash());
+		$sId = md5($this->oParser->getHtmlHash() . $this->oParser->params->get('pro_optimizeCssDelivery', '200'));
 
                 return $this->loadCache(array($this, 'processCriticalCss'), array($sCssId), $sId);
 	}
@@ -344,7 +344,7 @@ class JchOptimizeLinkBuilder extends JchOptimizelinkBuilderBase
         {
                 $bGz   = $this->isGZ();
 
-                $htaccess = $this->params->get('htaccess', 0);
+                $htaccess = $this->params->get('htaccess', 2);
 
 		switch ($htaccess)
 		{
@@ -387,7 +387,12 @@ class JchOptimizeLinkBuilder extends JchOptimizelinkBuilderBase
 				break;	
 		}
 
-                return $sUrl;
+		if($this->params->get('pro_cookielessdomain_enable', '0') && !JchOptimizeUrl::isRootRelative($sUrl))
+		{
+			$sUrl = JchOptimizeUrl::toRootRelative($sUrl);
+		}
+
+                return JchOptimizeHelper::cookieLessDomain($this->params, $sUrl, $sUrl);
         }
 
 	/**

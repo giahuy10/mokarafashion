@@ -58,11 +58,11 @@ class JchPlatformPlugin implements JchInterfacePlugin
                         return self::$plugin;
                 }
 
-                $cache = JchPlatformCache::getCacheObject('');
-                $id    = 'jchoptimizeplugincache';
+               // $cache = JchPlatformCache::getCacheObject('output');
+               // $id    = 'jchoptimizeplugincache';
 
-                if (!self::$plugin = $cache->get($id))
-                {
+               // if (!self::$plugin = $cache->get($id))
+               // {
                         $db    = JFactory::getDbo();
                         $query = $db->getQuery(true)
                                 ->select('folder AS type, element AS name, params, extension_id')
@@ -72,8 +72,8 @@ class JchPlatformPlugin implements JchInterfacePlugin
 
                         self::$plugin = $db->setQuery($query)->loadObject();
 
-                        $cache->store(self::$plugin, $id);
-                }
+               //         $cache->store(self::$plugin, $id);
+               // }
 
                 return self::$plugin;
         }

@@ -30,7 +30,7 @@ if (!defined('JCH_PLUGIN_DIR'))
 
 if (!defined('JCH_VERSION'))
 {
-        define('JCH_VERSION', '5.1.0');
+        define('JCH_VERSION', '5.1.2');
 }
 
 include_once(dirname(__FILE__) . '/jchoptimize/loader.php');
@@ -99,12 +99,17 @@ class plgSystemJCH_Optimize extends JPlugin
          */
         protected function isEditorLoaded()
         {
-                $sEditor = JFactory::getUser()->getParam('editor');
-                $sEditor = !isset($sEditor) ? JFactory::getConfig()->get('editor') : $sEditor;
+		$aEditors = JPluginHelper::getPlugin('editors');
 
-                $sEditorClass = 'plgEditor' . $sEditor;
+		foreach($aEditors as $sEditor)
+		{
+			if(class_exists('plgEditor' . $sEditor->name, false))
+			{
+				return true;
+			}
+		}
 
-                return class_exists($sEditorClass, FALSE);
+		return false;
         }
 
         /**
@@ -125,7 +130,7 @@ class plgSystemJCH_Optimize extends JPlugin
                 $sGroup = JchPlatformUtility::get('group');
                 $sValue = JchPlatformUtility::get('value', '', 'array');
 
-                $params = JchPlatformSettings::getInstance($this->params);
+                $params = JchPlatformPlugin::getPluginParams();
                 $oAdmin = new JchOptimizeAdmin($params, TRUE);
                 $oAdmin->getAdminLinks(new JchPlatformHtml($params), $params->get('jchmenu'));
 

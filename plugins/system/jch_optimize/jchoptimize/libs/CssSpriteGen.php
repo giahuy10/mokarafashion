@@ -150,7 +150,9 @@ class CssSpriteGen
                 {
                         JCH_DEBUG ? JchPlatformProfiler::start('CalculateSprite') : null;
                         
-                        $sFilePath = str_replace(JchOptimizeHelper::cookieLessDomain($this->params, '', TRUE), '', $sFile);
+			//Remove CDN domains if present
+			$aCdns = array_keys(JchOptimizeHelper::cookieLessDomain($this->params, '', '', true));
+                        $sFilePath = str_replace($aCdns, '', $sFile);
                         $sFilePath = JchOptimizeHelper::getFilepath($sFilePath);
 
                         $bFileExists = TRUE;
@@ -169,7 +171,7 @@ class CssSpriteGen
 
                                 $aImageInfo = @getimagesize($sFilePath);
 
-				if ($aImageInfo !== false)
+				if ($aImageInfo)
 				{
 					$iWidth  = $aImageInfo[0];
 					$iHeight = $aImageInfo[1];
@@ -219,7 +221,7 @@ class CssSpriteGen
                                 $bFileExists && !empty($sFileClass) && in_array(strtoupper($aPathParts['extension']), $this->aImageTypes)
                                 && in_array($iImageType, array(IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG))
                                 && substr($sFileBaseName, 0, 1) != '.'
-                                && $iWidth < 50 && $iHeight < 50
+                                && $iWidth < 50 && $iHeight < 50 && $iWidth > 0 && $iHeight > 0
                         )
                         {
                                 // grab the file extension
@@ -626,10 +628,10 @@ class CssSpriteGen
 
                 foreach ($this->aBackground as $background)
                 {
-			if(!empty($background))
-			{
+			//if(!empty($background))
+			//{
 				$aCssBackground[] = @$this->aPosition[$background];
-			}
+			//}
                 }
 
                 return $aCssBackground;

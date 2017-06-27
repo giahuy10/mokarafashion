@@ -9,7 +9,13 @@
 	}
 	h2, .h2 {
     font-size: 26px;
+	
 }
+.masonry {
+        -moz-column-count: 1;
+        -webkit-column-count: 1;
+        column-count: 1;
+    }
 .special-banner {
     position: absolute;
     top: -5px;
@@ -22,9 +28,11 @@
 .ed-media-block {
     margin-bottom: 30px;
 }
+
 }
 
 @media (max-width: 767px) {
+	
 	ul.nav.menu.nav-pills.top-menu {
     padding-top: 0;
 }
