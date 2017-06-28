@@ -7,15 +7,22 @@
 }
 .deal-block {
     display: inline-block;
-    border: 1px solid;
-    padding: 15px 35px;
-    border-radius: 5px;
+ 
     margin: 10px 0;
     text-align: center;
-    background: url(../images/hot_deal_bg_2.jpg);
+    border: 5px solid #faa719;
     background-size: 100% 100%;
     color: #fff;
-    box-shadow: 0px 0px 8px 1px #FFEB3B;
+  padding: 15px 35px;
+    box-sizing: content-box;
+}
+.deal_price {
+    color: #b47100;
+}
+.deal-info {
+    color: red;
+    font-size: 11px;
+    font-style: italic;
 }
 button.btn.btn-black {
     background: #000;
@@ -29,6 +36,10 @@ button.btn.btn-black:hover, button.btn.btn-black:active, button.btn.btn-black:fo
     font-weight: bold;
     color: #ffffff;
     text-shadow: 1px 1px black;
+    background: #faa719;
+    padding: 10px 5px;
+    display: inline-block;
+    border-radius: 5px;
 }
 /* The Close Button */
 .close {
