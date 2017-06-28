@@ -7,7 +7,7 @@
 							<?php if ($field->id > 23 &&  $field->id < 28) {?>
 								<div class="thumb_img">
 									
-									<img class="img-article" src="<?php echo $field->rawvalue?>" alt="<?php echo $this->item->title?>"/>
+									<img class="img-article" src="<?php echo htmlspecialchars($resizer->resize($field->rawvalue, array('w' => 98, 'h' => 152, 'crop' => TRUE)))?>" alt="<?php echo $this->item->title?>"/>
 								</div>
 							<?php }}?>
 					</div>

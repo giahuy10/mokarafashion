@@ -23,10 +23,11 @@
     margin-bottom: 30px;
 }
 .ed-inner-product .price {
-    color: #ed1c24;
+    color: #000;
     font-weight: bold;
 	margin-bottom: 10px;
 	    font-size: 20px;
+		
 }
 .discount-label {
     display: inline-block;
@@ -273,7 +274,7 @@
     font-size: 20px;
 }
 .masonry { /* Masonry container */
-    column-count: 2;
+    column-count: 4;
     column-gap: 1em;
 }
 
@@ -282,12 +283,13 @@
     display: inline-block;
     margin: 0 0 1em;
     width: 100%;
+	position: relative;
 }
 div.label-product {
     position: absolute;
-    top: 0;
+    top: -5px;
        right: 15px;
-    /* width: 50px; */
+ 
     z-index: 9999;
 }
 span.label-product {

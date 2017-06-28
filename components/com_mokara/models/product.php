@@ -471,7 +471,7 @@ class MokaraModelProduct extends JModelList
 		$clear = 0;
 		foreach ($items as $item) {
 			$item->jcfields    = FieldsHelper::getFields('com_content.article', $item, true);
-			echo '<div  class="col-xs-12 col-sm-6 items-on-row">';	
+			echo '<div  class="col-xs-12 col-sm-6 col-md-4 col-lg-3 items-on-row">';	
 			if (isset($template) && $template = "amp") {
 				$this->show_product_item_amp($item);
 			}else {
@@ -484,6 +484,14 @@ class MokaraModelProduct extends JModelList
 					
 						echo '<div class="clearfix visible-sm"></div>';
 					}
+					if ($clear%3==0) {
+					echo ' <div class="clearfix visible-md-block"></div>';
+					
+				}
+				if ($clear%4==0) {
+					
+					echo ' <div class="clearfix visible-lg-block"></div>';
+				}
 		}
 		echo '<div class="clearfix"></div>';
 	} 
@@ -860,12 +868,12 @@ class MokaraModelProduct extends JModelList
 				}
 				$html .='</div>';
 			}
-			$html .='<div class="ed-item-img col-xs-12 col-sm-6">';
+			$html .='<div class="ed-item-img col-xs-12 ">';
 			
 			$html .='	<a href="'.$link.'"><img itemprop="image" class="product-thumb-desk" src="'.htmlspecialchars($resizer->resize($item->product_thumb, array('w' => 250, 'h' => 390, 'crop' => TRUE))).'" alt="'.$item->title.'"/></a>';
 			
 			$html .='</div>';
-			$html .='<div class="ed-product-content  col-xs-12 col-sm-6">';
+			$html .='<div class="ed-product-content  col-xs-12 ">';
 			$html .='<div class="page-header">';
 			$html .='<h2 itemprop="name">';
 			$html .='<a href="'.$link.'" itemprop="url">'.$item->title.'</a>';
@@ -900,7 +908,7 @@ class MokaraModelProduct extends JModelList
 				$html .='</span>';
 			}
 			$html .='</div>';
-			$html .='<div class="promotion">';
+			/*$html .='<div class="promotion">';
 			if ($item->hot_deal) {
 			$html .='<div class="deal-block-main text-center">
 						<h4>Hot Deal</h4>
@@ -927,7 +935,7 @@ class MokaraModelProduct extends JModelList
 				$html .='</div>';
 			}
 			$html .='</div>';
-	
+			*/
 		
 				$html .='<div class="clearfix"></div>';
 			$html .='</div>';	
@@ -963,7 +971,7 @@ class MokaraModelProduct extends JModelList
 		$html .='<div class="clearfix"></div>';
 	$html .='</div>	';
 	echo $html;
-	if ($item->hot_deal) {
+	if ($item->hot_deal == 10) {
 	?>
 				<script>
 							

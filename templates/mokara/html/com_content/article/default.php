@@ -15,7 +15,8 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
 $params  = $this->item->params;
 $images  = json_decode($this->item->images);
 
-
+require_once JPATH_SITE . '/plugins/content/imgresizecache/resize.php';
+$resizer = new ImgResizeCache();
 $user    = JFactory::getUser();
 
 $userId     = $user->get('id');
