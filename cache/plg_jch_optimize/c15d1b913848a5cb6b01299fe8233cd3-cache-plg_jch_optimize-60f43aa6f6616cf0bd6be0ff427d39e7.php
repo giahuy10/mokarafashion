@@ -1,0 +1,1 @@
+<?php die("Access Denied"); ?>#x#a:2:{s:6:"result";s:231:"try{jQuery(function($){$('.thumb_img').click(function(){var imgelem=$(this).find('img').attr('src');$('#main_image').html('<img src="'+imgelem+'"/>');});});}catch(e){console.error('Error in script declaration; Error:'+e.message);};";s:6:"output";s:0:"";}

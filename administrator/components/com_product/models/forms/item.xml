@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+  <fieldset>
+    <field name="id" type="text" readonly="true" class="readonly" default="0" description="JGLOBAL_FIELD_ID_DESC"/>
+    <field name="ordering"/>
+    <field name="state" default="1" type="list" label="JSTATUS" description="JFIELD_PUBLISHED_DESC" class="inputbox" size="1">
+      <option value="1">JPUBLISHED</option>
+      <option value="0">JUNPUBLISHED</option>
+      <option value="2">JARCHIVED</option>
+      <option value="-2">JTRASHED</option>
+    </field>
+    <field name="checked_out" type="hidden" filter="unset"/>
+    <field name="checked_out_time" default="0000-00-00 00:00:00" type="hidden" filter="unset"/>
+    <field name="created_by" type="createdby" default="0" label="COM_PRODUCT_FORM_LBL_ITEM_CREATED_BY" description="COM_PRODUCT_FORM_DESC_ITEM_CREATED_BY" hidden="true" hint="COM_PRODUCT_FORM_LBL_ITEM_CREATED_BY"/>
+    <field name="modified_by" type="modifiedby" default="0" label="COM_PRODUCT_FORM_LBL_ITEM_MODIFIED_BY" description="COM_PRODUCT_FORM_DESC_ITEM_MODIFIED_BY" hidden="true" hint="COM_PRODUCT_FORM_LBL_ITEM_MODIFIED_BY"/>
+    <field name="title" type="text" filter="safehtml" required="true" label="COM_PRODUCT_FORM_LBL_ITEM_TITLE" description="COM_PRODUCT_FORM_DESC_ITEM_TITLE" hint="COM_PRODUCT_FORM_LBL_ITEM_TITLE"/>
+    <field name="alias" type="text" class="inputbox" generator="title"  label="COM_PRODUCT_FORM_LBL_ITEM_ALIAS" description="COM_PRODUCT_FORM_DESC_ITEM_ALIAS" hint="COM_PRODUCT_FORM_LBL_ITEM_ALIAS"/>
+    <field name="catid" type="category" extension="com_product" required="true" label="COM_PRODUCT_FORM_LBL_ITEM_CATID" description="COM_PRODUCT_FORM_DESC_ITEM_CATID" hint="COM_PRODUCT_FORM_LBL_ITEM_CATID"/>
+    <field name="code" type="text" filter="safehtml" required="true" label="COM_PRODUCT_FORM_LBL_ITEM_CODE" description="COM_PRODUCT_FORM_DESC_ITEM_CODE" hint="COM_PRODUCT_FORM_LBL_ITEM_CODE"/>
+    <field name="price" type="text" filter="int" label="COM_PRODUCT_FORM_LBL_ITEM_PRICE" description="COM_PRODUCT_FORM_DESC_ITEM_PRICE" hint="COM_PRODUCT_FORM_LBL_ITEM_PRICE"/>
+    <field name="old_price" type="text" filter="int" label="COM_PRODUCT_FORM_LBL_ITEM_OLD_PRICE" description="COM_PRODUCT_FORM_DESC_ITEM_OLD_PRICE" hint="COM_PRODUCT_FORM_LBL_ITEM_OLD_PRICE"/>
+    <field name="intro" type="editor" editor="|" filter="JComponentHelper::filterText" label="COM_PRODUCT_FORM_LBL_ITEM_INTRO" description="COM_PRODUCT_FORM_DESC_ITEM_INTRO" hint="COM_PRODUCT_FORM_LBL_ITEM_INTRO"/>
+    <field name="description" type="editor" editor="|" filter="JComponentHelper::filterText" label="COM_PRODUCT_FORM_LBL_ITEM_DESCRIPTION" description="COM_PRODUCT_FORM_DESC_ITEM_DESCRIPTION" hint="COM_PRODUCT_FORM_LBL_ITEM_DESCRIPTION"/>
+    <field name="combo" type="radio" default="0" label="COM_PRODUCT_FORM_LBL_ITEM_COMBO" description="COM_PRODUCT_FORM_DESC_ITEM_COMBO" hint="COM_PRODUCT_FORM_LBL_ITEM_COMBO">
+      <option value="0">COM_PRODUCT_ITEMS_COMBO_OPTION_0</option>
+      <option value="1">COM_PRODUCT_ITEMS_COMBO_OPTION_1</option>
+    </field>
+    <field name="combo_products" type="sql" query="SELECT id, title FROM  #__product_items WHERE state = 1" key_field="id" value_field="title" multiple="true" label="COM_PRODUCT_FORM_LBL_ITEM_COMBO_PRODUCTS" description="COM_PRODUCT_FORM_DESC_ITEM_COMBO_PRODUCTS" hint="COM_PRODUCT_FORM_LBL_ITEM_COMBO_PRODUCTS" showon="combo:1"/>
+    <field name="hot_deal" type="radio" default="0" label="COM_PRODUCT_FORM_LBL_ITEM_HOT_DEAL" description="COM_PRODUCT_FORM_DESC_ITEM_HOT_DEAL" hint="COM_PRODUCT_FORM_LBL_ITEM_HOT_DEAL">
+      <option value="0">COM_PRODUCT_ITEMS_HOT_DEAL_OPTION_0</option>
+      <option value="1">COM_PRODUCT_ITEMS_HOT_DEAL_OPTION_1</option>
+      <option value="2">COM_PRODUCT_ITEMS_HOT_DEAL_OPTION_2</option>
+    </field>
+    <field name="deal_price" type="text" filter="int" label="COM_PRODUCT_FORM_LBL_ITEM_DEAL_PRICE" description="COM_PRODUCT_FORM_DESC_ITEM_DEAL_PRICE" hint="COM_PRODUCT_FORM_LBL_ITEM_DEAL_PRICE" showon="hot_deal:1,2"/>
+    <field name="deal_from" type="calendar" class="inputbox" timeformat="12" filter="server_utc" showtime="true" singleheader="true" todaybutton="true" weeknumbers="false" filltable="false" label="COM_PRODUCT_FORM_LBL_ITEM_DEAL_FROM" description="COM_PRODUCT_FORM_DESC_ITEM_DEAL_FROM" hint="COM_PRODUCT_FORM_LBL_ITEM_DEAL_FROM" showon="hot_deal:1,2"/>
+    <field name="deal_to" type="calendar" class="inputbox" timeformat="12" filter="server_utc" showtime="true" singleheader="true" todaybutton="true" weeknumbers="false" filltable="false" label="COM_PRODUCT_FORM_LBL_ITEM_DEAL_TO" description="COM_PRODUCT_FORM_DESC_ITEM_DEAL_TO" hint="COM_PRODUCT_FORM_LBL_ITEM_DEAL_TO" showon="hot_deal:1,2"/>
+    <field name="deal_day" type="list" label="COM_PRODUCT_FORM_LBL_ITEM_DEAL_DAY" description="COM_PRODUCT_FORM_DESC_ITEM_DEAL_DAY" hint="COM_PRODUCT_FORM_LBL_ITEM_DEAL_DAY" showon="hot_deal:2">
+      <option value="0">COM_PRODUCT_ITEMS_DEAL_DAY_OPTION_0</option>
+      <option value="1">COM_PRODUCT_ITEMS_DEAL_DAY_OPTION_1</option>
+      <option value="2">COM_PRODUCT_ITEMS_DEAL_DAY_OPTION_2</option>
+      <option value="3">COM_PRODUCT_ITEMS_DEAL_DAY_OPTION_3</option>
+      <option value="4">COM_PRODUCT_ITEMS_DEAL_DAY_OPTION_4</option>
+      <option value="5">COM_PRODUCT_ITEMS_DEAL_DAY_OPTION_5</option>
+      <option value="6">COM_PRODUCT_ITEMS_DEAL_DAY_OPTION_6</option>
+      <option value="7">COM_PRODUCT_ITEMS_DEAL_DAY_OPTION_7</option>
+    </field>
+    <field name="image_1" type="media" directory="products" label="COM_PRODUCT_FORM_LBL_ITEM_IMAGE_1" description="COM_PRODUCT_FORM_DESC_ITEM_IMAGE_1" hint="COM_PRODUCT_FORM_LBL_ITEM_IMAGE_1"/>
+    <field name="color" type="checkboxes" label="COM_PRODUCT_FORM_LBL_ITEM_COLOR" description="COM_PRODUCT_FORM_DESC_ITEM_COLOR" hint="COM_PRODUCT_FORM_LBL_ITEM_COLOR"/>
+    <field name="collar" type="checkboxes" label="COM_PRODUCT_FORM_LBL_ITEM_COLLAR" description="COM_PRODUCT_FORM_DESC_ITEM_COLLAR" hint="COM_PRODUCT_FORM_LBL_ITEM_COLLAR"/>
+    <field name="sleeve" type="checkboxes" label="COM_PRODUCT_FORM_LBL_ITEM_SLEEVE" description="COM_PRODUCT_FORM_DESC_ITEM_SLEEVE" hint="COM_PRODUCT_FORM_LBL_ITEM_SLEEVE"/>
+    <field name="type" type="checkboxes" label="COM_PRODUCT_FORM_LBL_ITEM_TYPE" description="COM_PRODUCT_FORM_DESC_ITEM_TYPE" hint="COM_PRODUCT_FORM_LBL_ITEM_TYPE"/>
+    <field name="shape" type="checkboxes" label="COM_PRODUCT_FORM_LBL_ITEM_SHAPE" description="COM_PRODUCT_FORM_DESC_ITEM_SHAPE" hint="COM_PRODUCT_FORM_LBL_ITEM_SHAPE"/>
+    <field name="tags" type="tag" mode="ajax" multiple="true" custom="deny" label="COM_PRODUCT_FORM_LBL_ITEM_TAGS" description="COM_PRODUCT_FORM_DESC_ITEM_TAGS" hint="COM_PRODUCT_FORM_LBL_ITEM_TAGS"/>
+    <field name="images" type="subform" multiple="true" formsource="administrator/components/com_product/models/forms/subform_size_stock.xml" layout="joomla.form.field.subform.repeatable-table" label="COM_PRODUCT_FORM_LBL_ITEM_IMAGES" description="COM_PRODUCT_FORM_DESC_ITEM_IMAGES" hint="COM_PRODUCT_FORM_LBL_ITEM_IMAGES"/>
+    <field name="version_note" type="text" label="JGLOBAL_FIELD_VERSION_NOTE_LABEL" description="JGLOBAL_FIELD_VERSION_NOTE_DESC" class="inputbox" size="45" labelclass="control-label"/>
+  </fieldset>
+</form>

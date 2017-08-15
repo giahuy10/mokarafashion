@@ -97,6 +97,7 @@ unset($this->_styleSheets[JURI::root(true).'/media/jui/css/chosen.css']);
 	
 	<meta property="fb:app_id" content="1907423642863145" />
 	<meta property="fb:admins" content="100002787759779"/>
+<script charset="UTF-8" src="//cdn.sendpulse.com/28edd3380a1c17cf65b137fe96516659/js/push/1b88339234aa17e88ff0684db3b4955a_1.js" async></script>
 
 </head>
 

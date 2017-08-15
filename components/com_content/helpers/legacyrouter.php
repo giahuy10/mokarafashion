@@ -59,7 +59,7 @@ class ContentRouterRulesLegacy implements JComponentRouterRulesInterface
 	{
 		// Get a menu item based on Itemid or currently active
 		$params = JComponentHelper::getParams('com_content');
-		$advanced = 1;
+		$advanced = $params->get('sef_advanced_link', 0);
 
 		// We need a menu item.  Either the one specified in the query, or the current active one if none specified
 		if (empty($query['Itemid']))

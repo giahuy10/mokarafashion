@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form><fieldset><field name="name" type="text" filter="safehtml" label="COM_PRODUCT_SUBFORM_LBL_SIZE_STOCK_NAME" description="COM_PRODUCT_SUBFORM_DESC_SIZE_STOCK_NAME" hint="COM_PRODUCT_SUBFORM_LBL_SIZE_STOCK_NAME"/><field name="image" type="media" directory="products" label="COM_PRODUCT_SUBFORM_LBL_SIZE_STOCK_IMAGE" description="COM_PRODUCT_SUBFORM_DESC_SIZE_STOCK_IMAGE" hint="COM_PRODUCT_SUBFORM_LBL_SIZE_STOCK_IMAGE"/></fieldset></form>

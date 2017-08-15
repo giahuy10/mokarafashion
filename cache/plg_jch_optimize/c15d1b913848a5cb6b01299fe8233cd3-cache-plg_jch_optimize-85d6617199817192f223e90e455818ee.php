@@ -1,0 +1,1 @@
+<?php die("Access Denied"); ?>#x#a:2:{s:6:"result";s:185:"try{jQuery.noConflict();}catch(e){console.error('Error in file:/freelancer/mokara/mokarafashion/media/jui/js/jquery-noconflict.js?6d5474ceb9a4940f679b35768200b9b7; Error:'+e.message);};";s:6:"output";s:0:"";}

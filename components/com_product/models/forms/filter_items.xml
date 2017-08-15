@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fields name="filter">
+        <field name="search" type="text" hint="COM_PRODUCT_SEARCH_FILTER_SUBMIT"
+               label="COM_USERS_FILTER_SEARCH_DESC"
+               class="js-stools-search-string" />
+
+        <field name="catid" label="COM_PRODUCT_FORM_LBL_ITEM_CATID" type="category" extension="com_product" show_root="1" onchange="this.form.submit();"/>
+<field name="combo" label="COM_PRODUCT_FORM_LBL_ITEM_COMBO" type="list" onchange="this.form.submit();" default="COM_PRODUCT_ITEMS_COMBO_FILTER">
+  <option value="">COM_PRODUCT_ITEMS_COMBO_FILTER</option>
+  <option value="0">COM_PRODUCT_ITEMS_COMBO_OPTION_0</option>
+  <option value="1">COM_PRODUCT_ITEMS_COMBO_OPTION_1</option>
+</field>
+<field name="hot_deal" label="COM_PRODUCT_FORM_LBL_ITEM_HOT_DEAL" type="list" onchange="this.form.submit();" default="COM_PRODUCT_ITEMS_HOT_DEAL_FILTER">
+  <option value="">COM_PRODUCT_ITEMS_HOT_DEAL_FILTER</option>
+  <option value="0">COM_PRODUCT_ITEMS_HOT_DEAL_OPTION_0</option>
+  <option value="1">COM_PRODUCT_ITEMS_HOT_DEAL_OPTION_1</option>
+  <option value="2">COM_PRODUCT_ITEMS_HOT_DEAL_OPTION_2</option>
+</field>
+<field name="color" label="COM_PRODUCT_FORM_LBL_ITEM_COLOR" type="list" onchange="this.form.submit();"/>
+<field name="collar" label="COM_PRODUCT_FORM_LBL_ITEM_COLLAR" type="list" onchange="this.form.submit();"/>
+<field name="sleeve" label="COM_PRODUCT_FORM_LBL_ITEM_SLEEVE" type="list" onchange="this.form.submit();"/>
+<field name="type" label="COM_PRODUCT_FORM_LBL_ITEM_TYPE" type="list" onchange="this.form.submit();"/>
+<field name="shape" label="COM_PRODUCT_FORM_LBL_ITEM_SHAPE" type="list" onchange="this.form.submit();"/>
+
+
+    </fields>
+</form>
